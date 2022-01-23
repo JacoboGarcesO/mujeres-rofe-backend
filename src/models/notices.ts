@@ -1,13 +1,13 @@
 import { model, Schema } from 'mongoose';
 
 const linkSchema = new Schema({
-	name: { type: String },
-	url: { type: String },
+  name: { type: String },
+  url: { type: String },
 });
 
 const contentSchema = new Schema({
-	type: { type: String, enum: ['image', 'document'], required: [true, 'Content type icon is required'] },
-	contentUrl: { type: String, required: [true, 'Content url is required'] },
+  type: { type: String, enum: ['image', 'document'], required: [true, 'Content type icon is required'] },
+  contentUrl: { type: String, required: [true, 'Content url is required'] },
 });
 
 const noticeSchema = new Schema({

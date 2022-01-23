@@ -1,17 +1,17 @@
 import { model, Schema } from 'mongoose';
 
 const socialNetworkSchema = new Schema({
-	name: { type: String },
-	url: { type: String },
+  name: { type: String },
+  url: { type: String },
 });
 
 const locationSchema = new Schema({
-	city: { type: String },
-	departament: { type: String },
+  city: { type: String },
+  departament: { type: String },
 });
 
 const hobbieSchema = new Schema({
-	name: { type: String },
+  name: { type: String },
 });
 
 const userSchema = new Schema({
