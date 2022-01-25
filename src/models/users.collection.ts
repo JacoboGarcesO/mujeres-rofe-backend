@@ -17,9 +17,9 @@ const hobbieSchema = new Schema({
 const userSchema = new Schema({
   firstName: { type: String, required: [true, 'User firstName is required'] },
   lastName: { type: String, required: [true, 'User lastName is required'] },
-  email: { type: String, required: [true, 'User email is required'], unique: true, },
+  email: { type: String, required: [true, 'User email is required'], unique: true },
   password: { type: String, required: [true, 'User password is required'] },
-  rol: { type: String, required: [true, 'User rol is required'] },
+  rol: { type: String, enum: ['admin', 'user'], required: [true, 'User rol is required'] },
   document: { type: String },
   phoneNumber: { type: Number },
   description: { type: String },

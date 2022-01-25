@@ -1,1 +1,1 @@
-export const log = (data: any) => console.log(data);
+export const log = (data: unknown) => console.log(data);
