@@ -4,11 +4,11 @@ import cors from 'cors';
 import { log } from '../utils/logs';
 import environment from '../config/environment';
 
-export const startServer = (app: Application) => {
+export const startServer = (app: Application): void => {
   app.listen(app.get('port'), log.bind(this, `Server running in port ${app.get('port')}`));
-}
+};
 
-export default async (app: Application) => {
+export default async (app: Application): Promise<Application> => {
   app.use(cors());
   app.use(morgan('dev'));
   app.use(express.json());

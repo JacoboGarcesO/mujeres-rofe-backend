@@ -1,6 +1,7 @@
 import usersCollection from '../collections/users.collection';
-import { UserMapper } from '../mappers/users/dto-to-users.mapper';
-import { UserModel } from '../models/user.model';
+import { UserMapper } from '../mappers/users.mapper';
+import { UserRequestModel } from '../models/user.model';
+import messages from '../utils/messages';
 
 export class UserService {
 
@@ -8,11 +9,11 @@ export class UserService {
 
   constructor(mapper: UserMapper) { this.userMapper = mapper; }
   
-  async create(userDto: UserModel): Promise<UserModel> {
+  async create(userDto: any): Promise<UserRequestModel> {
     const user = this.userMapper.dtoToUserMapper(userDto);
-    const userToCreate = new usersCollection(user);
-    const userSaved = await userToCreate.save();
+    const userCreated = await new usersCollection(user).save();
+    const userRequest = this.userMapper.userToDto(userCreated, messages.createSuccess('user'));
 
-    return userSaved;
+    return userRequest;
   }
 }

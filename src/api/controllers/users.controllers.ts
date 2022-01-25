@@ -1,17 +1,17 @@
-import { Request, Response } from 'express';
-import { UserMapper } from '../../mappers/users/dto-to-users.mapper';
-import { UserModel } from '../../models/user.model';
+import { Request, Response, NextFunction } from 'express';
+import { UserMapper } from '../../mappers/users.mapper';
 import { UserService } from '../../services/users.service';
 
+const userMapper = new UserMapper();
+const service = new UserService(userMapper);
 export class UserController {
-  private userMapper = new UserMapper();
-  private service = new UserService(this.userMapper);
 
-  async create(request: Request, response: Response): Promise<Response | undefined>  {
-    const user = request.body as UserModel;
-    const userSaved = await this.service.create(user);
-
-    return response.status(200).json({userSaved, message: 'User was saved successfully'});
+  async create(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
+    try {
+      const userSaved = await service.create(request.body);
+      return response.status(200).json(userSaved);
+    } catch (err) {
+      next(err);
+    }
   }
-
 }
