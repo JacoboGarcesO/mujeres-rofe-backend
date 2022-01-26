@@ -6,10 +6,10 @@ const userMapper = new UserMapper();
 const service = new UserService(userMapper);
 export class UserController {
 
-  login(_request: Request, response: Response, next: NextFunction) {
+  async auth(request: Request, response: Response, next: NextFunction) {
     try {
-      const token = service.login();
-      return response.status(200).json({token});
+      const userAuthentication = await service.auth(request.body);
+      return response.status(200).json(userAuthentication);
     } catch (err) {
       next(err);
     }
