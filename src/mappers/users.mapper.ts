@@ -1,7 +1,8 @@
 import { UserModel, UserRequestModel } from '../models/user.model';
 
 export class UserMapper {
-  dtoToUserMapper(user: any): UserModel {
+
+  dtoToUser(user: any): UserModel {
     return {
       firstName: user?.firstName,
       lastName: user?.lastName,
