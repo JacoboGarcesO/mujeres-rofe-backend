@@ -11,5 +11,6 @@ export class UsersRouter {
     const router = Router();
     this.app.use('/api/users', router);
     router.post('/', this.controller.create);
+    router.post('/login', this.controller.login);
   }
 }

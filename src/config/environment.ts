@@ -9,4 +9,5 @@ export default {
     dev: process.env.DATABASE_URI_DEV as string,
     prod: process.env.DATABASE_URI_PROD as string,
   },
+  jwtPassword: process.env.JWT_PSW as string,
 };
