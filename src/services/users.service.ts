@@ -16,7 +16,7 @@ export class UserService {
     const user = await usersCollection.findOne({ email: credentials.email });
 
     if (!user) {
-      return this.userMapper.userCredentialsToDto(messages.authFailure);
+      return this.userMapper.userCredentialsToDto(messages.userNotFound);
     }
 
     if (comparePasswords(credentials?.password, user?.password)) {

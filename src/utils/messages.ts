@@ -5,5 +5,8 @@ export default {
   createFailure: (entity: string) => `${StringsUtils.capitalize(entity)} was not created`,
   authSuccess: 'Authentication was completed',
   authFailure: 'User credentials are incorrect',
-  requestInvalid: 'Request invalid. Token not provided',
+  userNotFound: 'User not found',
+  requestInvalid: 'Token invalid',
+  tokenRequired: 'Token not provided',
+
 };

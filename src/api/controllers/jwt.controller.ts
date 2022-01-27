@@ -8,7 +8,7 @@ export class JwtController {
     const token = request.header('Authorization');
 
     if (!token) {
-      return response.status(401).json({ message: messages.requestInvalid });
+      return response.status(401).json({ message: messages.tokenRequired });
     }
 
     Jwt.verify(token, environment.jwtPassword, (err) => {
