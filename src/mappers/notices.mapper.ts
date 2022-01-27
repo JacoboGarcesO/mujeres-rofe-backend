@@ -4,9 +4,10 @@ export class NoticeMapper {
 
   dtoToNotice(notice: any): NoticeModel {
     return {
-      image: notice?.image,
-      url: notice?.url,
+      title: notice?.title,
       description: notice?.description,
+      order: notice?.order,
+      icon: notice?.icon,     
     };
   }
 

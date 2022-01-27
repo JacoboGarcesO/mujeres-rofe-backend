@@ -1,7 +1,8 @@
 export interface NoticeModel {
-  image: string;
-  url: string;
+  title: string;
   description: string;
+  order: number;
+  icon: number;  
 }
 
 export interface NoticeRequestModel {
