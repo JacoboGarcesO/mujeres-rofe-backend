@@ -3,8 +3,7 @@ export interface SlideModel {
   image: string;
   url: string;
 }
-
-export interface SlideRequestModel {
-  slide: SlideModel;
+export interface SlideResponseModel {
+  slides: SlideModel[];
   message: string;
 }

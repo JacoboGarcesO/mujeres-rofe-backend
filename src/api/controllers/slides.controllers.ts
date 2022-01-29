@@ -1,15 +1,26 @@
 import { NextFunction, Request, Response } from 'express';
+import { MessagesMapper } from '../../mappers/messages.mapper';
 import { SlideMapper } from '../../mappers/slides.mapper';
 import { SlideService } from '../../services/slides.service';
 
 const slideMapper = new SlideMapper();
-const service = new SlideService(slideMapper);
+const messageMapper = new MessagesMapper();
+const service = new SlideService(slideMapper, messageMapper);
 export class SlideController {
+
+  async getAll(_request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
+    try {
+      const slidesResponse = await service.getAll();
+      return response.status(200).json(slidesResponse);
+    } catch (err) {
+      next(err);
+    }
+  }
 
   async create(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
     try{
-      const slideCreated = await service.create(request.body);
-      return response.status(200).json(slideCreated);
+      const slideResponse = await service.create(request.body);
+      return response.status(200).json(slideResponse);
     } catch (err) {
       next(err);
     }

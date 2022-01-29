@@ -1,4 +1,4 @@
-import { SlideModel, SlideRequestModel } from '../models/slide.model';
+import { SlideModel, SlideResponseModel } from '../models/slide.model';
 
 export class SlideMapper {
 
@@ -10,9 +10,16 @@ export class SlideMapper {
     };
   }
 
-  slideToDto(slide: any, message: string): SlideRequestModel {
+  slideToDto(slide: SlideModel, message: string): SlideResponseModel {
     return {
-      slide,
+      slides: [slide],
+      message,
+    };
+  }
+
+  slidesToDto(slides: SlideModel[], message: string): SlideResponseModel {
+    return {
+      slides,
       message,
     };
   }
