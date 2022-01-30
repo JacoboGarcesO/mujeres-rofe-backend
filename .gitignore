@@ -8,7 +8,9 @@
 
 # production
 /build
-
+# editor
+/.vscode
+/.vscode/*
 # misc
 .env
 .DS_Store
