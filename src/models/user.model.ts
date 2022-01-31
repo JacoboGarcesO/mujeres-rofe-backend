@@ -1,4 +1,4 @@
-import { ImageModel } from './image.model';
+import { MediaModel } from './media.model';
 
 export interface UserModel { 
   firstName: string;
@@ -6,7 +6,7 @@ export interface UserModel {
   email: string;
   password: string;
   rol: string;
-  image?: ImageModel;
+  image?: MediaModel;
 }
 
 export interface UserResponseModel {
