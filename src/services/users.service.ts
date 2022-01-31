@@ -57,4 +57,14 @@ export class UserService {
 
     return this.userMapper.usersToDto(users, messages.getAll('users'));
   }
+
+  async getById(userId: any): Promise<UserResponseModel | MessageModel> {
+    const user: UserModel = await usersCollection.findById(userId);
+
+    if (!user) {
+      return this.messageMapper.map(messages.getByIdFailure('user'));
+    }
+
+    return this.userMapper.userToDto(user, messages.getById('user'));
+  }
 }
