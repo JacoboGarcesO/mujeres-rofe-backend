@@ -12,8 +12,8 @@ export class UserMapper {
       password: passwordEncrypted,
       rol: user?.rol,
       image: {
-        _id: image.public_id,
-        imageUrl: image.url,
+        _id: image?.public_id,
+        imageUrl: image?.url,
       },
     };
   }

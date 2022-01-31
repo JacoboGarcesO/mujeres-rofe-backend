@@ -29,7 +29,12 @@ export class UserService {
   }
 
   async create(userDto: any, userImage: any): Promise<UserRequestModel> {
-    const image = await cloudinary.upload(userImage);
+    let image;
+
+    if (userImage) {
+      image = await cloudinary.upload(userImage);
+    }
+
     const user = this.userMapper.dtoToUser(userDto, image);
     const userCreated = await new usersCollection(user).save();
     const userRequest = this.userMapper.userToDto(userCreated, messages.createSuccess('user'));
