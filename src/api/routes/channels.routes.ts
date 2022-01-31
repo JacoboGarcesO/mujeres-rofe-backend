@@ -13,5 +13,6 @@ export class ChannelsRouter {
     const router = Router();
     this.app.use('/api/channels', router);
     router.post('/', this.jwtController.validateToken, this.controller.create);
+    router.get('/', this.jwtController.validateToken, this.controller.getAll);
   }
 }
