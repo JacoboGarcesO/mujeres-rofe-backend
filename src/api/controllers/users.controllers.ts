@@ -43,4 +43,13 @@ export class UserController {
       next(err);
     }
   }
+
+  async update(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
+    try {      
+      const userResponse = await service.update(request.body, request.file?.path);
+      return response.status(200).json(userResponse);
+    } catch (err) {
+      next(err);
+    }
+  }
 }

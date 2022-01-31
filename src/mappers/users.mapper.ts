@@ -4,7 +4,7 @@ import { encryptPassword } from '../utils/bcrypt';
 export class UserMapper {
   dtoToUser(user: any, image: any): UserModel {
     const passwordEncrypted = encryptPassword(user?.password);
-   
+
     return {
       firstName: user?.firstName,
       lastName: user?.lastName,
@@ -15,6 +15,7 @@ export class UserMapper {
         _id: image?.public_id,
         url: image?.url,
       },
+      id: user?.id,
     };
   }
 

@@ -7,6 +7,8 @@ export default {
   getAllFailure: (entity: string) => `${StringsUtils.capitalize(entity)} were not gotten`,
   getById: (entity: string) => `${StringsUtils.capitalize(entity)} was gotten`,
   getByIdFailure: (entity: string) => `${StringsUtils.capitalize(entity)} was not gotten`,
+  updateSuccess: (entity: string) => `${StringsUtils.capitalize(entity)} was updated successfully`,
+  updateFailure: (entity: string) => `${StringsUtils.capitalize(entity)} was not updated`,
   authSuccess: 'Authentication was completed',
   authFailure: 'User credentials are incorrect',
   userNotFound: 'User not found',
