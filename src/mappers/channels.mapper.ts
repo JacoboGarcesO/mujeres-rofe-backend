@@ -1,4 +1,4 @@
-import { ChannelModel, ChannelRequestModel as ChannelResponseModel } from '../models/channel.model';
+import { ChannelModel, ChannelResponseModel as ChannelResponseModel } from '../models/channel.model';
 
 export class ChannelMapper {
 
@@ -14,7 +14,14 @@ export class ChannelMapper {
 
   channelToDto(channel: ChannelModel, message: string): ChannelResponseModel {
     return {
-      channel,
+      channels: [channel],
+      message,
+    };
+  }
+
+  channelsToDto(channels: ChannelModel[], message: string): ChannelResponseModel {
+    return {
+      channels,
       message,
     };
   }

@@ -6,7 +6,7 @@ export interface ChannelModel {
   order: number;  
 }
 
-export interface ChannelRequestModel {
-  channel: ChannelModel;
+export interface ChannelResponseModel {
+  channels: ChannelModel[];
   message: string;
 }

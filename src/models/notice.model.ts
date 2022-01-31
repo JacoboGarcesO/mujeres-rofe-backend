@@ -5,7 +5,7 @@ export interface NoticeModel {
   icon: number;  
 }
 
-export interface NoticeRequestModel {
-  notice: NoticeModel;
+export interface NoticeResponseModel {
+  notices: NoticeModel[];
   message: string;
 }

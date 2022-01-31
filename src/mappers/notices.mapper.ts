@@ -1,4 +1,4 @@
-import { NoticeModel, NoticeRequestModel as NoticeResponseModel } from '../models/notice.model';
+import { NoticeModel, NoticeResponseModel as NoticeResponseModel } from '../models/notice.model';
 
 export class NoticeMapper {
 
@@ -13,7 +13,14 @@ export class NoticeMapper {
 
   noticeToDto(notice: NoticeModel, message: string): NoticeResponseModel {
     return {
-      notice,
+      notices: [notice],
+      message,
+    };
+  }
+
+  noticesToDto(notices: NoticeModel[], message: string): NoticeResponseModel {
+    return {
+      notices,
       message,
     };
   }
