@@ -5,6 +5,7 @@ import messages from '../utils/messages';
 import Jwt from 'jsonwebtoken';
 import environment from '../config/environment';
 import { comparePasswords } from '../utils/bcrypt';
+import cloudinary from '../config/cloudinary';
 
 export class UserService {
   private userMapper: UserMapper;
@@ -27,8 +28,9 @@ export class UserService {
     return this.userMapper.userCredentialsToDto(messages.authFailure);
   }
 
-  async create(userDto: any): Promise<UserRequestModel> {
-    const user = this.userMapper.dtoToUser(userDto);
+  async create(userDto: any, userImage: any): Promise<UserRequestModel> {
+    const image = await cloudinary.upload(userImage);
+    const user = this.userMapper.dtoToUser(userDto, image);
     const userCreated = await new usersCollection(user).save();
     const userRequest = this.userMapper.userToDto(userCreated, messages.createSuccess('user'));
 

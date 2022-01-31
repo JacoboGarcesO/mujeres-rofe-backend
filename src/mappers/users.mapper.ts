@@ -2,15 +2,19 @@ import { UserCredentialsModel, UserCredentialsRequestModel as UserCredentialsRes
 import { encryptPassword } from '../utils/bcrypt';
 
 export class UserMapper {
-  dtoToUser(user: any): UserModel {
+  dtoToUser(user: any, image: any): UserModel {
     const passwordEncrypted = encryptPassword(user?.password);
-
+   
     return {
       firstName: user?.firstName,
       lastName: user?.lastName,
       email: user?.email,
       password: passwordEncrypted,
       rol: user?.rol,
+      image: {
+        _id: image.public_id,
+        imageUrl: image.url,
+      },
     };
   }
 
