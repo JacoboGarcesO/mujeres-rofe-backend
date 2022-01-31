@@ -34,4 +34,13 @@ export class UserController {
       next(err);
     }
   }
+
+  async getById(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
+    try {
+      const userResponse = await service.getById(request.params.userId);
+      return response.status(200).json(userResponse);
+    } catch (err) {
+      next(err);
+    }
+  }
 }
