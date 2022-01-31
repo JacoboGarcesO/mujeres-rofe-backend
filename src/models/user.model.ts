@@ -9,8 +9,8 @@ export interface UserModel {
   image?: ImageModel;
 }
 
-export interface UserRequestModel {
-  user: UserModel;
+export interface UserResponseModel {
+  users: UserModel[];
   message: string;
 }
 
@@ -19,7 +19,7 @@ export interface UserCredentialsModel {
   password: string;
 }
 
-export interface UserCredentialsRequestModel {
+export interface UserCredentialsResponseModel {
   message: string;
   token?: string;
   user?: UserModel;

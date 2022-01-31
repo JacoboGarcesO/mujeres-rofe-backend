@@ -1,18 +1,24 @@
 import usersCollection from '../collections/users.collection';
 import { UserMapper } from '../mappers/users.mapper';
-import { UserCredentialsRequestModel, UserRequestModel } from '../models/user.model';
+import { UserCredentialsResponseModel, UserModel, UserResponseModel } from '../models/user.model';
 import messages from '../utils/messages';
 import Jwt from 'jsonwebtoken';
 import environment from '../config/environment';
 import { comparePasswords } from '../utils/bcrypt';
 import cloudinary from '../config/cloudinary';
+import { MessagesMapper } from '../mappers/messages.mapper';
+import { MessageModel } from '../models/message.model';
 
 export class UserService {
   private userMapper: UserMapper;
+  private messageMapper: MessagesMapper;
 
-  constructor(mapper: UserMapper) { this.userMapper = mapper; }
+  constructor(mapper: UserMapper, messageMapper: MessagesMapper) {
+    this.userMapper = mapper;
+    this.messageMapper = messageMapper;
+  }
 
-  async auth(userCredentials: any): Promise<UserCredentialsRequestModel> {
+  async auth(userCredentials: any): Promise<UserCredentialsResponseModel> {
     const credentials = this.userMapper.dtoToUserCredentials(userCredentials);
     const user = await usersCollection.findOne({ email: credentials.email });
 
@@ -28,7 +34,7 @@ export class UserService {
     return this.userMapper.userCredentialsToDto(messages.authFailure);
   }
 
-  async create(userDto: any, userImage: any): Promise<UserRequestModel> {
+  async create(userDto: any, userImage: any): Promise<UserResponseModel> {
     let image;
 
     if (userImage) {
@@ -40,5 +46,15 @@ export class UserService {
     const userRequest = this.userMapper.userToDto(userCreated, messages.createSuccess('user'));
 
     return userRequest;
+  }
+
+  async getAll(): Promise<UserResponseModel | MessageModel> {
+    const users: UserModel[] = await usersCollection.find();  
+
+    if (!users?.length) {
+      return this.messageMapper.map(messages.getAllFailure('users'));
+    }
+
+    return this.userMapper.usersToDto(users, messages.getAll('users'));
   }
 }

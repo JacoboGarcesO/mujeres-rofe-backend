@@ -1,4 +1,4 @@
-import { UserCredentialsModel, UserCredentialsRequestModel as UserCredentialsResponseModel, UserModel, UserRequestModel as UserResponseModel } from '../models/user.model';
+import { UserCredentialsModel, UserCredentialsResponseModel as UserCredentialsResponseModel, UserModel, UserResponseModel as UserResponseModel } from '../models/user.model';
 import { encryptPassword } from '../utils/bcrypt';
 
 export class UserMapper {
@@ -18,9 +18,16 @@ export class UserMapper {
     };
   }
 
-  userToDto(user: UserModel, message: string): UserResponseModel {
+  userToDto(users: UserModel, message: string): UserResponseModel {
     return {
-      user,
+      users: [users],
+      message,
+    };
+  }
+
+  usersToDto(users: UserModel[], message: string): UserResponseModel {
+    return {
+      users,
       message,
     };
   }

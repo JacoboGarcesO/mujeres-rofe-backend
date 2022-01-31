@@ -14,6 +14,7 @@ export class UsersRouter {
     this.app.use('/api/users', router);
 
     router.post('/', this.jwtController.validateToken, storage.single('image'), this.controller.create);
+    router.get('/', this.jwtController.validateToken, this.controller.getAll);
     router.post('/auth', this.controller.auth);
   }
 }
