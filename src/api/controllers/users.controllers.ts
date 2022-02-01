@@ -52,4 +52,13 @@ export class UserController {
       next(err);
     }
   }
+
+  async delete(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
+    try {      
+      const userResponse = await service.delete(request.params.userId);
+      return response.status(200).json(userResponse);
+    } catch (err) {
+      next(err);
+    }
+  }
 }
