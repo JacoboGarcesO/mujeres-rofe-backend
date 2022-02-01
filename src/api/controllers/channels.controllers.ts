@@ -18,6 +18,15 @@ export class ChannelController {
     }
   }
 
+  async getById(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
+    try {
+      const channelResponse = await service.getById(request.params.channelId);
+      return response.status(200).json(channelResponse);
+    } catch (err) {
+      next(err);
+    }
+  }
+
   async create(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
     try {
       const channelCreated = await service.create(request.body);

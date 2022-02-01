@@ -24,6 +24,16 @@ export class ChannelsService {
     return this.channelMapper.channelsToDto(channels, messages.getAll('channels'));
   }
 
+  async getById(channelId: any): Promise<ChannelResponseModel | MessageModel> {
+    const channel: ChannelModel = await channelsCollection.findById(channelId);
+
+    if (!channel) {
+      return this.messageMapper.map(messages.getByIdFailure('channel'));
+    }
+
+    return this.channelMapper.channelToDto(channel, messages.getById('channel'));
+  }
+
   async create(channelDto: any): Promise<ChannelResponseModel> {
     const channel = this.channelMapper.dtoToChannel(channelDto);
     const channelCreated = await new channelsCollection(channel).save();
