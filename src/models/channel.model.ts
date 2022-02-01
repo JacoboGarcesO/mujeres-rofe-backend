@@ -3,7 +3,8 @@ export interface ChannelModel {
   description: string;
   icon: string;
   banner: string;
-  order: number;  
+  order: number;
+  id?: string;
 }
 
 export interface ChannelResponseModel {

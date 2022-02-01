@@ -2,13 +2,17 @@ import { ChannelModel, ChannelResponseModel as ChannelResponseModel } from '../m
 
 export class ChannelMapper {
 
-  dtoToChannel(channel: any): ChannelModel {
+  dtoToChannel(channel: any, image: any): ChannelModel {
     return {
       name: channel?.name,
       description: channel?.description,
       icon: channel?.icon,
-      banner: channel?.banner,
+      banner: image && {
+        _id: image?.public_id,
+        url: image?.url,
+      },
       order: channel?.order,
+      id: channel?.id,
     };
   }
 

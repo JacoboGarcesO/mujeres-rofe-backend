@@ -1,4 +1,5 @@
 import { Application, Router } from 'express';
+import storage from '../../config/storage';
 import { ChannelController } from '../controllers/channels.controllers';
 import { JwtController } from '../controllers/jwt.controller';
 
@@ -15,5 +16,6 @@ export class ChannelsRouter {
     router.post('/', this.jwtController.validateToken, this.controller.create);
     router.get('/', this.jwtController.validateToken, this.controller.getAll);
     router.get('/:channelId', this.jwtController.validateToken, this.controller.getById);
+    router.put('/', this.jwtController.validateToken, storage.single('banner'), this.controller.update);
   }
 }

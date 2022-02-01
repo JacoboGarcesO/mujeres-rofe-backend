@@ -29,8 +29,17 @@ export class ChannelController {
 
   async create(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
     try {
-      const channelCreated = await service.create(request.body);
+      const channelCreated = await service.create(request.body, request.file?.path);
       return response.status(200).json(channelCreated);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async update(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
+    try {      
+      const channelResponse = await service.update(request.body, request.file?.path);
+      return response.status(200).json(channelResponse);
     } catch (err) {
       next(err);
     }

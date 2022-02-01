@@ -1,5 +1,5 @@
 import { model, Schema } from 'mongoose';
-import { imageSchema } from './image.collection';
+import { mediaSchema } from './image.collection';
 
 const socialNetworkSchema = new Schema({
   name: { type: String },
@@ -24,7 +24,7 @@ const userSchema = new Schema({
   document: { type: String },
   phoneNumber: { type: Number },
   description: { type: String },
-  image: imageSchema,
+  image: mediaSchema,
   hobbies: [hobbieSchema],
   location: locationSchema,
   socialsNetworks: [socialNetworkSchema],
