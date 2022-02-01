@@ -14,5 +14,6 @@ export class NoticesRouter {
     this.app.use('/api/notices', router);
     router.post('/', this.jwtController.validateToken, this.controller.create);
     router.get('/', this.jwtController.validateToken, this.controller.getAll);
+    router.get('/:noticeId', this.jwtController.validateToken, this.controller.getById);
   }
 }

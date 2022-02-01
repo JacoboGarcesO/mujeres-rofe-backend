@@ -17,6 +17,15 @@ export class NoticeController {
     }
   }
 
+  async getById(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
+    try {
+      const noticeResponse = await service.getById(request.params.noticeId);
+      return response.status(200).json(noticeResponse);
+    } catch (err) {
+      next(err);
+    }
+  }
+
   async create(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
     try {
       const noticeCreated = await service.create(request.body);
