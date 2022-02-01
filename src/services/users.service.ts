@@ -84,4 +84,14 @@ export class UserService {
     const userResponse = this.userMapper.userToDto(userUpdated, messages.updateSuccess('user'));
     return userResponse;
   }
+
+  async delete(userId: any): Promise<MessageModel> {
+    const user = await usersCollection.findByIdAndDelete(userId);
+
+    if (!user) {
+      return this.messageMapper.map(messages.deleteFailure('user'));
+    }
+
+    return this.userMapper.userToDto(user, messages.deleteSuccess('user'));
+  }
 }

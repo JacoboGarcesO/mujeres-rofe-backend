@@ -17,6 +17,7 @@ export class UsersRouter {
     router.get('/', this.jwtController.validateToken, this.controller.getAll);
     router.put('/', this.jwtController.validateToken, storage.single('image'), this.controller.update);
     router.get('/:userId', this.jwtController.validateToken, this.controller.getById);
+    router.delete('/:userId', this.jwtController.validateToken, this.controller.delete);
     router.post('/auth', this.controller.auth);
   }
 }
