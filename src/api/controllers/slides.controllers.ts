@@ -17,6 +17,15 @@ export class SlideController {
     }
   }
 
+  async getById(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
+    try {
+      const slideResponse = await service.getById(request.params.slideId);
+      return response.status(200).json(slideResponse);
+    } catch (err) {
+      next(err);
+    }
+  }
+
   async create(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
     try{
       const slideResponse = await service.create(request.body);

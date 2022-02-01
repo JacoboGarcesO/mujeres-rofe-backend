@@ -24,6 +24,16 @@ export class SlideService {
     return this.slideMapper.slidesToDto(slides, messages.getAll('slides'));
   }
 
+  async getById(slideId: any): Promise<SlideResponseModel | MessageModel> {
+    const slide: SlideModel = await slidesCollection.findById(slideId);
+
+    if (!slide) {
+      return this.messageMapper.map(messages.getByIdFailure('slides'));
+    }
+
+    return this.slideMapper.slideToDto(slide, messages.getById('slides'));
+  }
+
   async create(slideDto: any): Promise<SlideResponseModel> {
     const slide = this.slideMapper.dtoToSlide(slideDto);
     const slideCreated = await new slidesCollection(slide).save();
