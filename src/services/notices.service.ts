@@ -24,6 +24,16 @@ export class NoticesService {
     return this.noticeMapper.noticesToDto(notices, messages.getAll('notices'));
   }
 
+  async getById(noticeId: any): Promise<NoticeResponseModel | MessageModel> {
+    const notice: NoticeModel = await noticesCollection.findById(noticeId);
+
+    if (!notice) {
+      return this.messageMapper.map(messages.getByIdFailure('notices'));
+    }
+
+    return this.noticeMapper.noticeToDto(notice, messages.getById('notice'));
+  }
+
   async create(noticeDto: any): Promise<NoticeResponseModel> {
     const notice = this.noticeMapper.dtoToNotice(noticeDto);
     const noticeCreated = await new noticesCollection(notice).save();

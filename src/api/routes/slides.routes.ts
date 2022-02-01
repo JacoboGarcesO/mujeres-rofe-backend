@@ -14,5 +14,6 @@ export class SlidesRouter {
     this.app.use('/api/slides', router);
     router.post('/', this.jwtController.validateToken, this.controller.create);
     router.get('/', this.jwtController.validateToken, this.controller.getAll);
+    router.get('/:slideId', this.jwtController.validateToken, this.controller.getById);
   }
 }

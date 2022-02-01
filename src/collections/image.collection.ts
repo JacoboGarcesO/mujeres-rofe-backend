@@ -1,6 +1,6 @@
 import { Schema } from 'mongoose';
 
-export const imageSchema = new Schema({
+export const mediaSchema = new Schema({
   _id: { type: String },
   url: { type: String },
 });
