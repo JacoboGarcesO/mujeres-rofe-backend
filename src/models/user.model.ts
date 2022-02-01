@@ -7,6 +7,7 @@ export interface UserModel {
   password: string;
   rol: string;
   image?: MediaModel;
+  id?: string;
 }
 
 export interface UserResponseModel {
