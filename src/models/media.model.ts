@@ -1,4 +1,4 @@
 export interface MediaModel {
-  _id: string;
-  url: string;
+  _id: string | undefined;
+  url: string | undefined;
 }

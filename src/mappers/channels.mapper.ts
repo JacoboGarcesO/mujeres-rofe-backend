@@ -1,15 +1,19 @@
+import { UploadApiResponse } from 'cloudinary';
 import { ChannelModel, ChannelResponseModel as ChannelResponseModel } from '../models/channel.model';
 
 export class ChannelMapper {
 
-  dtoToChannel(channel: any, image: any): ChannelModel {
+  dtoToChannel(channel: any, media: UploadApiResponse[] | undefined): ChannelModel {
     return {
       name: channel?.name,
       description: channel?.description,
-      icon: channel?.icon,
-      banner: image && {
-        _id: image?.public_id,
-        url: image?.url,
+      icon: media?.[1] && {
+        _id: media?.[1].public_id,
+        url: media?.[1].url,
+      },
+      banner: media?.[0] && {
+        _id: media?.[0].public_id,
+        url: media?.[0].url,
       },
       order: channel?.order,
       id: channel?.id,

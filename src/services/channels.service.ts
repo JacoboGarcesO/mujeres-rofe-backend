@@ -10,8 +10,8 @@ export class ChannelsService {
   private channelMapper: ChannelMapper;
   private messageMapper: MessagesMapper;
 
-  constructor(mapper: ChannelMapper, messageMapper: MessagesMapper) { 
-    this.channelMapper = mapper; 
+  constructor(mapper: ChannelMapper, messageMapper: MessagesMapper) {
+    this.channelMapper = mapper;
     this.messageMapper = messageMapper;
   }
 
@@ -35,32 +35,43 @@ export class ChannelsService {
     return this.channelMapper.channelToDto(channel, messages.getById('channel'));
   }
 
-  async create(channelDto: any, channelImage: any): Promise<ChannelResponseModel> {
-    let image;
+  async create(channelDto: any, channelMedia: any): Promise<ChannelResponseModel> {
+    let media;
 
-    if (channelImage) {
-      image = await cloudinary.upload(channelImage);
+    if (channelMedia.banner?.[0] && channelMedia.icon?.[0]) {
+      const banner = await cloudinary.upload(channelMedia.banner?.[0]?.path);
+      const icon = await cloudinary.upload(channelMedia.icon?.[0]?.path);
+      media = [banner, icon];
     }
 
-    const channel = this.channelMapper.dtoToChannel(channelDto, image);
+    const channel = this.channelMapper.dtoToChannel(channelDto, media);
     const channelCreated = await new channelsCollection(channel).save();
     const channelRequest = this.channelMapper.channelToDto(channelCreated, messages.createSuccess('channel'));
 
     return channelRequest;
   }
 
-  async update(channelDto: any, channelImage: any): Promise<ChannelResponseModel | MessageModel> {
-    let image;
+  async update(channelDto: any, channelMedia: any): Promise<ChannelResponseModel | MessageModel> {
+    const media = [];
 
-    if (channelImage) {
-      if (channelDto?.image) {
-        await cloudinary.upload(channelDto?.image._id);
+    if (channelMedia.banner) {
+      if (channelDto.banner?._id) {
+        await cloudinary.destroy(channelDto?.banner._id);
       }
 
-      image = await cloudinary.upload(channelImage);
+      media.push(await cloudinary.upload(channelMedia.banner?.[0]?.path));
     }
 
-    const channel = this.channelMapper.dtoToChannel(channelDto, image);
+    if (channelMedia.icon) {
+      if (channelDto.icon?._id) {
+        await cloudinary.destroy(channelDto.icon._id);
+      }
+
+      media.push(await cloudinary.upload(channelMedia.icon?.[0]?.path));
+    }
+
+
+    const channel = this.channelMapper.dtoToChannel(channelDto, media);
     const channelUpdated = await channelsCollection.findByIdAndUpdate(channel?.id, { $set: channel }, { new: true });
     const channelResponse = this.channelMapper.channelToDto(channelUpdated, messages.updateSuccess('channel'));
     return channelResponse;

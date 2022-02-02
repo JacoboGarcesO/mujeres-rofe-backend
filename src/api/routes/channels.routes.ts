@@ -13,9 +13,9 @@ export class ChannelsRouter {
   init() {
     const router = Router();
     this.app.use('/api/channels', router);
-    router.post('/', this.jwtController.validateToken, this.controller.create);
+    router.post('/', this.jwtController.validateToken, storage.fields([{ name: 'banner' }, { name: 'icon' }]), this.controller.create);
     router.get('/', this.jwtController.validateToken, this.controller.getAll);
     router.get('/:channelId', this.jwtController.validateToken, this.controller.getById);
-    router.put('/', this.jwtController.validateToken, storage.single('banner'), this.controller.update);
+    router.put('/', this.jwtController.validateToken, storage.fields([{ name: 'banner' }, { name: 'icon' }]), this.controller.update);
   }
 }
