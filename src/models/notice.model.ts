@@ -5,7 +5,7 @@ export interface NoticeModel {
   description: string;
   order: number;
   icon: string;
-  content: string;
+  content: MediaModel;
   id?: string;
 }
 

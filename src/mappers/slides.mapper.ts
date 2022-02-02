@@ -2,11 +2,15 @@ import { SlideModel, SlideResponseModel } from '../models/slide.model';
 
 export class SlideMapper {
 
-  dtoToSlide(slide: any): SlideModel {
+  dtoToSlide(slide: any, image: any): SlideModel {
     return {
       title: slide?.title,
-      image: slide?.image,
+      image: image && {
+        _id: image?.public_id,
+        url: image?.url,
+      },
       url: slide?.url,
+      id: slide?.id,
     };
   }
 
