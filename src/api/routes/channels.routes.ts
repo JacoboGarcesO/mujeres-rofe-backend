@@ -17,5 +17,6 @@ export class ChannelsRouter {
     router.get('/', this.jwtController.validateToken, this.controller.getAll);
     router.get('/:channelId', this.jwtController.validateToken, this.controller.getById);
     router.put('/', this.jwtController.validateToken, storage.fields([{ name: 'banner' }, { name: 'icon' }]), this.controller.update);
+    router.delete('/:channelId', this.jwtController.validateToken, this.controller.delete);
   }
 }

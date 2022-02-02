@@ -1,4 +1,5 @@
 import noticesCollection from '../collections/notices.collection';
+import cloudinary from '../config/cloudinary';
 import { MessagesMapper } from '../mappers/messages.mapper';
 import { NoticeMapper } from '../mappers/notices.mapper';
 import { MessageModel } from '../models/message.model';
@@ -34,11 +35,44 @@ export class NoticesService {
     return this.noticeMapper.noticeToDto(notice, messages.getById('notice'));
   }
 
-  async create(noticeDto: any): Promise<NoticeResponseModel> {
-    const notice = this.noticeMapper.dtoToNotice(noticeDto);
+  async create(noticeDto: any, noticeImage: any): Promise<NoticeResponseModel> {
+    let image;
+
+    if (noticeImage) {
+      image = await cloudinary.upload(noticeImage);
+    }
+
+    const notice = this.noticeMapper.dtoToNotice(noticeDto, image);
     const noticeCreated = await new noticesCollection(notice).save();
     const noticeRequest = this.noticeMapper.noticeToDto(noticeCreated, messages.createSuccess('notice'));
 
     return noticeRequest;
+  }
+
+  async update(noticeDto: any, noticeImage: any): Promise<NoticeResponseModel | MessageModel> {
+    let image;
+
+    if (noticeImage) {
+      if (noticeDto?.image) {
+        await cloudinary.upload(noticeDto?.image._id);
+      }
+
+      image = await cloudinary.upload(noticeImage);
+    }
+
+    const notice = this.noticeMapper.dtoToNotice(noticeDto, image);
+    const noticeUpdated = await noticesCollection.findByIdAndUpdate(notice?.id, { $set: notice }, { new: true });
+    const noticeResponse = this.noticeMapper.noticeToDto(noticeUpdated, messages.updateSuccess('notice'));
+    return noticeResponse;
+  }
+
+  async delete(noticeId: any): Promise<MessageModel> {
+    const notice = await noticesCollection.findByIdAndDelete(noticeId);
+
+    if (!notice) {
+      return this.messageMapper.map(messages.deleteFailure('notice'));
+    }
+
+    return this.noticeMapper.noticeToDto(notice, messages.deleteSuccess('notice'));
   }
 }

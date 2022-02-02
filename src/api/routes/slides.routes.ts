@@ -1,4 +1,5 @@
 import { Application, Router } from 'express';
+import storage from '../../config/storage';
 import { JwtController } from '../controllers/jwt.controller';
 import { SlideController } from '../controllers/slides.controllers';
 
@@ -15,5 +16,7 @@ export class SlidesRouter {
     router.post('/', this.jwtController.validateToken, this.controller.create);
     router.get('/', this.jwtController.validateToken, this.controller.getAll);
     router.get('/:slideId', this.jwtController.validateToken, this.controller.getById);
+    router.put('/', this.jwtController.validateToken, storage.single('image'), this.controller.update);
+    router.delete('/:slideId', this.jwtController.validateToken, this.controller.delete);
   }
 }

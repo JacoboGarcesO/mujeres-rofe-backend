@@ -28,7 +28,25 @@ export class SlideController {
 
   async create(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
     try{
-      const slideResponse = await service.create(request.body);
+      const slideResponse = await service.create(request.body, request.file?.path);
+      return response.status(200).json(slideResponse);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async update(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
+    try {      
+      const slideResponse = await service.update(request.body, request.file?.path);
+      return response.status(200).json(slideResponse);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async delete(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
+    try {      
+      const slideResponse = await service.delete(request.params.slideId);
       return response.status(200).json(slideResponse);
     } catch (err) {
       next(err);

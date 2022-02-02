@@ -76,4 +76,17 @@ export class ChannelsService {
     const channelResponse = this.channelMapper.channelToDto(channelUpdated, messages.updateSuccess('channel'));
     return channelResponse;
   }
+
+  async delete(channelId: any): Promise<MessageModel> {
+    const channel = await channelsCollection.findByIdAndDelete(channelId);
+
+    if (!channel) {
+      return this.messageMapper.map(messages.deleteFailure('channel'));
+    }
+
+    await cloudinary.destroy(channel?.banner?._id);
+    await cloudinary.destroy(channel?.icon?._id);
+
+    return this.channelMapper.channelToDto(channel, messages.deleteSuccess('channel'));
+  }
 }

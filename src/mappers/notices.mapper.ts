@@ -2,12 +2,18 @@ import { NoticeModel, NoticeResponseModel as NoticeResponseModel } from '../mode
 
 export class NoticeMapper {
 
-  dtoToNotice(notice: any): NoticeModel {
+  dtoToNotice(notice: any, image: any): NoticeModel {
+    console.log(notice);
     return {
       title: notice?.title,
       description: notice?.description,
       order: notice?.order,
-      icon: notice?.icon,     
+      icon: notice?.icon,
+      content: image && {
+        _id: image?.public_id,
+        url: image?.url,
+      },
+      id: notice?.id,
     };
   }
 

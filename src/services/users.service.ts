@@ -92,6 +92,8 @@ export class UserService {
       return this.messageMapper.map(messages.deleteFailure('user'));
     }
 
+    await cloudinary.destroy(user?.image?._id);
+
     return this.userMapper.userToDto(user, messages.deleteSuccess('user'));
   }
 }
