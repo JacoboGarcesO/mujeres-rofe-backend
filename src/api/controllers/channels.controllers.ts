@@ -44,4 +44,13 @@ export class ChannelController {
       next(err);
     }
   }
+
+  async delete(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
+    try {      
+      const channelResponse = await service.delete(request.params.channelId);
+      return response.status(200).json(channelResponse);
+    } catch (err) {
+      next(err);
+    }
+  }
 }

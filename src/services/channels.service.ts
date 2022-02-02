@@ -65,4 +65,14 @@ export class ChannelsService {
     const channelResponse = this.channelMapper.channelToDto(channelUpdated, messages.updateSuccess('channel'));
     return channelResponse;
   }
+
+  async delete(channelId: any): Promise<MessageModel> {
+    const channel = await channelsCollection.findByIdAndDelete(channelId);
+
+    if (!channel) {
+      return this.messageMapper.map(messages.deleteFailure('channel'));
+    }
+
+    return this.channelMapper.channelToDto(channel, messages.deleteSuccess('channel'));
+  }
 }
