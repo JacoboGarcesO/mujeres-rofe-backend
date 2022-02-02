@@ -65,4 +65,14 @@ export class NoticesService {
     const noticeResponse = this.noticeMapper.noticeToDto(noticeUpdated, messages.updateSuccess('notice'));
     return noticeResponse;
   }
+
+  async delete(noticeId: any): Promise<MessageModel> {
+    const notice = await noticesCollection.findByIdAndDelete(noticeId);
+
+    if (!notice) {
+      return this.messageMapper.map(messages.deleteFailure('notice'));
+    }
+
+    return this.noticeMapper.noticeToDto(notice, messages.deleteSuccess('notice'));
+  }
 }

@@ -17,5 +17,6 @@ export class NoticesRouter {
     router.get('/', this.jwtController.validateToken, this.controller.getAll);
     router.get('/:noticeId', this.jwtController.validateToken, this.controller.getById);
     router.put('/', this.jwtController.validateToken, storage.single('content'), this.controller.update);
+    router.delete('/:noticeId', this.jwtController.validateToken, this.controller.delete);
   }
 }

@@ -43,4 +43,13 @@ export class NoticeController {
       next(err);
     }
   }
+
+  async delete(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
+    try {      
+      const noticeResponse = await service.delete(request.params.noticeId);
+      return response.status(200).json(noticeResponse);
+    } catch (err) {
+      next(err);
+    }
+  }
 }
