@@ -17,5 +17,6 @@ export class SlidesRouter {
     router.get('/', this.jwtController.validateToken, this.controller.getAll);
     router.get('/:slideId', this.jwtController.validateToken, this.controller.getById);
     router.put('/', this.jwtController.validateToken, storage.single('image'), this.controller.update);
+    router.delete('/:slideId', this.jwtController.validateToken, this.controller.delete);
   }
 }

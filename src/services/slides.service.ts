@@ -64,4 +64,14 @@ export class SlideService {
     const slideResponse = this.slideMapper.slideToDto(slideUpdated, messages.updateSuccess('slide'));
     return slideResponse;
   }
+
+  async delete(slideId: any): Promise<MessageModel> {
+    const slide = await slidesCollection.findByIdAndDelete(slideId);
+
+    if (!slide) {
+      return this.messageMapper.map(messages.deleteFailure('slide'));
+    }
+
+    return this.slideMapper.slideToDto(slide, messages.deleteSuccess('slide'));
+  }
 }
