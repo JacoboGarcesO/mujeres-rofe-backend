@@ -36,12 +36,11 @@ export class ChannelsService {
   }
 
   async create(channelDto: any, channelMedia: any): Promise<ChannelResponseModel> {
-    let media;
+    const media = [];
 
     if (channelMedia.banner?.[0] && channelMedia.icon?.[0]) {
-      const banner = await cloudinary.upload(channelMedia.banner?.[0]?.path);
-      const icon = await cloudinary.upload(channelMedia.icon?.[0]?.path);
-      media = [banner, icon];
+      media.push(await cloudinary.upload(channelMedia.banner?.[0]?.path));
+      media.push(await cloudinary.upload(channelMedia.icon?.[0]?.path));
     }
 
     const channel = this.channelMapper.dtoToChannel(channelDto, media);
@@ -64,7 +63,7 @@ export class ChannelsService {
 
     if (channelMedia.icon) {
       if (channelDto.icon?._id) {
-        await cloudinary.destroy(channelDto.icon._id);
+        await cloudinary.destroy(channelDto.icon?._id);
       }
 
       media.push(await cloudinary.upload(channelMedia.icon?.[0]?.path));

@@ -1,17 +1,20 @@
+import { UploadApiResponse } from 'cloudinary';
 import { NoticeModel, NoticeResponseModel as NoticeResponseModel } from '../models/notice.model';
 
 export class NoticeMapper {
 
-  dtoToNotice(notice: any, image: any): NoticeModel {
-    console.log(notice);
+  dtoToNotice(notice: any, media: UploadApiResponse[] | undefined): NoticeModel {
     return {
       title: notice?.title,
       description: notice?.description,
       order: notice?.order,
-      icon: notice?.icon,
-      content: image && {
-        _id: image?.public_id,
-        url: image?.url,
+      icon: media?.[1] && {
+        _id: media?.[1]?.public_id,
+        url: media?.[1]?.url,
+      },
+      content: media?.[0] && {
+        _id: media?.[0]?.public_id,
+        url: media?.[0]?.url,
       },
       id: notice?.id,
     };

@@ -28,7 +28,7 @@ export class NoticeController {
 
   async create(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
     try {
-      const noticeCreated = await service.create(request.body, request.file?.path);
+      const noticeCreated = await service.create(request.body, request.files);
       return response.status(200).json(noticeCreated);
     } catch (err) {
       next(err);
@@ -37,7 +37,7 @@ export class NoticeController {
 
   async update(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
     try {      
-      const noticeResponse = await service.update(request.body, request.file?.path);
+      const noticeResponse = await service.update(request.body, request.files);
       return response.status(200).json(noticeResponse);
     } catch (err) {
       next(err);

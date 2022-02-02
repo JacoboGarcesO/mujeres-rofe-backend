@@ -4,8 +4,8 @@ export interface NoticeModel {
   title: string;
   description: string;
   order: number;
-  icon: string;
-  content: MediaModel;
+  icon?: MediaModel;
+  content?: MediaModel;
   id?: string;
 }
 

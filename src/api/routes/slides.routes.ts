@@ -13,7 +13,7 @@ export class SlidesRouter {
   init() {
     const router = Router();
     this.app.use('/api/slides', router);
-    router.post('/', this.jwtController.validateToken, this.controller.create);
+    router.post('/', this.jwtController.validateToken, storage.single('image'), this.controller.create);
     router.get('/', this.jwtController.validateToken, this.controller.getAll);
     router.get('/:slideId', this.jwtController.validateToken, this.controller.getById);
     router.put('/', this.jwtController.validateToken, storage.single('image'), this.controller.update);

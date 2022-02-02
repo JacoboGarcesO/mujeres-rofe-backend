@@ -35,32 +35,41 @@ export class NoticesService {
     return this.noticeMapper.noticeToDto(notice, messages.getById('notice'));
   }
 
-  async create(noticeDto: any, noticeImage: any): Promise<NoticeResponseModel> {
-    let image;
+  async create(noticeDto: any, noticeMedia: any): Promise<NoticeResponseModel> {
+    const media = [];
 
-    if (noticeImage) {
-      image = await cloudinary.upload(noticeImage);
+    if (noticeMedia.content?.[0] && noticeMedia.icon?.[0]) {
+      media.push(await cloudinary.upload(noticeMedia.content?.[0]?.path));
+      media.push(await cloudinary.upload(noticeMedia.icon?.[0]?.path));
     }
 
-    const notice = this.noticeMapper.dtoToNotice(noticeDto, image);
+    const notice = this.noticeMapper.dtoToNotice(noticeDto, media);
     const noticeCreated = await new noticesCollection(notice).save();
     const noticeRequest = this.noticeMapper.noticeToDto(noticeCreated, messages.createSuccess('notice'));
 
     return noticeRequest;
   }
 
-  async update(noticeDto: any, noticeImage: any): Promise<NoticeResponseModel | MessageModel> {
-    let image;
+  async update(noticeDto: any, noticeMedia: any): Promise<NoticeResponseModel | MessageModel> {
+    const media = [];
 
-    if (noticeImage) {
-      if (noticeDto?.image) {
-        await cloudinary.upload(noticeDto?.image._id);
+    if (noticeMedia.content) {
+      if (noticeDto.content?._id) {
+        await cloudinary.destroy(noticeDto?.content?._id);
       }
 
-      image = await cloudinary.upload(noticeImage);
+      media.push(await cloudinary.upload(noticeMedia.content?.[0]?.path));
     }
 
-    const notice = this.noticeMapper.dtoToNotice(noticeDto, image);
+    if (noticeMedia.icon) {
+      if (noticeDto.icon?._id) {
+        await cloudinary.destroy(noticeDto.icon._id);
+      }
+
+      media.push(await cloudinary.upload(noticeMedia.icon?.[0]?.path));
+    }
+
+    const notice = this.noticeMapper.dtoToNotice(noticeDto, media);
     const noticeUpdated = await noticesCollection.findByIdAndUpdate(notice?.id, { $set: notice }, { new: true });
     const noticeResponse = this.noticeMapper.noticeToDto(noticeUpdated, messages.updateSuccess('notice'));
     return noticeResponse;
@@ -72,6 +81,9 @@ export class NoticesService {
     if (!notice) {
       return this.messageMapper.map(messages.deleteFailure('notice'));
     }
+
+    await cloudinary.destroy(notice?.content?._id);
+    await cloudinary.destroy(notice?.icon?._id);
 
     return this.noticeMapper.noticeToDto(notice, messages.deleteSuccess('notice'));
   }

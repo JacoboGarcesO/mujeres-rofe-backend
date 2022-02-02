@@ -41,6 +41,7 @@ export class SlideService {
     if (slideImage) {
       image = await cloudinary.upload(slideImage);
     }
+
     const slide = this.slideMapper.dtoToSlide(slideDto, image);
     const slideCreated = await new slidesCollection(slide).save();
     const slideRequest = this.slideMapper.slideToDto(slideCreated, messages.createSuccess('slide'));
@@ -71,6 +72,8 @@ export class SlideService {
     if (!slide) {
       return this.messageMapper.map(messages.deleteFailure('slide'));
     }
+
+    await cloudinary.destroy(slide.image._id);
 
     return this.slideMapper.slideToDto(slide, messages.deleteSuccess('slide'));
   }
