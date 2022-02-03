@@ -1,0 +1,19 @@
+export interface CityModel {
+  stateId: string;
+  name: string;
+}
+
+export interface StateModel {
+  name: string;
+  _id: string;
+}
+
+export interface CitesResponseModel {
+  cities: CityModel[];
+  message: string;
+}
+
+export interface StatesResponseModel {
+  states: StateModel[];
+  message: string;
+}
