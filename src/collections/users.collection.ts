@@ -8,7 +8,7 @@ const socialNetworkSchema = new Schema({
 
 const locationSchema = new Schema({
   city: { type: String },
-  departament: { type: String },
+  state: { type: String },
 });
 
 const hobbieSchema = new Schema({
@@ -24,6 +24,7 @@ const userSchema = new Schema({
   document: { type: String },
   phoneNumber: { type: Number },
   description: { type: String },
+  isPending: { type: Boolean, default: true },
   image: mediaSchema,
   hobbies: [hobbieSchema],
   location: locationSchema,

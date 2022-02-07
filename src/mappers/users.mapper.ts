@@ -1,4 +1,4 @@
-import { UserCredentialsModel, UserCredentialsResponseModel as UserCredentialsResponseModel, UserModel, UserResponseModel as UserResponseModel } from '../models/user.model';
+import { UserCredentialsModel, UserCredentialsResponseModel, UserModel, UserResponseModel } from '../models/user.model';
 import { encryptPassword } from '../utils/bcrypt';
 
 export class UserMapper {
