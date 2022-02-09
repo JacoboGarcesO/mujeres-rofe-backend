@@ -22,7 +22,7 @@ const userSchema = new Schema({
   password: { type: String, required: [true, 'User password is required'] },
   rol: { type: String, enum: ['admin', 'user'], required: [true, 'User rol is required'] },
   document: { type: String },
-  phoneNumber: { type: Number },
+  phoneNumber: { type: String },
   description: { type: String },
   isPending: { type: Boolean, default: true },
   image: mediaSchema,

@@ -8,6 +8,12 @@ export interface UserModel {
   rol: string;
   image?: MediaModel;
   id?: string;
+  description?: string;
+  socialsNetworks?: SocialNetworksModel[]; 
+  hobbies?: string[];
+  phoneNumber?: number;
+  isPending?: boolean;
+  document?: string;
 }
 
 export interface UserResponseModel {
@@ -24,4 +30,9 @@ export interface UserCredentialsResponseModel {
   message: string;
   token?: string;
   user?: UserModel;
+}
+
+export interface SocialNetworksModel {
+  name: string;
+  url: string;
 }
