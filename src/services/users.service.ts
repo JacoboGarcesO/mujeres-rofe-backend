@@ -34,14 +34,8 @@ export class UserService {
     return this.userMapper.userCredentialsToDto(messages.authFailure);
   }
 
-  async create(userDto: any, userImage: any): Promise<UserResponseModel> {
-    let image;
-
-    if (userImage) {
-      image = await cloudinary.upload(userImage);
-    }
-
-    const user = this.userMapper.dtoToUser(userDto, image);
+  async create(userDto: any): Promise<UserResponseModel> {
+    const user = this.userMapper.dtoToCreateUser(userDto);
     const userCreated = await new usersCollection(user).save();
     const userResponse = this.userMapper.userToDto(userCreated, messages.createSuccess('user'));
 
@@ -79,7 +73,7 @@ export class UserService {
       image = await cloudinary.upload(userImage);
     }
 
-    const user = this.userMapper.dtoToUser(userDto, image);
+    const user = this.userMapper.dtoToUserUpdate(userDto, image);
     const userUpdated = await usersCollection.findByIdAndUpdate(user?.id, { $set: user }, { new: true });
     const userResponse = this.userMapper.userToDto(userUpdated, messages.updateSuccess('user'));
     return userResponse;

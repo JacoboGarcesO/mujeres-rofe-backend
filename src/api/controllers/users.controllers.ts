@@ -28,7 +28,7 @@ export class UserController {
 
   async create(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
     try {
-      const userResponse = await service.create(request.body, request.file?.path);
+      const userResponse = await service.create(request.body);
       return response.status(200).json(userResponse);
     } catch (err) {
       next(err);

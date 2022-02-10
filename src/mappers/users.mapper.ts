@@ -2,7 +2,28 @@ import { UserCredentialsModel, UserCredentialsResponseModel, UserModel, UserResp
 import { encryptPassword } from '../utils/bcrypt';
 
 export class UserMapper {
-  dtoToUser(user: any, image: any): UserModel {
+  dtoToUserUpdate(user: any, image: any): UserModel {  
+    return {
+      firstName: user?.firstName,
+      lastName: user?.lastName,
+      email: user?.email,
+      rol: user?.rol,
+      description: user?.description,
+      document: user?.document,
+      hobbies: JSON.parse(user?.hobbies),
+      socialsNetworks: JSON.parse(user?.socialsNetworks),
+      phoneNumber: user.phoneNumber,
+      isPending: user?.isPending !== 'false',
+      location: JSON.parse(user?.location),
+      image: image && {
+        _id: image?.public_id,
+        url: image?.url,
+      },
+      id: user?.id,
+    };
+  }
+
+  dtoToCreateUser(user: any): UserModel {
     const passwordEncrypted = encryptPassword(user?.password);
   
     return {
@@ -11,17 +32,6 @@ export class UserMapper {
       email: user?.email,
       password: passwordEncrypted,
       rol: user?.rol,
-      description: user?.description,
-      document: user?.document,
-      hobbies: JSON.parse(user?.hobbies),
-      socialsNetworks: JSON.parse(user?.socialsNetworks),
-      phoneNumber: user.phoneNumber,
-      isPending: user?.isPending !== 'false',
-      image: image && {
-        _id: image?.public_id,
-        url: image?.url,
-      },
-      id: user?.id,
     };
   }
 

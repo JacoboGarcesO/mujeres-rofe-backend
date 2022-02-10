@@ -32,7 +32,7 @@ export class LocationsService {
       return this.messageMapper.map(messages.getAllFailure('cities'));
     }
 
-    return this.locationsMapper.statesToDto(cities, messages.getAll('cities'));
+    return this.locationsMapper.citiesToDto(cities, messages.getAll('cities'));
   }
   
 }

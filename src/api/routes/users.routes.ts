@@ -13,7 +13,7 @@ export class UsersRouter {
     const router = Router();
     this.app.use('/api/users', router);
 
-    router.post('/', this.jwtController.validateToken, storage.single('image'), this.controller.create);
+    router.post('/', this.jwtController.validateToken, this.controller.create);
     router.get('/', this.jwtController.validateToken, this.controller.getAll);
     router.put('/', this.jwtController.validateToken, storage.single('image'), this.controller.update);
     router.get('/:userId', this.jwtController.validateToken, this.controller.getById);

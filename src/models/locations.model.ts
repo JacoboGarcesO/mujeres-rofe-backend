@@ -3,6 +3,11 @@ export interface CityModel {
   name: string;
 }
 
+export interface LocationModel {
+  state: string;
+  city: string;
+}
+
 export interface StateModel {
   name: string;
   _id: string;

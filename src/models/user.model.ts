@@ -1,11 +1,12 @@
+import { LocationModel } from './locations.model';
 import { MediaModel } from './media.model';
 
 export interface UserModel { 
   firstName: string;
   lastName: string;
   email: string;
-  password: string;
   rol: string;
+  password?: string;
   image?: MediaModel;
   id?: string;
   description?: string;
@@ -14,6 +15,7 @@ export interface UserModel {
   phoneNumber?: number;
   isPending?: boolean;
   document?: string;
+  location?: LocationModel;
 }
 
 export interface UserResponseModel {
