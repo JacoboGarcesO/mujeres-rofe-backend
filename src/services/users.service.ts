@@ -37,10 +37,6 @@ export class UserService {
     let image;
 
     if (userImage) {
-      if (userDto?.image) {
-        await cloudinary.destroy(userDto.image._id);
-      }
-
       image = await cloudinary.upload(userImage);
     }
   
@@ -62,7 +58,7 @@ export class UserService {
   }
 
   async getById(userId: any): Promise<UserResponseModel | MessageModel> {
-    const user: UserModel = await usersCollection.findById(userId);
+    const user = await usersCollection.findById(userId);
 
     if (!user) {
       return this.messageMapper.map(messages.getByIdFailure('user'));

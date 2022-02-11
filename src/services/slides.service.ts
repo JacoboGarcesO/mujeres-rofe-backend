@@ -26,7 +26,7 @@ export class SlideService {
   }
 
   async getById(slideId: any): Promise<SlideResponseModel | MessageModel> {
-    const slide: SlideModel = await slidesCollection.findById(slideId);
+    const slide = await slidesCollection.findById(slideId);
 
     if (!slide) {
       return this.messageMapper.map(messages.getByIdFailure('slides'));

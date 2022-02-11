@@ -26,7 +26,7 @@ export class NoticesService {
   }
 
   async getById(noticeId: any): Promise<NoticeResponseModel | MessageModel> {
-    const notice: NoticeModel = await noticesCollection.findById(noticeId);
+    const notice = await noticesCollection.findById(noticeId);
 
     if (!notice) {
       return this.messageMapper.map(messages.getByIdFailure('notices'));
