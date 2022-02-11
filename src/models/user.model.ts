@@ -13,7 +13,7 @@ export interface UserModel {
   socialsNetworks?: SocialNetworksModel[]; 
   hobbies?: string[];
   phoneNumber?: number;
-  isPending?: boolean;
+  isPremium?: boolean;
   document?: string;
   location?: LocationModel;
 }

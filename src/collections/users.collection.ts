@@ -24,7 +24,7 @@ const userSchema = new Schema({
   document: { type: String },
   phoneNumber: { type: String },
   description: { type: String },
-  isPending: { type: Boolean, default: true },
+  isPremium: { type: Boolean, default: false },
   image: mediaSchema,
   hobbies: [hobbieSchema],
   location: locationSchema,

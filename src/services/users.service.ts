@@ -4,7 +4,6 @@ import { UserCredentialsResponseModel, UserModel, UserResponseModel } from '../m
 import messages from '../utils/messages';
 import Jwt from 'jsonwebtoken';
 import environment from '../config/environment';
-import { comparePasswords } from '../utils/bcrypt';
 import cloudinary from '../config/cloudinary';
 import { MessagesMapper } from '../mappers/messages.mapper';
 import { MessageModel } from '../models/message.model';
@@ -26,7 +25,7 @@ export class UserService {
       return this.userMapper.userCredentialsToDto(messages.userNotFound);
     }
 
-    if (comparePasswords(credentials?.password, user?.password)) {
+    if (credentials?.password === user?.password) {
       const token = Jwt.sign(credentials, environment.jwtPassword);
       return this.userMapper.userCredentialsToDto(messages.authSuccess, token, user);
     }
@@ -34,8 +33,18 @@ export class UserService {
     return this.userMapper.userCredentialsToDto(messages.authFailure);
   }
 
-  async create(userDto: any): Promise<UserResponseModel> {
-    const user = this.userMapper.dtoToCreateUser(userDto);
+  async create(userDto: any, userImage: any): Promise<UserResponseModel> {
+    let image;
+
+    if (userImage) {
+      if (userDto?.image) {
+        await cloudinary.destroy(userDto.image._id);
+      }
+
+      image = await cloudinary.upload(userImage);
+    }
+  
+    const user = this.userMapper.dtoToUser(userDto, image);
     const userCreated = await new usersCollection(user).save();
     const userResponse = this.userMapper.userToDto(userCreated, messages.createSuccess('user'));
 
@@ -73,7 +82,7 @@ export class UserService {
       image = await cloudinary.upload(userImage);
     }
 
-    const user = this.userMapper.dtoToUserUpdate(userDto, image);
+    const user = this.userMapper.dtoToUser(userDto, image);
     const userUpdated = await usersCollection.findByIdAndUpdate(user?.id, { $set: user }, { new: true });
     const userResponse = this.userMapper.userToDto(userUpdated, messages.updateSuccess('user'));
     return userResponse;
