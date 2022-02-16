@@ -1,7 +1,10 @@
 import { UserCredentialsModel, UserCredentialsResponseModel, UserModel, UserResponseModel } from '../models/user.model';
+import { encryptPassword } from '../utils/bcrypt';
 
 export class UserMapper {
-  dtoToUser(user: any, image: any): UserModel {  
+  dtoToUser(user: any, image: any): UserModel {
+    const password = encryptPassword(user?.firstName + user?.document);
+
     return {
       firstName: user?.firstName,
       lastName: user?.lastName,
@@ -10,7 +13,7 @@ export class UserMapper {
       description: user?.description,
       document: user?.document,
       hobbies: JSON.parse(user?.hobbies),
-      password: user?.firstName + user?.document,
+      password,
       socialsNetworks: JSON.parse(user?.socialsNetworks),
       phoneNumber: user?.phoneNumber,
       isPremium: user?.isPremium?.startsWith('true'),
@@ -21,6 +24,7 @@ export class UserMapper {
       },
       id: user?.id,
     };
+
   }
 
   userToDto(users: UserModel, message: string): UserResponseModel {
