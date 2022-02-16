@@ -7,6 +7,7 @@ import environment from '../config/environment';
 import cloudinary from '../config/cloudinary';
 import { MessagesMapper } from '../mappers/messages.mapper';
 import { MessageModel } from '../models/message.model';
+import { comparePasswords } from '../utils/bcrypt';
 
 export class UserService {
   private userMapper: UserMapper;
@@ -25,7 +26,7 @@ export class UserService {
       return this.userMapper.userCredentialsToDto(messages.userNotFound);
     }
 
-    if (credentials?.password === user?.password) {
+    if (comparePasswords(credentials?.password, user?.password)) {
       const token = Jwt.sign(credentials, environment.jwtPassword);
       return this.userMapper.userCredentialsToDto(messages.authSuccess, token, user);
     }
