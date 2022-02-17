@@ -15,7 +15,7 @@ const noticeSchema = new Schema({
   title: { type: String, required: [true, 'Notice title is required'] },
   description: { type: String, required: [true, 'Notice description is required'] },
   order: { type: Number, required: [true, 'Notice order is required'] },
-  icon: { type: String, required: [true, 'Notice icon is required'] },
+  icon: mediaSchema,
   content: mediaSchema,
   links: [linkSchema],
 }, { collection: 'Notices' });

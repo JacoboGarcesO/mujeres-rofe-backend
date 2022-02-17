@@ -16,6 +16,7 @@ export class NoticeMapper {
         _id: media?.[0]?.public_id,
         url: media?.[0]?.url,
       },
+      links: JSON.parse(notice?.links),
       id: notice?.id,
     };
   }
