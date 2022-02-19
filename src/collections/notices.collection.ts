@@ -14,7 +14,7 @@ const linkSchema = new Schema({
 const noticeSchema = new Schema({
   title: { type: String, required: [true, 'Notice title is required'] },
   description: { type: String, required: [true, 'Notice description is required'] },
-  order: { type: Number, required: [true, 'Notice order is required'] },
+  order: { type: String, required: [true, 'Notice order is required'] },
   icon: mediaSchema,
   content: mediaSchema,
   links: [linkSchema],
