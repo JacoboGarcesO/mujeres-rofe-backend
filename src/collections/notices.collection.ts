@@ -6,11 +6,6 @@ const linkSchema = new Schema({
   url: { type: String },
 });
 
-// const contentSchema = new Schema({
-//   type: { type: String, enum: ['image', 'document'], required: [true, 'Content type icon is required'] },
-//   contentUrl: { type: String, required: [true, 'Content url is required'] },
-// });
-
 const noticeSchema = new Schema({
   title: { type: String, required: [true, 'Notice title is required'] },
   description: { type: String, required: [true, 'Notice description is required'] },
