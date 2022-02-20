@@ -26,6 +26,16 @@ export class NoticeController {
     }
   }
 
+  async getNoticesByChannel(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
+    try {
+      const channel = request.params.channel; 
+      const noticesResponse = await service.getNoticesByChannel(channel);
+      return response.status(200).json(noticesResponse);
+    } catch (err) {
+      next(err);
+    }
+  }
+
   async create(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
     try {
       const noticeCreated = await service.create(request.body, request.files);

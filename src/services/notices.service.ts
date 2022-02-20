@@ -35,6 +35,16 @@ export class NoticesService {
     return this.noticeMapper.noticeToDto(notice, messages.getById('notice'));
   }
 
+  async getNoticesByChannel(channel: any): Promise<NoticeResponseModel | MessageModel> {
+    const notices: NoticeModel[] = await noticesCollection.find({channel});
+  
+    if (!notices?.length) {
+      return this.messageMapper.map(messages.getAllFailure('notices'));
+    }
+
+    return this.noticeMapper.noticesToDto(notices, messages.getAll('notices'));
+  }
+
   async create(noticeDto: any, noticeMedia: any): Promise<NoticeResponseModel> {
     const media = [];
 

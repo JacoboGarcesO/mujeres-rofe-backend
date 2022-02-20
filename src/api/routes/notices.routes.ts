@@ -16,6 +16,7 @@ export class NoticesRouter {
     router.post('/', this.jwtController.validateToken, storage.fields([{ name: 'content' }, { name: 'icon' }]), this.controller.create);
     router.get('/', this.jwtController.validateToken, this.controller.getAll);
     router.get('/:noticeId', this.jwtController.validateToken, this.controller.getById);
+    router.get('/channel/:channel', this.jwtController.validateToken, this.controller.getNoticesByChannel);
     router.put('/', this.jwtController.validateToken, storage.fields([{ name: 'content' }, { name: 'icon' }]), this.controller.update);
     router.delete('/:noticeId', this.jwtController.validateToken, this.controller.delete);
   }
