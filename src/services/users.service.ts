@@ -8,7 +8,9 @@ import cloudinary from '../config/cloudinary';
 import { MessagesMapper } from '../mappers/messages.mapper';
 import { MessageModel } from '../models/message.model';
 import { comparePasswords } from '../utils/bcrypt';
+import { EmailsService } from './emails.service';
 
+const emailsService = new EmailsService();
 export class UserService {
   private userMapper: UserMapper;
   private messageMapper: MessagesMapper;
@@ -34,13 +36,21 @@ export class UserService {
     return this.userMapper.userCredentialsToDto(messages.authFailure);
   }
 
-  async create(userDto: any, userImage: any): Promise<UserResponseModel> {
+  async create(userDto: any, userImage: any): Promise<UserResponseModel | MessageModel> {
+    const userExisting = await usersCollection.findOne({ email: userDto.email });
+    
+    if(userExisting) {
+      throw this.messageMapper.map(messages.emailDuplicate);
+    }
+    
+    await emailsService.send(userDto);
+  
     let image;
-
+    
     if (userImage) {
       image = await cloudinary.upload(userImage);
     }
-  
+    
     const user = this.userMapper.dtoToUser(userDto, image);
     const userCreated = await new usersCollection(user).save();
     const userResponse = this.userMapper.userToDto(userCreated, messages.createSuccess('user'));

@@ -11,6 +11,7 @@ export default {
   updateFailure: (entity: string) => `${StringsUtils.capitalize(entity)} was not updated`,
   deleteSuccess: (entity: string) => `${StringsUtils.capitalize(entity)} was deleted`,
   deleteFailure: (entity: string) => `${StringsUtils.capitalize(entity)} was not found`,
+  emailDuplicate: 'No pudimos crear el usuario porque el correo ya está registrado',
   authSuccess: 'Authentication was completed',
   authFailure: 'User credentials are incorrect',
   userNotFound: 'User not found',

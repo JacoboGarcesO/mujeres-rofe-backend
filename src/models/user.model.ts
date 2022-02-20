@@ -6,6 +6,7 @@ export interface UserModel {
   lastName: string;
   email: string;
   rol: string;
+  document: string;
   password?: string;
   image?: MediaModel;
   id?: string;
@@ -14,7 +15,6 @@ export interface UserModel {
   hobbies?: string[];
   phoneNumber?: number;
   isPremium?: boolean;
-  document?: string;
   location?: LocationModel;
 }
 

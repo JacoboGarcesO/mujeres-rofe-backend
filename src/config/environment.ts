@@ -15,4 +15,5 @@ export default {
     apiKey: process.env.CLOUDINARY_API_KEY as string, 
     apiSecret: process.env.CLOUDINARY_API_SECRET as string, 
   },
+  sendgridApiKey: process.env.SENDGRID_API_KEY as string, 
 };
