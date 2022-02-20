@@ -8,10 +8,11 @@ export interface linkNoticeModel {
 export interface NoticeModel {
   title: string;
   description: string;
-  order: number;
-  icon?: MediaModel;
-  content?: MediaModel;
-  links?: linkNoticeModel[],
+  order: string;
+  channel: string;
+  icon: MediaModel;
+  content: MediaModel;
+  links: linkNoticeModel[],
   id?: string;
 }
 

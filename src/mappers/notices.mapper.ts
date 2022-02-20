@@ -8,11 +8,12 @@ export class NoticeMapper {
       title: notice?.title,
       description: notice?.description,
       order: notice?.order,
-      icon: media?.[1] && {
+      channel: notice?.channel,
+      icon: {
         _id: media?.[1]?.public_id,
         url: media?.[1]?.url,
       },
-      content: media?.[0] && {
+      content: {
         _id: media?.[0]?.public_id,
         url: media?.[0]?.url,
       },
