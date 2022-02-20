@@ -46,14 +46,15 @@ export class NoticesService {
   }
 
   async create(noticeDto: any, noticeMedia: any): Promise<NoticeResponseModel> {
-    const media = [];
+    let icon;
+    let content;
 
     if (noticeMedia.content?.[0] && noticeMedia.icon?.[0]) {
-      media.push(await cloudinary.upload(noticeMedia.content?.[0]?.path));
-      media.push(await cloudinary.upload(noticeMedia.icon?.[0]?.path));
-    }
+      content = await cloudinary.upload(noticeMedia.content?.[0]?.path);
+      icon = await cloudinary.upload(noticeMedia.icon?.[0]?.path);
+    }    
 
-    const notice = this.noticeMapper.dtoToNotice(noticeDto, media);
+    const notice = this.noticeMapper.dtoToNotice(noticeDto, icon, content);
     const noticeCreated = await new noticesCollection(notice).save();
     const noticeRequest = this.noticeMapper.noticeToDto(noticeCreated, messages.createSuccess('notice'));
 
@@ -61,25 +62,26 @@ export class NoticesService {
   }
 
   async update(noticeDto: any, noticeMedia: any): Promise<NoticeResponseModel | MessageModel> {
-    const media = [];
+    let icon;
+    let content;    
 
-    if (noticeMedia.content) {
+    if (noticeMedia?.content) {
       if (noticeDto.content?._id) {
         await cloudinary.destroy(noticeDto?.content?._id);
       }
 
-      media.push(await cloudinary.upload(noticeMedia.content?.[0]?.path));
+      content = await cloudinary.upload(noticeMedia?.content?.[0]?.path);
     }
 
-    if (noticeMedia.icon) {
+    if (noticeMedia?.icon) {
       if (noticeDto.icon?._id) {
         await cloudinary.destroy(noticeDto.icon._id);
       }
 
-      media.push(await cloudinary.upload(noticeMedia.icon?.[0]?.path));
+      icon = await cloudinary.upload(noticeMedia?.icon?.[0]?.path);
     }
 
-    const notice = this.noticeMapper.dtoToNotice(noticeDto, media);
+    const notice = this.noticeMapper.dtoToNotice(noticeDto, icon, content);
     const noticeUpdated = await noticesCollection.findByIdAndUpdate(notice?.id, { $set: notice }, { new: true });
     const noticeResponse = this.noticeMapper.noticeToDto(noticeUpdated, messages.updateSuccess('notice'));
     return noticeResponse;

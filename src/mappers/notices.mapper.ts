@@ -1,22 +1,16 @@
 import { UploadApiResponse } from 'cloudinary';
+import { MediaModel } from '../models/media.model';
 import { NoticeModel, NoticeResponseModel as NoticeResponseModel } from '../models/notice.model';
 
 export class NoticeMapper {
-
-  dtoToNotice(notice: any, media: UploadApiResponse[] | undefined): NoticeModel {
+  dtoToNotice(notice: any, icon: UploadApiResponse | undefined, content: UploadApiResponse | undefined): NoticeModel {
     return {
       title: notice?.title,
       description: notice?.description,
       order: notice?.order,
       channel: notice?.channel,
-      icon: {
-        _id: media?.[1]?.public_id,
-        url: media?.[1]?.url,
-      },
-      content: {
-        _id: media?.[0]?.public_id,
-        url: media?.[0]?.url,
-      },
+      icon: this.getMedia(icon, JSON.parse(notice?.iconEncoded)),
+      content: this.getMedia(content, JSON.parse(notice?.contentEncoded)),
       links: JSON.parse(notice?.links),
       id: notice?.id,
     };
@@ -33,6 +27,15 @@ export class NoticeMapper {
     return {
       notices,
       message,
+    };
+  }
+
+  private getMedia(newMedia: UploadApiResponse | undefined, media: MediaModel): MediaModel {    
+    if (!!media && !newMedia) { return media; }
+
+    return {
+      _id: newMedia?.public_id,
+      url: newMedia?.url,
     };
   }
 }
