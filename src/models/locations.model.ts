@@ -6,7 +6,7 @@ export interface CityModel {
 export interface LocationModel {
   state: string;
   city: string;
-  citiName: string;
+  cityName: string;
 }
 
 export interface StateModel {
