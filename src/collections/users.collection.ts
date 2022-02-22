@@ -9,6 +9,7 @@ const socialNetworkSchema = new Schema({
 const locationSchema = new Schema({
   city: { type: String },
   state: { type: String },
+  citiName: { type: String },
 });
 
 const hobbieSchema = new Schema({
