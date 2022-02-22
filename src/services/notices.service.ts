@@ -36,7 +36,7 @@ export class NoticesService {
   }
 
   async getNoticesByChannel(channel: any): Promise<NoticeResponseModel | MessageModel> {
-    const notices: NoticeModel[] = await noticesCollection.find({channel});
+    const notices: NoticeModel[] = await noticesCollection.find({channel}).sort({ order : 'asc'});
   
     if (!notices?.length) {
       return this.messageMapper.map(messages.getAllFailure('notices'));
