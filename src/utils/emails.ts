@@ -1,7 +1,22 @@
 export const createEmail = (to: string, firstName: string, lastName: string, document: string) => {
   return {
     to,
-    from: 'mujeres.rofe@tocaunavida.org',
+    personalizations: [
+      {
+        to: [
+          {
+            email: to,
+          },
+          {
+            email: 'mujeres.rofe@tocaunavida.org',
+          },
+        ],
+      },
+    ],
+    from: {
+      email: 'mujeres.rofe@tocaunavida.org',
+      name: 'MujeresROFÉ',
+    },
     subject: 'Confirma tu cuenta de Mujeres ROFÉ',
     html: `
     <!doctype html>
