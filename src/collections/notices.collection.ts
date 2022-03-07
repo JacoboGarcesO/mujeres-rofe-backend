@@ -8,12 +8,12 @@ const linkSchema = new Schema({
 
 const noticeSchema = new Schema({
   title: { type: String, required: [true, 'Notice title is required'] },
-  description: { type: String, required: [true, 'Notice description is required'] },
   order: { type: String, required: [true, 'Notice order is required'] },
   channel: { type: String, required: [true, 'Notice channel is required'] },
   showUsersList: { type: Boolean, default: false },
   isLink: { type: Boolean, default: false },
   url: { type: String },
+  description: { type: String },
   icon: mediaSchema,
   content: mediaSchema,
   links: [linkSchema],
