@@ -12,6 +12,9 @@ export class NoticeMapper {
       icon: this.getMedia(icon, JSON.parse(notice?.iconEncoded || '{}')),
       content: this.getMedia(content, JSON.parse(notice?.contentEncoded || '{}')),
       links: JSON.parse(notice?.links),
+      showUsersList: notice?.showUsersList,
+      isLink: notice?.isLink,
+      url: notice?.url,
       id: notice?.id,
     };
   }

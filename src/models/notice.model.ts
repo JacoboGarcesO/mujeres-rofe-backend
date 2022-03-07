@@ -13,6 +13,9 @@ export interface NoticeModel {
   icon: MediaModel;
   content: MediaModel;
   links: linkNoticeModel[],
+  showUsersList: boolean,
+  isLink: boolean,
+  url: string,
   id?: string;
 }
 
