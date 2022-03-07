@@ -39,6 +39,7 @@ export class NoticeMapper {
     return {
       _id: newMedia?.public_id,
       url: newMedia?.url,
+      type: newMedia?.type,
     };
   }
 }
