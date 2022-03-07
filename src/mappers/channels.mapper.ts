@@ -10,12 +10,12 @@ export class ChannelMapper {
       icon: media?.[1] && {
         _id: media?.[1].public_id,
         url: media?.[1].url,
-        type: media?.[1].type,
+        type: media?.[1].format,
       },
       banner: media?.[0] && {
         _id: media?.[0].public_id,
         url: media?.[0].url,
-        type: media?.[0].type,
+        type: media?.[0].format,
       },
       order: channel?.order,
       id: channel?.id,
