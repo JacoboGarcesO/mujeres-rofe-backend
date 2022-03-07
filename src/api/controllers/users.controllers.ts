@@ -28,7 +28,7 @@ export class UserController {
 
   async create(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
     try {
-      const userResponse = await service.create(request.body, request.file?.path);
+      const userResponse = await service.create(request.body, request.files);
       return response.status(200).json(userResponse);
     } catch (err) {
       next(err);
@@ -46,7 +46,7 @@ export class UserController {
 
   async update(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
     try {      
-      const userResponse = await service.update(request.body, request.file?.path);
+      const userResponse = await service.update(request.body, request.files);
       return response.status(200).json(userResponse);
     } catch (err) {
       next(err);

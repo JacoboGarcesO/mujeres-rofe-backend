@@ -13,9 +13,14 @@ export class UsersRouter {
     const router = Router();
     this.app.use('/api/users', router);
 
-    router.post('/', storage.single('image'), this.controller.create);
+    router.post('/', storage.fields([{ name: 'image' }, { name: 'documentImage' }]), this.controller.create);
     router.get('/', this.jwtController.validateToken, this.controller.getAll);
-    router.put('/', this.jwtController.validateToken, storage.single('image'), this.controller.update);
+    router.put(
+      '/',
+      this.jwtController.validateToken,
+      storage.fields([{ name: 'image' }, { name: 'documentImage' }]),
+      this.controller.update,
+    );
     router.get('/:userId', this.jwtController.validateToken, this.controller.getById);
     router.delete('/:userId', this.jwtController.validateToken, this.controller.delete);
     router.post('/auth', this.controller.auth);

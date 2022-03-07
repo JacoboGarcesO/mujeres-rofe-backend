@@ -36,7 +36,7 @@ export class UserService {
     return this.userMapper.userCredentialsToDto(messages.authFailure);
   }
 
-  async create(userDto: any, userImage: any): Promise<UserResponseModel | MessageModel> {
+  async create(userDto: any, userMedia: any): Promise<UserResponseModel | MessageModel> {
     const userExisting = await usersCollection.findOne({ email: userDto.email });
     
     if(userExisting) {
@@ -46,12 +46,14 @@ export class UserService {
     await emailsService.send(userDto);
   
     let image;
+    let documentImage;
     
-    if (userImage) {
-      image = await cloudinary.upload(userImage);
-    }
+    if (userMedia.image?.[0] && userMedia.documentImage?.[0]) {
+      image = await cloudinary.upload(userMedia.image?.[0]?.path);
+      documentImage = await cloudinary.upload(userMedia.documentImage?.[0]?.path);
+    }    
     
-    const user = this.userMapper.dtoToUser(userDto, image);
+    const user = this.userMapper.dtoToUser(userDto, image, documentImage);
     const userCreated = await new usersCollection(user).save();
     const userResponse = this.userMapper.userToDto(userCreated, messages.createSuccess('user'));
 
@@ -78,18 +80,27 @@ export class UserService {
     return this.userMapper.userToDto(user, messages.getById('user'));
   }
 
-  async update(userDto: any, userImage: any): Promise<UserResponseModel | MessageModel> {
+  async update(userDto: any, userMedia: any): Promise<UserResponseModel | MessageModel> {
     let image;
-
-    if (userImage) {
-      if (userDto?.image) {
-        await cloudinary.destroy(userDto.image._id);
+    let documentImage;
+  
+    if (userMedia?.content) {
+      if (userDto.content?._id) {
+        await cloudinary.destroy(userDto?.content?._id);
       }
 
-      image = await cloudinary.upload(userImage);
+      image = await cloudinary.upload(userMedia?.image?.[0]?.path);
     }
 
-    const user = this.userMapper.dtoToUser(userDto, image);
+    if (userMedia?.icon) {
+      if (userDto.icon?._id) {
+        await cloudinary.destroy(userDto.icon._id);
+      }
+
+      documentImage = await cloudinary.upload(userMedia?.documentImage?.[0]?.path);
+    }
+
+    const user = this.userMapper.dtoToUser(userDto, image, documentImage);
     const userUpdated = await usersCollection.findByIdAndUpdate(user?.id, { $set: user }, { new: true });
     const userResponse = this.userMapper.userToDto(userUpdated, messages.updateSuccess('user'));
     return userResponse;

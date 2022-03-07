@@ -1,8 +1,9 @@
+import { UploadApiResponse } from 'cloudinary';
 import { UserCredentialsModel, UserCredentialsResponseModel, UserModel, UserResponseModel } from '../models/user.model';
 import { encryptPassword } from '../utils/bcrypt';
 
 export class UserMapper {
-  dtoToUser(user: any, image: any): UserModel {
+  dtoToUser(user: any, image: UploadApiResponse | undefined, documentImage: UploadApiResponse | undefined): UserModel {
     const password = encryptPassword(user?.firstName.charAt(0).toUpperCase() + user?.lastName.charAt(0).toLowerCase() + user?.document);
 
     return {
@@ -18,11 +19,28 @@ export class UserMapper {
       phoneNumber: user?.phoneNumber,
       isPremium: user?.isPremium?.startsWith('true'),
       location: JSON.parse(user?.location),
-      image: image && {
+      image: {
         _id: image?.public_id,
         url: image?.url,
       },
       id: user?.id,
+      address: user?.address,
+      age: user?.age,
+      disclosure: user?.disclosure,
+      documentImage: {
+        _id: documentImage?.public_id,
+        url: documentImage?.url,
+      },
+      documentType: user?.documentType,
+      education: user?.education,
+      ethnicGroup: user?.education,
+      familyCore: user?.familyCore,
+      familyIncome: user?.familyIncome,
+      housingType: user?.familyIncome,
+      maritalStatus: user?.maritalStatus,
+      promocionalCode: user?.promocionalCode,
+      stratum: user?.stratum,
+      sustaining: user?.sustaining,
     };
 
   }

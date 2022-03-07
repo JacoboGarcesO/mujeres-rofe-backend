@@ -7,15 +7,29 @@ export interface UserModel {
   email: string;
   rol: string;
   document: string;
-  password?: string;
-  image?: MediaModel;
-  id?: string;
-  description?: string;
-  socialsNetworks?: SocialNetworksModel[]; 
-  hobbies?: string[];
-  phoneNumber?: number;
-  isPremium?: boolean;
-  location?: LocationModel;
+  password: string;
+  image: MediaModel;
+  id: string;
+  description: string;
+  socialsNetworks: SocialNetworksModel[]; 
+  hobbies: string[];
+  phoneNumber: number;
+  isPremium: boolean;
+  location: LocationModel;
+  documentType: string,
+  maritalStatus: string,
+  address: string,
+  age: string,
+  familyCore: string,
+  familyIncome: string,
+  housingType: string,
+  education: string,
+  stratum: string,
+  promocionalCode: string,
+  disclosure: string,
+  ethnicGroup: string[],
+  sustaining: string[],
+  documentImage: MediaModel,
 }
 
 export interface UserResponseModel {
