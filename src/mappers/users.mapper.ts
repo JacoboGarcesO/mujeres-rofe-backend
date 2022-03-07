@@ -22,6 +22,7 @@ export class UserMapper {
       image: {
         _id: image?.public_id,
         url: image?.url,
+        type: image?.format,
       },
       id: user?.id,
       address: user?.address,
@@ -30,6 +31,7 @@ export class UserMapper {
       documentImage: {
         _id: documentImage?.public_id,
         url: documentImage?.url,
+        type: documentImage?.format,
       },
       documentType: user?.documentType,
       education: user?.education,
