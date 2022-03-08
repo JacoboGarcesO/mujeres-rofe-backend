@@ -5,6 +5,7 @@ import { NoticesRouter } from '../api/routes/notices.routes';
 import { SlidesRouter } from '../api/routes/slides.routes';
 import { UsersRouter } from '../api/routes/users.routes';
 import { FormRequestsRouter } from '../api/routes/form-requests.routes';
+import { RequestsRouter } from '../api/routes/requests.routes';
 
 export default async (app: Application): Promise<Application> => {
   const userRouter = new UsersRouter(app);
@@ -24,6 +25,9 @@ export default async (app: Application): Promise<Application> => {
 
   const formRequestsRouter = new FormRequestsRouter(app);
   formRequestsRouter.init(); 
+
+  const requestsRouter = new RequestsRouter(app);
+  requestsRouter.init();
 
   return app;
 };
