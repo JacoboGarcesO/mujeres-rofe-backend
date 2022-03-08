@@ -35,14 +35,14 @@ export class UserMapper {
       },
       documentType: user?.documentType,
       education: user?.education,
-      ethnicGroup: user?.education,
+      ethnicGroup: JSON.parse(user?.ethnicGroup),
       familyCore: user?.familyCore,
       familyIncome: user?.familyIncome,
       housingType: user?.familyIncome,
       maritalStatus: user?.maritalStatus,
       promocionalCode: user?.promocionalCode,
       stratum: user?.stratum,
-      sustaining: user?.sustaining,
+      sustaining: JSON.parse(user?.sustaining),
     };
 
   }
