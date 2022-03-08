@@ -24,7 +24,7 @@ export class RequestsService {
   }
 
   async getById(requestId: any): Promise<RequestsResponseModel | MessageModel> {
-    const request = await requestsCollection.findById(requestId);
+    const request = await requestsCollection.findById(requestId).populate('formId');
 
     if (!request) {
       return this.messageMapper.map(messages.getByIdFailure('requests'));
