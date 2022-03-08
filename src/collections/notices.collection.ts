@@ -7,6 +7,7 @@ const linkSchema = new Schema({
 });
 
 const noticeSchema = new Schema({
+  formId: { type: Schema.Types.ObjectId, ref: 'FormRequests', required: [true, 'FormId is required'] },
   title: { type: String, required: [true, 'Notice title is required'] },
   order: { type: String, required: [true, 'Notice order is required'] },
   channel: { type: String, required: [true, 'Notice channel is required'] },

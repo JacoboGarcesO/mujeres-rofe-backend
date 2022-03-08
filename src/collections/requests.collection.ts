@@ -7,10 +7,10 @@ const fieldSchema = new Schema({
 });
 
 const requestsSchema = new Schema({
-  formId: { type: Schema.Types.ObjectId, ref: 'FormRequests', required: [true, 'Foorm subject is required'] },
-  title: { type: String, required: [true, 'Foorm title is required'] },
-  template: { type: String, required: [true, 'Foorm template is required'] },
-  subject: { type: String, required: [true, 'Foorm subject is required'] },
+  formId: { type: Schema.Types.ObjectId, ref: 'FormRequests', required: [true, 'FormId is required'] },
+  title: { type: String, required: [true, 'Form title is required'] },
+  template: { type: String, required: [true, 'Form template is required'] },
+  subject: { type: String, required: [true, 'Form subject is required'] },
   fields: [fieldSchema],
 }, { collection: 'Requests' });
 
