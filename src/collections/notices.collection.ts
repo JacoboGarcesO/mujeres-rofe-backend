@@ -1,4 +1,4 @@
-import { model, Schema } from 'mongoose';
+import { model, Schema, SchemaTypes } from 'mongoose';
 import { mediaSchema } from './image.collection';
 
 const linkSchema = new Schema({
@@ -16,6 +16,7 @@ const noticeSchema = new Schema({
   description: { type: String },
   icon: mediaSchema,
   content: mediaSchema,
+  form: SchemaTypes.ObjectId, ref: 'FormRequests',
   links: [linkSchema],
 }, { collection: 'Notices' });
 

@@ -43,7 +43,7 @@ export class UserService {
       throw this.messageMapper.map(messages.emailDuplicate);
     }
     
-    await emailsService.send(userDto);
+    await emailsService.send(userDto, 'register');
   
     let image;
     let documentImage;

@@ -1,5 +1,12 @@
-export const createEmail = (to: string, firstName: string, lastName: string, document: string) => {
-  return {
+export const createEmail = (templateId: string, to: string, firstName: string, lastName: string, document: string) => {
+  const templates = [register, apoyoEmocional];
+  const template = templates.find((template) => template.id === templateId);
+  return template?.template(to, firstName, lastName, document);
+};
+
+const register = {
+  id: 'register',
+  template: (to: string, firstName: string, lastName: string, document: string) =>({
     to,
     personalizations: [
       {
@@ -288,5 +295,30 @@ export const createEmail = (to: string, firstName: string, lastName: string, doc
     </body>
     </html>
     `,
-  };
+  }),
+};
+
+const apoyoEmocional = {
+  id: 'apoyoEmocional',
+  template: (to: string) =>({
+    to,
+    personalizations: [
+      {
+        to: [
+          {
+            email: 'soporte@tocaunavida.org',
+          },
+          {
+            email: 'mujeres.rofe@tocaunavida.org',
+          },
+        ],
+      },
+    ],
+    from: {
+      email: 'mujeres.rofe@tocaunavida.org',
+      name: 'MujeresROFÉ',
+    },
+    subject: '',
+    html: '',
+  }),
 };
