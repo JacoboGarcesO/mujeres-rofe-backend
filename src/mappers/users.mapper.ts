@@ -38,7 +38,7 @@ export class UserMapper {
       ethnicGroup: JSON.parse(user?.ethnicGroup),
       familyCore: user?.familyCore,
       familyIncome: user?.familyIncome,
-      housingType: user?.familyIncome,
+      housingType: user?.housingType,
       maritalStatus: user?.maritalStatus,
       promocionalCode: user?.promocionalCode,
       stratum: user?.stratum,
