@@ -15,6 +15,15 @@ export class FormRequestsController {
     }
   }
 
+  async getById(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
+    try {
+      const formResponse = await service.getById(request.params.formId);
+      return response.status(200).json(formResponse);
+    } catch (err) {
+      next(err);
+    }
+  }
+
   async create(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
     try {
       const formCreated = await service.create(request.body);

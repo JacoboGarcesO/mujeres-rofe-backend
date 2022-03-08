@@ -14,6 +14,7 @@ export class FormRequestsRouter {
     this.app.use('/api/form', router);
     router.post('/', this.jwtController.validateToken, this.controller.create);
     router.get('/', this.jwtController.validateToken, this.controller.getAll);
+    router.get('/:formId', this.jwtController.validateToken, this.controller.getById);
     router.put('/', this.jwtController.validateToken, this.controller.update);
     router.delete('/:formId', this.jwtController.validateToken, this.controller.delete);
   }

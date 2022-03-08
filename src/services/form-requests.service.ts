@@ -23,6 +23,19 @@ export class formRequestsService {
     return { forms, message };
   }
 
+  async getById(formId: any): Promise<FormRequestsResponseModel | MessageModel> {
+    const form = await formRequestsCollection.findById(formId);
+
+    if (!form) {
+      return this.messageMapper.map(messages.getByIdFailure('forms'));
+    }
+
+    const message = messages.getById('form');
+    const formResponse = {  forms: [form], message };
+
+    return formResponse;
+  }
+
   async create(form: any): Promise<FormRequestsResponseModel> {
     const formCreated = await new formRequestsCollection(form).save();
     const message = messages.createSuccess('form');
