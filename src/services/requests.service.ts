@@ -3,6 +3,9 @@ import { MessagesMapper } from '../mappers/messages.mapper';
 import { RequestsModel, RequestsResponseModel } from '../models/requests.model';
 import { MessageModel } from '../models/message.model';
 import messages from '../utils/messages';
+import { EmailsService } from './emails.service';
+
+const emailsService = new EmailsService();
 
 export class RequestsService {
   private messageMapper: MessagesMapper;
@@ -37,7 +40,8 @@ export class RequestsService {
   }
 
   async create(request: any): Promise<RequestsResponseModel> {
-    const requestCreated = await new requestsCollection(request).save();
+    const requestCreated = await new requestsCollection(request?.request).save();
+    await emailsService.send(request?.user, request?.request?.template);
     const message = messages.createSuccess('request');
     const requestResponse = {  requests: [requestCreated], message };
 

@@ -14,6 +14,7 @@ export class NoticeMapper {
       links: JSON.parse(notice?.links),
       showUsersList: notice?.showUsersList,
       isLink: notice?.isLink,
+      formId: notice?.formId,
       url: notice?.url,
       id: notice?.id,
     };

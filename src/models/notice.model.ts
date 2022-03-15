@@ -12,10 +12,11 @@ export interface NoticeModel {
   channel: string;
   icon: MediaModel;
   content: MediaModel;
-  links: linkNoticeModel[],
-  showUsersList: boolean,
-  isLink: boolean,
-  url: string,
+  links: linkNoticeModel[];
+  showUsersList: boolean;
+  isLink: boolean;
+  url: string;
+  formId: string;
   id?: string;
 }
 
