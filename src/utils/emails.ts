@@ -1,12 +1,20 @@
-export const createEmail = (templateId: string, to: string, firstName: string, lastName: string, document: string) => {
+export const createEmail = (
+  templateId: string,
+  subject: string,
+  to: string,
+  firstName: string,
+  lastName: string,
+  document: string,
+  title: string,
+) => {
   const templates = [register, notification];
   const template = templates.find((template) => template.id === templateId);
-  return template?.template(to, firstName, lastName, document);
+  return template?.template(to, subject, firstName, lastName, document, title);
 };
 
 const register = {
   id: 'register',
-  template: (to: string, firstName: string, lastName: string, document: string) => ({
+  template: (to: string, subject: string, firstName: string, lastName: string, document: string, title: string) => ({
     to,
     personalizations: [
       {
@@ -24,7 +32,7 @@ const register = {
       email: 'mujeres.rofe@tocaunavida.org',
       name: 'MujeresROFÉ',
     },
-    subject: 'Confirma tu cuenta de Mujeres ROFÉ',
+    subject,
     html: `
     <!doctype html>
     <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
@@ -195,7 +203,7 @@ const register = {
                                 <tr>
                                   <td align="center" style="font-size:0px;padding:0;word-break:break-word;">
                                     <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:center;color:#000000;">
-                                      <h1>¡Tu cuenta ha sido creada exitosamente!</h1>
+                                      <h1>${title}</h1>
                                     </div>
                                   </td>
                                 </tr>
@@ -301,7 +309,7 @@ const register = {
 const notification = {
   id: 'notification',
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  template: (to: string, firstName: string, lastName: string, _document: string) => ({
+  template: (to: string, subject: string, firstName: string, lastName: string, _document: string, title: string) => ({
     to,
     personalizations: [
       {
@@ -312,6 +320,9 @@ const notification = {
           {
             email: 'mujeres.rofe@tocaunavida.org',
           },
+          {
+            email: to,
+          },
         ],
       },
     ],
@@ -319,7 +330,7 @@ const notification = {
       email: 'mujeres.rofe@tocaunavida.org',
       name: 'MujeresROFÉ',
     },
-    subject: '',
+    subject,
     html: `
     <!doctype html>
     <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
@@ -490,7 +501,7 @@ const notification = {
                                 <tr>
                                   <td align="center" style="font-size:0px;padding:0;word-break:break-word;">
                                     <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:center;color:#000000;">
-                                      <h1>¡Tu cuenta ha sido creada exitosamente!</h1>
+                                      <h1>${title}</h1>
                                     </div>
                                   </td>
                                 </tr>

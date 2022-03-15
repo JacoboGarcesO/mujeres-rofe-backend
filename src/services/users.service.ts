@@ -43,7 +43,7 @@ export class UserService {
       throw this.messageMapper.map(messages.emailDuplicate);
     }
     
-    await emailsService.send(userDto, 'register');
+    await emailsService.send(userDto, 'Confirma tu cuenta de Mujeres ROFÉ', 'register', '¡Tu cuenta ha sido creada exitosamente!');
   
     let image;
     let documentImage;

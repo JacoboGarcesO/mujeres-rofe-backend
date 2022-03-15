@@ -4,8 +4,8 @@ import smg from '../config/sendgrid';
 import { MailDataRequired } from '@sendgrid/mail';
 
 export class EmailsService {
-  async send(user: any, templateId: string): Promise<any> {
-    const msg = createEmail(templateId, user.email, user.firstName, user.lastName, user.document);
+  async send(user: any, subject: string,  templateId: string, title: string): Promise<any> {
+    const msg = createEmail(templateId, subject, user.email, user.firstName, user.lastName, user.document, title);
     return await smg.send(msg as MailDataRequired | MailDataRequired[]);
   }
 }

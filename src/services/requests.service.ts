@@ -39,9 +39,9 @@ export class RequestsService {
     return requestResponse;
   }
 
-  async create(request: any): Promise<RequestsResponseModel> {
-    const requestCreated = await new requestsCollection(request?.request).save();
-    await emailsService.send(request?.user, request?.request?.template);
+  async create(request: any): Promise<RequestsResponseModel> {    
+    const requestCreated = await new requestsCollection(request?.request).save();    
+    await emailsService.send(request?.user, request?.request?.subject, request?.request?.template, request?.request?.title);
     const message = messages.createSuccess('request');
     const requestResponse = {  requests: [requestCreated], message };
 
