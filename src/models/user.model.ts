@@ -6,7 +6,7 @@ export interface UserModel {
   lastName: string;
   email: string;
   rol: string;
-  document: string;
+  documentNumber: string;
   password: string;
   image: MediaModel;
   id: string;
