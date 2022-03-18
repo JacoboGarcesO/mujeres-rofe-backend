@@ -12,7 +12,7 @@ export class UserMapper {
       email: user?.email,
       rol: user?.rol,
       description: user?.description,
-      document: user?.document,
+      documentNumber: user?.document,
       hobbies: JSON.parse(user?.hobbies),
       password,
       socialsNetworks: JSON.parse(user?.socialsNetworks),

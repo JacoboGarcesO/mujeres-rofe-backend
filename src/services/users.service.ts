@@ -48,9 +48,9 @@ export class UserService {
     let image;
     let documentImage;
     
-    if (userMedia.image?.[0] && userMedia.documentImage?.[0]) {
-      image = await cloudinary.upload(userMedia.image?.[0]?.path);
-      documentImage = await cloudinary.upload(userMedia.documentImage?.[0]?.path);
+    if (userMedia?.image?.[0] && userMedia?.documentImage?.[0]) {
+      image = await cloudinary.upload(userMedia?.image?.[0]?.path);
+      documentImage = await cloudinary.upload(userMedia?.documentImage?.[0]?.path);
     }    
     
     const user = this.userMapper.dtoToUser(userDto, image, documentImage);
