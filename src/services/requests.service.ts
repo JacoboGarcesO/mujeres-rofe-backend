@@ -9,7 +9,7 @@ const emailsService = new EmailsService();
 
 export class RequestsService {
   private messageMapper: MessagesMapper;
-    
+
   constructor(messageMapper: MessagesMapper) {
     this.messageMapper = messageMapper;
   }
@@ -34,16 +34,16 @@ export class RequestsService {
     }
 
     const message = messages.getById('requests');
-    const requestResponse = {  requests: [request], message };
+    const requestResponse = { requests: [request], message };
 
     return requestResponse;
   }
 
-  async create(request: any): Promise<RequestsResponseModel> {    
-    const requestCreated = await new requestsCollection(request?.request).save();    
+  async create(request: any): Promise<RequestsResponseModel> {
+    const requestCreated = await new requestsCollection(request?.request).save();
     await emailsService.send(request?.user, request?.request?.subject, request?.request?.template, request?.request?.title);
     const message = messages.createSuccess('request');
-    const requestResponse = {  requests: [requestCreated], message };
+    const requestResponse = { requests: [requestCreated], message };
 
     return requestResponse;
   }
@@ -51,7 +51,7 @@ export class RequestsService {
   async update(request: any): Promise<RequestsResponseModel | MessageModel> {
     const requestUpdated = await requestsCollection.findByIdAndUpdate(request?.id, { $set: request }, { new: true });
     const message = messages.updateSuccess('request');
-    const requestResponse = {  requests: [requestUpdated], message };
+    const requestResponse = { requests: [requestUpdated], message };
 
     return requestResponse;
   }
@@ -64,7 +64,7 @@ export class RequestsService {
     }
 
     const message = messages.deleteSuccess('request');
-    const requestResponse = {  requests: [request], message };
+    const requestResponse = { requests: [request], message };
 
     return requestResponse;
   }

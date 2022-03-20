@@ -1,4 +1,4 @@
-export interface fieldRequestsModel {
+export interface FieldRequestsModel {
   label: string,
   placeholder: string,
   value: string,
@@ -9,7 +9,7 @@ export interface RequestsModel {
   title: string;
   template: string;
   subject: string;
-  links: fieldRequestsModel[],
+  fields: FieldRequestsModel[],
 }
 
 export interface RequestsResponseModel {

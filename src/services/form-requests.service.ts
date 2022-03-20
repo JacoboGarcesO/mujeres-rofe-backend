@@ -6,7 +6,7 @@ import messages from '../utils/messages';
 
 export class formRequestsService {
   private messageMapper: MessagesMapper;
-    
+
   constructor(messageMapper: MessagesMapper) {
     this.messageMapper = messageMapper;
   }
@@ -31,7 +31,7 @@ export class formRequestsService {
     }
 
     const message = messages.getById('form');
-    const formResponse = {  forms: [form], message };
+    const formResponse = { forms: [form], message };
 
     return formResponse;
   }
@@ -39,7 +39,7 @@ export class formRequestsService {
   async create(form: any): Promise<FormRequestsResponseModel> {
     const formCreated = await new formRequestsCollection(form).save();
     const message = messages.createSuccess('form');
-    const formResponse = {  forms: [formCreated], message };
+    const formResponse = { forms: [formCreated], message };
 
     return formResponse;
   }
@@ -47,7 +47,7 @@ export class formRequestsService {
   async update(form: any): Promise<FormRequestsResponseModel | MessageModel> {
     const formUpdated = await formRequestsCollection.findByIdAndUpdate(form?.id, { $set: form }, { new: true });
     const message = messages.updateSuccess('form');
-    const formResponse = {  forms: [formUpdated], message };
+    const formResponse = { forms: [formUpdated], message };
 
     return formResponse;
   }
@@ -60,7 +60,7 @@ export class formRequestsService {
     }
 
     const message = messages.deleteSuccess('form');
-    const formResponse = {  forms: [form], message };
+    const formResponse = { forms: [form], message };
 
     return formResponse;
   }
