@@ -1,4 +1,5 @@
 import { UploadApiResponse } from 'cloudinary';
+import { MediaModel } from '../models/media.model';
 import { UserCredentialsModel, UserCredentialsResponseModel, UserModel, UserResponseModel } from '../models/user.model';
 import { encryptPassword } from '../utils/bcrypt';
 
@@ -19,20 +20,12 @@ export class UserMapper {
       phoneNumber: user?.phoneNumber,
       isPremium: user?.isPremium?.startsWith('true'),
       location: JSON.parse(user?.location),
-      image: {
-        _id: image?.public_id,
-        url: image?.url,
-        type: image?.format,
-      },
+      image: this.getMedia(image, JSON.parse(user?.imageEncoded || '{}')),
       id: user?.id,
       address: user?.address,
       age: user?.age,
       disclosure: user?.disclosure,
-      documentImage: {
-        _id: documentImage?.public_id,
-        url: documentImage?.url,
-        type: documentImage?.format,
-      },
+      documentImage: this.getMedia(documentImage, JSON.parse(user?.documentImageEncoded || '{}')),
       documentType: user?.documentType,
       education: user?.education,
       ethnicGroup: JSON.parse(user?.ethnicGroup),
@@ -77,6 +70,16 @@ export class UserMapper {
       message,
       token,
       user,
+    };
+  }
+
+  private getMedia(newMedia: UploadApiResponse | undefined, media: MediaModel): MediaModel {    
+    if (!!media && !newMedia) { return media; }
+
+    return {
+      _id: newMedia?.public_id,
+      url: newMedia?.url,
+      type: newMedia?.format,
     };
   }
 }

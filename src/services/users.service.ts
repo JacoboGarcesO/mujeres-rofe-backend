@@ -84,17 +84,18 @@ export class UserService {
     let image;
     let documentImage;
   
-    if (userMedia?.content) {
-      if (userDto.content?._id) {
-        await cloudinary.destroy(userDto?.content?._id);
+    if (userMedia?.image) {
+      
+      if (userDto.image?._id) {
+        await cloudinary.destroy(userDto?.image?._id);
       }
 
       image = await cloudinary.upload(userMedia?.image?.[0]?.path);
     }
 
-    if (userMedia?.icon) {
-      if (userDto.icon?._id) {
-        await cloudinary.destroy(userDto.icon._id);
+    if (userMedia?.documentImage) {
+      if (userDto.documentImage?._id) {
+        await cloudinary.destroy(userDto.documentImage._id);
       }
 
       documentImage = await cloudinary.upload(userMedia?.documentImage?.[0]?.path);
