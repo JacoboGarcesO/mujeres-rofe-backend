@@ -44,6 +44,7 @@ const userSchema = new Schema({
   hobbies: [hobbieSchema],
   location: locationSchema,
   socialsNetworks: [socialNetworkSchema],
+  creationDate: { type: Date, default: Date.now },
 }, { collection: 'Users' });
 
 export default model('Users', userSchema);

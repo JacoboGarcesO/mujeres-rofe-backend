@@ -30,6 +30,7 @@ export interface UserModel {
   ethnicGroup: string[],
   sustaining: string[],
   documentImage: MediaModel,
+  creationDate?: Date;
 }
 
 export interface UserResponseModel {

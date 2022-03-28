@@ -61,7 +61,7 @@ export class UserService {
   }
 
   async getAll(): Promise<UserResponseModel | MessageModel> {
-    const users: UserModel[] = await usersCollection.find();
+    const users: UserModel[] = await usersCollection.find().sort({ firstName: 1 });
 
     if (!users?.length) {
       return this.messageMapper.map(messages.getAllFailure('users'));
