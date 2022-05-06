@@ -10,7 +10,7 @@ export class UserMapper {
     return {
       firstName: user?.firstName,
       lastName: user?.lastName,
-      email: user?.email,
+      email: user?.email?.toLowerCase(),
       rol: user?.rol,
       description: user?.description,
       documentNumber: user?.document,

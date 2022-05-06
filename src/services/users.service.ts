@@ -22,7 +22,7 @@ export class UserService {
 
   async auth(userCredentials: any): Promise<UserCredentialsResponseModel> {
     const credentials = this.userMapper.dtoToUserCredentials(userCredentials);
-    const user = await usersCollection.findOne({ email: credentials.email });
+    const user = await usersCollection.findOne({ email: credentials.email.toLowerCase() });
 
     if (!user) {
       return this.userMapper.userCredentialsToDto(messages.userNotFound);
@@ -37,7 +37,7 @@ export class UserService {
   }
 
   async create(userDto: any, userMedia: any): Promise<UserResponseModel | MessageModel> {
-    const userExisting = await usersCollection.findOne({ email: userDto.email });
+    const userExisting = await usersCollection.findOne({ email: userDto.email.toLowerCase() });
     
     if(userExisting) {
       throw this.messageMapper.map(messages.emailDuplicate);
