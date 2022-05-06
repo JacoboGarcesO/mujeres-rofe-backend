@@ -53,7 +53,7 @@ export class SlideService {
     let image;
 
     if (slideImage) {
-      if (slideDto?.image) {
+      if (slideDto?.image?._id) {
         await cloudinary.upload(slideDto?.image._id);
       }
 

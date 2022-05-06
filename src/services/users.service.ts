@@ -91,7 +91,6 @@ export class UserService {
     let documentImage;
   
     if (userMedia?.image) {
-      
       if (userDto.image?._id) {
         await cloudinary.destroy(userDto?.image?._id);
       }

@@ -1,3 +1,5 @@
+import { UploadApiResponse } from 'cloudinary';
+import { MediaModel } from '../models/media.model';
 import { SlideModel, SlideResponseModel } from '../models/slide.model';
 
 export class SlideMapper {
@@ -5,10 +7,7 @@ export class SlideMapper {
   dtoToSlide(slide: any, image: any): SlideModel {
     return {
       title: slide?.title,
-      image: image && {
-        _id: image?.public_id,
-        url: image?.url,
-      },
+      image: this.getMedia(image, JSON.parse(slide?.imageEncoded || '{}')),
       url: slide?.url,
       id: slide?.id,
     };
@@ -27,4 +26,15 @@ export class SlideMapper {
       message,
     };
   }
+
+  private getMedia(newMedia: UploadApiResponse | undefined, media: MediaModel): MediaModel {    
+    if (!!media && !newMedia) { return media; }
+
+    return {
+      _id: newMedia?.public_id,
+      url: newMedia?.url,
+      type: newMedia?.format,
+    };
+  }
+  
 }
