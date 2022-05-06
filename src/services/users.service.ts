@@ -37,10 +37,16 @@ export class UserService {
   }
 
   async create(userDto: any, userMedia: any): Promise<UserResponseModel | MessageModel> {
-    const userExisting = await usersCollection.findOne({ email: userDto.email.toLowerCase() });
+    const emailExisting = await usersCollection.findOne({ email: userDto?.email?.toLowerCase() });
     
-    if(userExisting) {
-      throw this.messageMapper.map(messages.emailDuplicate);
+    if(emailExisting) {
+      throw new Error(this.messageMapper.map(messages.emailDuplicate).message);
+    }
+
+    const documentExisting = await usersCollection.findOne({ documentNumber: userDto?.document });
+
+    if (documentExisting) {
+      throw new Error(this.messageMapper.map(messages.documentDuplicate).message);
     }
     
     await emailsService.send(userDto, 'Confirma tu cuenta de Mujeres ROFÉ', 'register', '¡Tu cuenta ha sido creada exitosamente!');

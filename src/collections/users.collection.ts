@@ -22,7 +22,7 @@ const userSchema = new Schema({
   email: { type: String, required: [true, 'User email is required'], unique: true },
   password: { type: String, required: [true, 'User password is required'] },
   rol: { type: String, enum: ['admin', 'user'], required: [true, 'User rol is required'] },
-  documentNumber: { type: String, required: [true, 'User document is required'] },
+  documentNumber: { type: String, required: [true, 'User document is required'], unique: true },
   isPremium: { type: Boolean, default: false },
   phoneNumber: { type: String },
   description: { type: String },
