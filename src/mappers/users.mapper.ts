@@ -1,11 +1,25 @@
 import { UploadApiResponse } from 'cloudinary';
 import { MediaModel } from '../models/media.model';
-import { UserCredentialsModel, UserCredentialsResponseModel, UserModel, UserResponseModel } from '../models/user.model';
+import {
+  UserCredentialsModel,
+  UserCredentialsResponseModel,
+  UserModel,
+  UserResponseModel,
+  UserPaginatedResponseModel,
+} from '../models/user.model';
 import { encryptPassword } from '../utils/bcrypt';
 
 export class UserMapper {
-  dtoToUser(user: any, image: UploadApiResponse | undefined, documentImage: UploadApiResponse | undefined): UserModel {
-    const password = encryptPassword(user?.firstName.charAt(0).toUpperCase() + user?.lastName.charAt(0).toLowerCase() + user?.document);
+  dtoToUser(
+    user: any,
+    image: UploadApiResponse | undefined,
+    documentImage: UploadApiResponse | undefined,
+  ): UserModel {
+    const password = encryptPassword(
+      user?.firstName.charAt(0).toUpperCase() +
+        user?.lastName.charAt(0).toLowerCase() +
+        user?.document,
+    );
 
     return {
       firstName: user?.firstName,
@@ -25,7 +39,10 @@ export class UserMapper {
       address: user?.address,
       age: user?.age,
       disclosure: user?.disclosure,
-      documentImage: this.getMedia(documentImage, JSON.parse(user?.documentImageEncoded || '{}')),
+      documentImage: this.getMedia(
+        documentImage,
+        JSON.parse(user?.documentImageEncoded || '{}'),
+      ),
       documentType: user?.documentType,
       education: user?.education,
       ethnicGroup: JSON.parse(user?.ethnicGroup),
@@ -37,7 +54,6 @@ export class UserMapper {
       stratum: user?.stratum,
       sustaining: JSON.parse(user?.sustaining),
     };
-
   }
 
   userToDto(users: UserModel, message: string): UserResponseModel {
@@ -50,6 +66,18 @@ export class UserMapper {
   usersToDto(users: UserModel[], message: string): UserResponseModel {
     return {
       users,
+      message,
+    };
+  }
+
+  usersPaginatedToDto(
+    users: UserModel[],
+    total: number,
+    message: string,
+  ): UserPaginatedResponseModel {
+    return {
+      users,
+      total,
       message,
     };
   }
@@ -73,8 +101,13 @@ export class UserMapper {
     };
   }
 
-  private getMedia(newMedia: UploadApiResponse | undefined, media: MediaModel): MediaModel {    
-    if (!!media && !newMedia) { return media; }
+  private getMedia(
+    newMedia: UploadApiResponse | undefined,
+    media: MediaModel,
+  ): MediaModel {
+    if (!!media && !newMedia) {
+      return media;
+    }
 
     return {
       _id: newMedia?.public_id,

@@ -7,22 +7,41 @@ export class UsersRouter {
   private controller: UserController = new UserController();
   private jwtController: JwtController = new JwtController();
 
-  constructor(app: Application) { this.app = app; }
+  constructor(app: Application) {
+    this.app = app;
+  }
 
   init() {
     const router = Router();
     this.app.use('/api/users', router);
 
-    router.post('/', storage.fields([{ name: 'image' }, { name: 'documentImage' }]), this.controller.create);
+    router.post(
+      '/',
+      storage.fields([{ name: 'image' }, { name: 'documentImage' }]),
+      this.controller.create,
+    );
     router.get('/', this.jwtController.validateToken, this.controller.getAll);
+    router.get(
+      '/paginated/:from',
+      this.jwtController.validateToken,
+      this.controller.getPaginatedUsers,
+    );
     router.put(
       '/',
       this.jwtController.validateToken,
       storage.fields([{ name: 'image' }, { name: 'documentImage' }]),
       this.controller.update,
     );
-    router.get('/:userId', this.jwtController.validateToken, this.controller.getById);
-    router.delete('/:userId', this.jwtController.validateToken, this.controller.delete);
+    router.get(
+      '/:userId',
+      this.jwtController.validateToken,
+      this.controller.getById,
+    );
+    router.delete(
+      '/:userId',
+      this.jwtController.validateToken,
+      this.controller.delete,
+    );
     router.post('/auth', this.controller.auth);
   }
 }
