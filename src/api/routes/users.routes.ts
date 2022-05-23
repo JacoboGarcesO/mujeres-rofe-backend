@@ -15,11 +15,8 @@ export class UsersRouter {
     const router = Router();
     this.app.use('/api/users', router);
 
-    router.post(
-      '/',
-      storage.fields([{ name: 'image' }, { name: 'documentImage' }]),
-      this.controller.create,
-    );
+    router.post('/', storage.fields([{ name: 'image' }, { name: 'documentImage' }]),
+      this.controller.create);
     router.get('/', this.jwtController.validateToken, this.controller.getAll);
     router.get(
       '/paginated/:from',
@@ -43,5 +40,6 @@ export class UsersRouter {
       this.controller.delete,
     );
     router.post('/auth', this.controller.auth);
+    router.post('/forgot-password', this.controller.forgotPassword);
   }
 }

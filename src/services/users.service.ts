@@ -25,6 +25,23 @@ export class UserService {
     this.messageMapper = messageMapper;
   }
 
+  async forgotPassword(email: any): Promise<MessageModel> {
+    const user = await usersCollection.findOne({ email: email?.toLowerCase() });
+
+    if (!user) {
+      throw new Error(this.messageMapper.map(messages.userNotFound).message);
+    }
+
+    await emailsService.send(
+      user,
+      'Recordatorio de credenciales para tu cuenta de Mujeres ROFÉ',
+      'forgot-password',
+      '¡Estas son tus credenciales de acceso!',
+    );
+
+    return this.messageMapper.map(messages.forgotPassword);
+  }
+
   async auth(userCredentials: any): Promise<UserCredentialsResponseModel> {
     const credentials = this.userMapper.dtoToUserCredentials(userCredentials);
     const user = await usersCollection.findOne({

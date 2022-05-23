@@ -18,5 +18,5 @@ export default {
   userNotFound: 'User not found',
   requestInvalid: 'Token invalid',
   tokenRequired: 'Token not provided',
-
+  forgotPassword: 'Credenciales recuperadas con éxito',
 };
