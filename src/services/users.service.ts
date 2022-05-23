@@ -112,7 +112,7 @@ export class UserService {
     from: number,
   ): Promise<UserPaginatedResponseModel | MessageModel> {
     const [users, total] = await Promise.all([
-      usersCollection.find().skip(from).limit(10).sort({ _id: -1 }),
+      usersCollection.find().skip(from).limit(10).sort({ firstName: 1 }),
       usersCollection.countDocuments(),
     ]);
 
