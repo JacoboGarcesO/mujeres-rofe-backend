@@ -25,4 +25,13 @@ export class LocationsController {
       next(err);
     }
   }
+
+  async getCities(_request: Request, response: Response, next: NextFunction) {
+    try {
+      const citiesResponse = await service.getCities();
+      return response.status(200).json(citiesResponse);
+    } catch (err) {
+      next(err);
+    }
+  }
 }

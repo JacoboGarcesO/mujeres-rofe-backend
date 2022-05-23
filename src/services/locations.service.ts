@@ -2,7 +2,7 @@ import citiesCollection from '../collections/cities.collection';
 import statesCollection from '../collections/states.collection';
 import { LocationsMapper } from '../mappers/locations.mapper';
 import { MessagesMapper } from '../mappers/messages.mapper';
-import { StatesResponseModel } from '../models/locations.model';
+import { CitesResponseModel, StatesResponseModel } from '../models/locations.model';
 import { MessageModel } from '../models/message.model';
 import messages from '../utils/messages';
 
@@ -34,5 +34,14 @@ export class LocationsService {
 
     return this.locationsMapper.citiesToDto(cities, messages.getAll('cities'));
   }
-  
+
+  async getCities(): Promise<CitesResponseModel | MessageModel> {
+    const cities = await citiesCollection.find();
+    
+    if (!cities?.length) {
+      return this.messageMapper.map(messages.getAllFailure('cities'));
+    }
+
+    return this.locationsMapper.citiesToDto(cities, messages.getAll('cities'));
+  }
 }

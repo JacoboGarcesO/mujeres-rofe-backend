@@ -12,5 +12,6 @@ export class LocationsRouter {
     this.app.use('/api/locations', router);
     router.get('/',this.controller.getStates);
     router.get('/:stateId',this.controller.getCitiesByState);
+    router.post('/cities',this.controller.getCities);
   }
 }
