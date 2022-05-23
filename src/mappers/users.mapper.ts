@@ -78,7 +78,7 @@ export class UserMapper {
 
     return {
       _id: newMedia?.public_id,
-      url: newMedia?.url,
+      url: newMedia?.secure_url,
       type: newMedia?.format,
     };
   }
