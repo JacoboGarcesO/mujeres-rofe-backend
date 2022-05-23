@@ -7,10 +7,27 @@ const userMapper = new UserMapper();
 const messageMapper = new MessagesMapper();
 const service = new UserService(userMapper, messageMapper);
 export class UserController {
-
-  async getAll(_request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
+  async getAll(
+    _request: Request,
+    response: Response,
+    next: NextFunction,
+  ): Promise<Response | undefined> {
     try {
       const usersResponse = await service.getAll();
+      return response.status(200).json(usersResponse);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async getPaginatedUsers(
+    request: Request,
+    response: Response,
+    next: NextFunction,
+  ): Promise<Response | undefined> {
+    try {
+      const from = Number(request.params.from) || 0;
+      const usersResponse = await service.getPaginatedUsers(from);
       return response.status(200).json(usersResponse);
     } catch (err) {
       next(err);
@@ -26,8 +43,12 @@ export class UserController {
     }
   }
 
-  async create(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
-    try {      
+  async create(
+    request: Request,
+    response: Response,
+    next: NextFunction,
+  ): Promise<Response | undefined> {
+    try {
       const userResponse = await service.create(request.body, request.files);
       return response.status(200).json(userResponse);
     } catch (err) {
@@ -35,7 +56,11 @@ export class UserController {
     }
   }
 
-  async getById(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
+  async getById(
+    request: Request,
+    response: Response,
+    next: NextFunction,
+  ): Promise<Response | undefined> {
     try {
       const userResponse = await service.getById(request.params.userId);
       return response.status(200).json(userResponse);
@@ -44,8 +69,12 @@ export class UserController {
     }
   }
 
-  async update(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
-    try {      
+  async update(
+    request: Request,
+    response: Response,
+    next: NextFunction,
+  ): Promise<Response | undefined> {
+    try {
       const userResponse = await service.update(request.body, request.files);
       return response.status(200).json(userResponse);
     } catch (err) {
@@ -53,8 +82,12 @@ export class UserController {
     }
   }
 
-  async delete(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
-    try {      
+  async delete(
+    request: Request,
+    response: Response,
+    next: NextFunction,
+  ): Promise<Response | undefined> {
+    try {
       const userResponse = await service.delete(request.params.userId);
       return response.status(200).json(userResponse);
     } catch (err) {

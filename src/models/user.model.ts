@@ -1,7 +1,7 @@
 import { LocationModel } from './locations.model';
 import { MediaModel } from './media.model';
 
-export interface UserModel { 
+export interface UserModel {
   firstName: string;
   lastName: string;
   email: string;
@@ -11,30 +11,36 @@ export interface UserModel {
   image: MediaModel;
   id: string;
   description: string;
-  socialsNetworks: SocialNetworksModel[]; 
+  socialsNetworks: SocialNetworksModel[];
   hobbies: string[];
   phoneNumber: number;
   isPremium: boolean;
   location: LocationModel;
-  documentType: string,
-  maritalStatus: string,
-  address: string,
-  age: string,
-  familyCore: string,
-  familyIncome: string,
-  housingType: string,
-  education: string,
-  stratum: string,
-  promocionalCode: string,
-  disclosure: string,
-  ethnicGroup: string[],
-  sustaining: string[],
-  documentImage: MediaModel,
+  documentType: string;
+  maritalStatus: string;
+  address: string;
+  age: string;
+  familyCore: string;
+  familyIncome: string;
+  housingType: string;
+  education: string;
+  stratum: string;
+  promocionalCode: string;
+  disclosure: string;
+  ethnicGroup: string[];
+  sustaining: string[];
+  documentImage: MediaModel;
   creationDate?: Date;
 }
 
 export interface UserResponseModel {
   users: UserModel[];
+  message: string;
+}
+
+export interface UserPaginatedResponseModel {
+  users: UserModel[];
+  total: number;
   message: string;
 }
 
