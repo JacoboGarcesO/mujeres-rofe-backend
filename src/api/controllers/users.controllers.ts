@@ -20,6 +20,32 @@ export class UserController {
     }
   }
 
+  async getAllByCity(
+    request: Request,
+    response: Response,
+    next: NextFunction,
+  ): Promise<Response | undefined> {
+    try {
+      const usersResponse = await service.getAllByCity(request.params.city);
+      return response.status(200).json(usersResponse);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async getAllByName(
+    request: Request,
+    response: Response,
+    next: NextFunction,
+  ): Promise<Response | undefined> {
+    try {
+      const usersResponse = await service.getByFirstName(request.params.name);
+      return response.status(200).json(usersResponse);
+    } catch (err) {
+      next(err);
+    }
+  }
+
   async forgotPassword(
     request: Request,
     response: Response,

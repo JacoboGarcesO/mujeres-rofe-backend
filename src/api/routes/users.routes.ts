@@ -41,5 +41,7 @@ export class UsersRouter {
     );
     router.post('/auth', this.controller.auth);
     router.post('/forgot-password', this.controller.forgotPassword);
+    router.get('/for-city/:city', this.controller.getAllByCity);
+    router.get('/for-name/:name', this.controller.getAllByName);
   }
 }

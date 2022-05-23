@@ -125,6 +125,30 @@ export class UserService {
     return this.userMapper.usersToDto(users, messages.getAll('users'));
   }
 
+  async getAllByCity(city: string): Promise<UserResponseModel | MessageModel> {
+    const users: UserModel[] = await usersCollection
+      .find({ 'location.city': city})
+      .sort({ firstName: 1 });
+
+    if (!users?.length) {
+      return this.messageMapper.map(messages.getAllFailure('users'));
+    }
+
+    return this.userMapper.usersToDto(users, messages.getAll('users'));
+  }
+
+  async getByFirstName(firstName: string): Promise<UserResponseModel | MessageModel> {
+    const users: UserModel[] = await usersCollection
+      .find({ firstName })
+      .sort({ firstName: 1 });
+
+    if (!users?.length) {
+      return this.messageMapper.map(messages.getAllFailure('users'));
+    }
+
+    return this.userMapper.usersToDto(users, messages.getAll('users'));
+  }
+
   async getPaginatedUsers(
     from: number,
   ): Promise<UserPaginatedResponseModel | MessageModel> {
