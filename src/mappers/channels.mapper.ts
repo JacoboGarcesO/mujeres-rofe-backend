@@ -9,7 +9,7 @@ export class ChannelMapper {
       name: channel?.name,
       description: channel?.description,
       icon: this.getMedia(icon, JSON.parse(channel?.iconEncoded || '{}')),
-      banner: this.getMedia(banner, JSON.parse(channel?.iconEncoded || '{}')),
+      banner: this.getMedia(banner, JSON.parse(channel?.bannerEncoded || '{}')),
       order: channel?.order,
       type: channel?.type,
       link: channel?.link,
