@@ -6,6 +6,7 @@ import { SlidesRouter } from '../api/routes/slides.routes';
 import { UsersRouter } from '../api/routes/users.routes';
 import { FormRequestsRouter } from '../api/routes/form-requests.routes';
 import { RequestsRouter } from '../api/routes/requests.routes';
+import { HighlightedCityRouter } from '../api/routes/highlighted-cities.routes';
 
 export default async (app: Application): Promise<Application> => {
   const userRouter = new UsersRouter(app);
@@ -28,6 +29,9 @@ export default async (app: Application): Promise<Application> => {
 
   const requestsRouter = new RequestsRouter(app);
   requestsRouter.init();
+
+  const highlightedCityRouter = new HighlightedCityRouter(app);
+  highlightedCityRouter.init();
 
   return app;
 };
