@@ -6,6 +6,8 @@ export interface ChannelModel {
   order: number;
   icon?: MediaModel;
   banner?: MediaModel;
+  type: string,
+  link: string,
   id?: string;
 }
 

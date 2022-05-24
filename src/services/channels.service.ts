@@ -36,14 +36,15 @@ export class ChannelsService {
   }
 
   async create(channelDto: any, channelMedia: any): Promise<ChannelResponseModel> {
-    const media = [];
+    let icon;
+    let banner;
 
     if (channelMedia.banner?.[0] && channelMedia.icon?.[0]) {
-      media.push(await cloudinary.upload(channelMedia.banner?.[0]?.path));
-      media.push(await cloudinary.upload(channelMedia.icon?.[0]?.path));
+      banner = await cloudinary.upload(channelMedia.banner?.[0]?.path);
+      icon = await cloudinary.upload(channelMedia.icon?.[0]?.path);
     }
 
-    const channel = this.channelMapper.dtoToChannel(channelDto, media);
+    const channel = this.channelMapper.dtoToChannel(channelDto, icon, banner);
     const channelCreated = await new channelsCollection(channel).save();
     const channelRequest = this.channelMapper.channelToDto(channelCreated, messages.createSuccess('channel'));
 
@@ -51,14 +52,15 @@ export class ChannelsService {
   }
 
   async update(channelDto: any, channelMedia: any): Promise<ChannelResponseModel | MessageModel> {
-    const media = [];
+    let icon;
+    let banner;  
 
     if (channelMedia.banner) {
       if (channelDto.banner?._id) {
         await cloudinary.destroy(channelDto?.banner._id);
       }
 
-      media.push(await cloudinary.upload(channelMedia.banner?.[0]?.path));
+      banner = await cloudinary.upload(channelMedia.banner?.[0]?.path);
     }
 
     if (channelMedia.icon) {
@@ -66,11 +68,10 @@ export class ChannelsService {
         await cloudinary.destroy(channelDto.icon?._id);
       }
 
-      media.push(await cloudinary.upload(channelMedia.icon?.[0]?.path));
+      icon = await cloudinary.upload(channelMedia.icon?.[0]?.path);
     }
 
-
-    const channel = this.channelMapper.dtoToChannel(channelDto, media);
+    const channel = this.channelMapper.dtoToChannel(channelDto, icon, banner);
     const channelUpdated = await channelsCollection.findByIdAndUpdate(channel?.id, { $set: channel }, { new: true });
     const channelResponse = this.channelMapper.channelToDto(channelUpdated, messages.updateSuccess('channel'));
     return channelResponse;

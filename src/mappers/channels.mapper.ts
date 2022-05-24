@@ -1,23 +1,18 @@
 import { UploadApiResponse } from 'cloudinary';
 import { ChannelModel, ChannelResponseModel as ChannelResponseModel } from '../models/channel.model';
+import { MediaModel } from '../models/media.model';
 
 export class ChannelMapper {
 
-  dtoToChannel(channel: any, media: UploadApiResponse[] | undefined): ChannelModel {
+  dtoToChannel(channel: any, icon: UploadApiResponse | undefined, banner: UploadApiResponse | undefined): ChannelModel {
     return {
       name: channel?.name,
       description: channel?.description,
-      icon: media?.[1] && {
-        _id: media?.[1].public_id,
-        url: media?.[1].secure_url,
-        type: media?.[1].format,
-      },
-      banner: media?.[0] && {
-        _id: media?.[0].public_id,
-        url: media?.[0].secure_url,
-        type: media?.[0].format,
-      },
+      icon: this.getMedia(icon, JSON.parse(channel?.iconEncoded || '{}')),
+      banner: this.getMedia(banner, JSON.parse(channel?.iconEncoded || '{}')),
       order: channel?.order,
+      type: channel?.type,
+      link: channel?.link,
       id: channel?.id,
     };
   }
@@ -33,6 +28,16 @@ export class ChannelMapper {
     return {
       channels,
       message,
+    };
+  }
+
+  private getMedia(newMedia: UploadApiResponse | undefined, media: MediaModel): MediaModel {    
+    if (!!media && !newMedia) { return media; }
+
+    return {
+      _id: newMedia?.public_id,
+      url: newMedia?.secure_url,
+      type: newMedia?.format,
     };
   }
 }
