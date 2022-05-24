@@ -29,14 +29,7 @@ export class HighlightedCityService {
     return { states: [cityCreated], message };
   }
 
-  async update(city: any): Promise<StatesResponseModel | MessageModel> {
-    const cityUpdated = await highlightedCitiesCollection.findByIdAndUpdate(city?._id, { $set: city }, { new: true });
-    const message = messages.updateSuccess('Highlighted city');
-
-    return { states: [cityUpdated], message };
-  }
-
-  async delete(cityId: any): Promise<MessageModel> {
+  async delete(cityId: any): Promise<StatesResponseModel | MessageModel> {
     const city = await highlightedCitiesCollection.findByIdAndDelete(cityId);
 
     if (!city) {
@@ -44,6 +37,6 @@ export class HighlightedCityService {
     }
 
     const message = messages.deleteSuccess('Highlighted city');
-    return { message };
+    return { states: [city], message };
   }
 }

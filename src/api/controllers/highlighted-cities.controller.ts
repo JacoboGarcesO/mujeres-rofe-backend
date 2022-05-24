@@ -24,15 +24,6 @@ export class HighlightedCityController {
     }
   }
 
-  async update(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
-    try {      
-      const formResponse = await service.update(request.body);
-      return response.status(200).json(formResponse);
-    } catch (err) {
-      next(err);
-    }
-  }
-
   async delete(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
     try {      
       const formResponse = await service.delete(request.params.cityId);

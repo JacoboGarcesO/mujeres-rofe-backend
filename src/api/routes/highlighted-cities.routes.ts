@@ -14,7 +14,6 @@ export class HighlightedCityRouter {
     this.app.use('/api/highlighted', router);
     router.post('/', this.jwtController.validateToken, this.controller.create);
     router.get('/', this.jwtController.validateToken, this.controller.getAll);
-    router.put('/', this.jwtController.validateToken, this.controller.update);
     router.delete('/:cityId', this.jwtController.validateToken, this.controller.delete);
   }
 }
