@@ -12,6 +12,7 @@ const requestsSchema = new Schema({
   template: { type: String, required: [true, 'Form template is required'] },
   subject: { type: String, required: [true, 'Form subject is required'] },
   creationDate: { type: Date, default: new Date() },
+  channel: { type: String },
   fields: [fieldSchema],
 }, { collection: 'Requests' });
 

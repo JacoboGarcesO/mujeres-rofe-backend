@@ -16,6 +16,7 @@ const formRequestsSchema = new Schema({
   template: { type: String, required: [true, 'Foorm template is required'] },
   subject: { type: String, required: [true, 'Foorm subject is required'] },
   fields: [fieldSchema],
+  channel: { type: String },
 }, { collection: 'FormRequests' });
 
 export default model('FormRequests', formRequestsSchema);
