@@ -15,7 +15,7 @@ export class RequestsService {
   }
 
   async getAll(): Promise<RequestsResponseModel | MessageModel> {
-    const requests: RequestsModel[] = await requestsCollection.find();
+    const requests: RequestsModel[] = await requestsCollection.find().sort({ creationDate: -1 });
 
     if (!requests?.length) {
       return this.messageMapper.map(messages.getAllFailure('requests'));
