@@ -139,7 +139,7 @@ export class UserService {
 
   async getByFirstName(firstName: string): Promise<UserResponseModel | MessageModel> {
     const users: UserModel[] = await usersCollection
-      .find({ firstName })
+      .find({ firstName: new RegExp(firstName) })
       .sort({ firstName: 1 });
 
     if (!users?.length) {

@@ -45,6 +45,7 @@ const userSchema = new Schema({
   location: locationSchema,
   socialsNetworks: [socialNetworkSchema],
   creationDate: { type: Date, default: new Date() },
+  hasAcceptTermsAndConditions: { type: Boolean },
 }, { collection: 'Users' });
 
 export default model('Users', userSchema);

@@ -53,6 +53,7 @@ export class UserMapper {
       promocionalCode: user?.promocionalCode,
       stratum: user?.stratum,
       sustaining: JSON.parse(user?.sustaining),
+      hasAcceptTermsAndConditions: user?.hasAcceptTermsAndConditions,
     };
   }
 
