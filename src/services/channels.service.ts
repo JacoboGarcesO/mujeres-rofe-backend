@@ -16,7 +16,7 @@ export class ChannelsService {
   }
 
   async getAll(): Promise<ChannelResponseModel | MessageModel> {
-    const channels: ChannelModel[] = await channelsCollection.find();
+    const channels: ChannelModel[] = await channelsCollection.find().sort({ order: 1 });
 
     if (!channels?.length) {
       return this.messageMapper.map(messages.getAllFailure('channels'));
@@ -53,7 +53,7 @@ export class ChannelsService {
 
   async update(channelDto: any, channelMedia: any): Promise<ChannelResponseModel | MessageModel> {
     let icon;
-    let banner;  
+    let banner;
 
     if (channelMedia.banner) {
       if (channelDto.banner?._id) {

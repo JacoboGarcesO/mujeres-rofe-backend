@@ -1,7 +1,10 @@
+import { MediaModel } from './media.model';
+
 export interface FieldRequestsModel {
   label: string,
   placeholder: string,
   value: string,
+  image?: MediaModel;
 }
 
 export interface RequestsModel {
@@ -9,6 +12,7 @@ export interface RequestsModel {
   title: string;
   template: string;
   subject: string;
+  channel: string;
   fields: FieldRequestsModel[],
 }
 

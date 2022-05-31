@@ -1,9 +1,12 @@
 import { model, Schema } from 'mongoose';
+import { mediaSchema } from './image.collection';
 
 const fieldSchema = new Schema({
   label: { type: String },
   placeholder: { type: String },
   value: { type: String },
+  type: { type: String, enum: ['image', 'text', 'list'] },
+  image: mediaSchema,
 });
 
 const requestsSchema = new Schema({

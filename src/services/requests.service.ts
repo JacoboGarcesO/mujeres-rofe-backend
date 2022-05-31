@@ -4,14 +4,18 @@ import { RequestsModel, RequestsResponseModel } from '../models/requests.model';
 import { MessageModel } from '../models/message.model';
 import messages from '../utils/messages';
 import { EmailsService } from './emails.service';
+import { RequestMapper } from '../mappers/requests.mapper';
+import cloudinary from '../config/cloudinary';
 
 const emailsService = new EmailsService();
 
 export class RequestsService {
   private messageMapper: MessagesMapper;
+  private requestMapper: RequestMapper;
 
-  constructor(messageMapper: MessagesMapper) {
+  constructor(messageMapper: MessagesMapper, requestMapper: RequestMapper) {
     this.messageMapper = messageMapper;
+    this.requestMapper = requestMapper;
   }
 
   async getAll(): Promise<RequestsResponseModel | MessageModel> {
@@ -39,9 +43,25 @@ export class RequestsService {
     return requestResponse;
   }
 
-  async create(request: any): Promise<RequestsResponseModel> {
-    const requestCreated = await new requestsCollection(request?.request).save();
-    await emailsService.send(request?.user, request?.request?.subject, request?.request?.template, request?.request?.title);
+  async create(request: any, media: any): Promise<RequestsResponseModel> {
+    let image;
+  
+    if (media?.image?.[0]) {
+      image = await cloudinary.upload(media?.image?.[0]?.path);
+    }
+
+    const requestMapped = this.requestMapper.toRequest(request, image);
+
+    const requestCreated = await new requestsCollection(requestMapped).save();
+
+    const user = {
+      email: request?.userEmail,
+      firstName: request?.userFirstName,
+      lastName: request?.userLastName,
+      document: request?.userDocument,
+    };
+
+    await emailsService.send(user, requestMapped?.subject, requestMapped?.template, requestMapped?.title);
     const message = messages.createSuccess('request');
     const requestResponse = { requests: [requestCreated], message };
 
@@ -61,6 +81,12 @@ export class RequestsService {
 
     if (!request) {
       return this.messageMapper.map(messages.deleteFailure('request'));
+    }
+
+    const fieldImage = request?.fields?.find((field: any) => field?.type === 'image').image;
+
+    if (fieldImage) {
+      await cloudinary.destroy(fieldImage?._id);
     }
 
     const message = messages.deleteSuccess('request');

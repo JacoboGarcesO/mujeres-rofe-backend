@@ -7,6 +7,7 @@ const optionSchema = new Schema({
 const fieldSchema = new Schema({
   label: { type: String },
   placeholder: { type: String },
+  type: { type: String, enum: ['image', 'text', 'list'] },
   options: [optionSchema],
 });
 

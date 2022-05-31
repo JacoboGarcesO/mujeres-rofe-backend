@@ -1,9 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
 import { RequestsService } from '../../services/requests.service';
 import { MessagesMapper } from '../../mappers/messages.mapper';
+import { RequestMapper } from '../../mappers/requests.mapper';
 
 const messageMapper = new MessagesMapper();
-const service = new RequestsService(messageMapper);
+const requestMapper = new RequestMapper();
+const service = new RequestsService(messageMapper, requestMapper);
 
 export class RequestsController {
   async getAll(_request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
@@ -25,8 +27,8 @@ export class RequestsController {
   }
 
   async create(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
-    try {
-      const requestCreated = await service.create(request.body);
+    try {      
+      const requestCreated = await service.create(request.body, request.files);
       return response.status(201).json(requestCreated);
     } catch (err) {
       next(err);
