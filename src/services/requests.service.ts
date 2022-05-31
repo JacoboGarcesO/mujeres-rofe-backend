@@ -83,7 +83,7 @@ export class RequestsService {
       return this.messageMapper.map(messages.deleteFailure('request'));
     }
 
-    const fieldImage = request?.fields?.find((field: any) => field?.type === 'image').image;
+    const fieldImage = request?.fields?.find((field: any) => field?.type === 'image')?.image;
 
     if (fieldImage) {
       await cloudinary.destroy(fieldImage?._id);
