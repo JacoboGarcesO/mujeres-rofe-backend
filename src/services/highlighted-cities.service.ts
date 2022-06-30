@@ -12,7 +12,7 @@ export class HighlightedCityService {
   }
 
   async getAll(): Promise<StatesResponseModel | MessageModel> {
-    const cities: StateModel[] = await highlightedCitiesCollection.find();
+    const cities: StateModel[] = await highlightedCitiesCollection.find().sort({ name: 1 });
 
     if (!cities?.length) {
       return this.messageMapper.map(messages.getAllFailure('Highlighted cities'));
