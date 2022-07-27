@@ -9,29 +9,18 @@ import { RequestsRouter } from '../api/routes/requests.routes';
 import { HighlightedCityRouter } from '../api/routes/highlighted-cities.routes';
 
 export default async (app: Application): Promise<Application> => {
-  const userRouter = new UsersRouter(app);
-  userRouter.init();
+  const routes = [
+    new HighlightedCityRouter(app),
+    new RequestsRouter(app),
+    new FormRequestsRouter(app),
+    new LocationsRouter(app),
+    new SlidesRouter(app),
+    new NoticesRouter(app),
+    new ChannelsRouter(app),
+    new UsersRouter(app),
+  ];
 
-  const channelRouter = new ChannelsRouter(app);
-  channelRouter.init();
-
-  const noticeRouter = new NoticesRouter(app);
-  noticeRouter.init();
-
-  const slideRouter = new SlidesRouter(app);
-  slideRouter.init();
-
-  const locationsRouter = new LocationsRouter(app);
-  locationsRouter.init();
-
-  const formRequestsRouter = new FormRequestsRouter(app);
-  formRequestsRouter.init(); 
-
-  const requestsRouter = new RequestsRouter(app);
-  requestsRouter.init();
-
-  const highlightedCityRouter = new HighlightedCityRouter(app);
-  highlightedCityRouter.init();
+  routes.forEach((route) => route.init());
 
   return app;
 };
