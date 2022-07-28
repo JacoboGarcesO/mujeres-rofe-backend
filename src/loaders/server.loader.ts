@@ -14,12 +14,14 @@ export default class Server {
     return this.server;
   }
 
-  public start(): void {
+  public async start(): Promise<Application> {
     this.server
       .listen(
         this.getPort(),
         this.log.bind(this),
       );
+
+    return this.server;
   }
 
   private setPort(): void {

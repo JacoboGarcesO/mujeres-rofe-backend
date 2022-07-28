@@ -1,9 +1,9 @@
 import express from 'express';
-import loader from './loaders/index';
+import Loader from './loaders/index';
 
-const init = () => {
-  const app = express();
-  loader(app);
-};
-
-init();
+(
+  async () => {
+    const loader = new Loader(express());
+    await loader.load();
+  }
+)();

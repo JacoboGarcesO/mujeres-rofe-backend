@@ -1,12 +1,23 @@
 import { Application } from 'express';
-import { log } from '../utils/logs';
-import Server from './server';
-import databaseLoader from './database';
-import routesLoader from './routes';
+import Server from './server.loader';
+import Database from './database.loader';
+import Router from './router.loader';
 
-export default async (app: Application) => {
-  const server = new Server(app);
-  await server.init();
-  await routesLoader(app);
-  databaseLoader.then(() => server.start()).catch(log.bind(this));
-};
+export default class {
+  private server: Server;
+  private router: Router;
+  private database: Database;
+
+  constructor(app: Application) {
+    this.server = new Server(app);
+    this.router = new Router(app);
+    this.database = new Database();
+  }
+
+  public async load(): Promise<void> {
+    await this.server.init();
+    await this.router.init();
+    await this.database.connect();
+    await this.server.start();
+  }
+}
