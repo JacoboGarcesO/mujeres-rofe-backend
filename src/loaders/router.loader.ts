@@ -1,35 +1,35 @@
 import { Application } from 'express';
-import { ChannelsRouter } from '../api/routes/channels.routes';
-import { LocationsRouter } from '../api/routes/locations.routes';
-import { NoticesRouter } from '../api/routes/notices.routes';
-import { SlidesRouter } from '../api/routes/slides.routes';
-import { UsersRouter } from '../api/routes/users.routes';
-import { FormRequestsRouter } from '../api/routes/form-requests.routes';
-import { RequestsRouter } from '../api/routes/requests.routes';
-import { HighlightedCityRouter } from '../api/routes/highlighted-cities.routes';
+import { ChannelRouter } from '../api/routes/channel.routes';
+import { LocationRouter } from '../api/routes/location.routes';
+import { NoticeRouter } from '../api/routes/notice.routes';
+import { SlideRouter } from '../api/routes/slide.routes';
+import { UserRouter } from '../api/routes/user.routes';
+import { FormRequestRouter } from '../api/routes/form-request.routes';
+import { RequestRouter } from '../api/routes/request.routes';
+import { HighlightedCityRouter } from '../api/routes/highlighted-city.routes';
 
 export default class Router {
   private routes: (
     HighlightedCityRouter 
-    | RequestsRouter 
-    | FormRequestsRouter 
-    | LocationsRouter 
-    | SlidesRouter 
-    | NoticesRouter 
-    | ChannelsRouter 
-    | UsersRouter
+    | RequestRouter 
+    | FormRequestRouter 
+    | LocationRouter 
+    | SlideRouter 
+    | NoticeRouter 
+    | ChannelRouter 
+    | UserRouter
   )[];
 
   constructor(app: Application) {
     this.routes = [
       new HighlightedCityRouter(app),
-      new RequestsRouter(app),
-      new FormRequestsRouter(app),
-      new LocationsRouter(app),
-      new SlidesRouter(app),
-      new NoticesRouter(app),
-      new ChannelsRouter(app),
-      new UsersRouter(app),
+      new RequestRouter(app),
+      new FormRequestRouter(app),
+      new LocationRouter(app),
+      new SlideRouter(app),
+      new NoticeRouter(app),
+      new ChannelRouter(app),
+      new UserRouter(app),
     ];
   }
 

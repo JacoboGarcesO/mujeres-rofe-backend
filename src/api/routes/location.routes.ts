@@ -1,7 +1,7 @@
 import { Application, Router } from 'express';
 import { LocationsController } from '../controllers/locations.controller';
 
-export class LocationsRouter {
+export class LocationRouter {
   private app: Application;
   private controller: LocationsController = new LocationsController();
 
@@ -10,8 +10,20 @@ export class LocationsRouter {
   init() {
     const router = Router();
     this.app.use('/api/locations', router);
-    router.get('/',this.controller.getStates);
-    router.get('/:stateId',this.controller.getCitiesByState);
-    router.post('/cities',this.controller.getCities);
+
+    router.get(
+      '/',
+      this.controller.getStates,
+    );
+
+    router.get(
+      '/:stateId',
+      this.controller.getCitiesByState,
+    );
+
+    router.post(
+      '/cities',
+      this.controller.getCities,
+    );
   }
 }
