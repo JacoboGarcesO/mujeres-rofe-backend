@@ -1,11 +1,11 @@
 import { UploadApiResponse } from 'cloudinary';
-import { MediaModel } from '../models/media.model';
+import { IMedia } from '../models/media.model';
 import {
-  UserCredentialsModel,
-  UserCredentialsResponseModel,
-  UserModel,
-  UserResponseModel,
-  UserPaginatedResponseModel,
+  IUserCredentials,
+  IUserCredentialsResponse,
+  IUser,
+  IUserResponse,
+  IUserPaginated,
 } from '../models/user.model';
 import { encryptPassword } from '../utils/bcrypt';
 
@@ -14,7 +14,7 @@ export class UserMapper {
     user: any,
     image: UploadApiResponse | undefined,
     documentImage: UploadApiResponse | undefined,
-  ): UserModel {
+  ): IUser {
     const password = encryptPassword(
       user?.firstName.charAt(0).toUpperCase() +
         user?.lastName.charAt(0).toLowerCase() +
@@ -57,14 +57,14 @@ export class UserMapper {
     };
   }
 
-  userToDto(users: UserModel, message: string): UserResponseModel {
+  userToDto(users: IUser, message: string): IUserResponse {
     return {
       users: [users],
       message,
     };
   }
 
-  usersToDto(users: UserModel[], message: string): UserResponseModel {
+  usersToDto(users: IUser[], message: string): IUserResponse {
     return {
       users,
       message,
@@ -72,10 +72,10 @@ export class UserMapper {
   }
 
   usersPaginatedToDto(
-    users: UserModel[],
+    users: IUser[],
     total: number,
     message: string,
-  ): UserPaginatedResponseModel {
+  ): IUserPaginated {
     return {
       users,
       total,
@@ -83,7 +83,7 @@ export class UserMapper {
     };
   }
 
-  dtoToUserCredentials(userCredentials: any): UserCredentialsModel {
+  dtoToUserCredentials(userCredentials: any): IUserCredentials {
     return {
       password: userCredentials?.password,
       email: userCredentials?.email,
@@ -93,8 +93,8 @@ export class UserMapper {
   userCredentialsToDto(
     message: string,
     token?: string,
-    user?: UserModel,
-  ): UserCredentialsResponseModel {
+    user?: IUser,
+  ): IUserCredentialsResponse {
     return {
       message,
       token,
@@ -104,8 +104,8 @@ export class UserMapper {
 
   private getMedia(
     newMedia: UploadApiResponse | undefined,
-    media: MediaModel,
-  ): MediaModel {
+    media: IMedia,
+  ): IMedia {
     if (!!media && !newMedia) {
       return media;
     }

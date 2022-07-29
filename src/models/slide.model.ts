@@ -1,12 +1,12 @@
-import { MediaModel } from './media.model';
+import { IMedia } from './media.model';
 
-export interface SlideModel {
+export interface ISlide {
   title: string;
-  image: MediaModel;
+  image: IMedia;
   url: string;
   id?: string;
 }
-export interface SlideResponseModel {
-  slides: SlideModel[];
+export interface ISlideResponse {
+  slides: ISlide[];
   message: string;
 }

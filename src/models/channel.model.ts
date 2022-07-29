@@ -1,17 +1,17 @@
-import { MediaModel } from './media.model';
+import { IMedia } from './media.model';
 
-export interface ChannelModel {
+export interface IChannel {
   name: string;
   description: string;
   order: number;
-  icon?: MediaModel;
-  banner?: MediaModel;
+  icon?: IMedia;
+  banner?: IMedia;
   type: string,
   link: string,
   id?: string;
 }
 
-export interface ChannelResponseModel {
-  channels: ChannelModel[];
+export interface IChannelResponse {
+  channels: IChannel[];
   message: string;
 }

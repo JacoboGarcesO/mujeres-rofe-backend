@@ -1,22 +1,22 @@
-import { MediaModel } from './media.model';
+import { IMedia } from './media.model';
 
-export interface FieldRequestsModel {
+export interface IFieldRequest {
   label: string,
   placeholder: string,
   value: string,
-  image?: MediaModel;
+  image?: IMedia;
 }
 
-export interface RequestsModel {
+export interface IRequest {
   formId: string;
   title: string;
   template: string;
   subject: string;
   channel: string;
-  fields: FieldRequestsModel[],
+  fields: IFieldRequest[],
 }
 
-export interface RequestsResponseModel {
-  requests: RequestsModel[];
+export interface IRequestResponse {
+  requests: IRequest[];
   message: string;
 }

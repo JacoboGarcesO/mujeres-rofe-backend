@@ -1,7 +1,7 @@
-import { MessageModel } from '../models/message.model';
+import { IMessage } from '../models/message.model';
 
 export class MessagesMapper {
-  map(message: string): MessageModel {
+  map(message: string): IMessage {
     return { message };
   }
 }

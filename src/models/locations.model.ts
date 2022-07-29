@@ -1,25 +1,25 @@
-export interface CityModel {
+export interface ICity {
   stateId: string;
   name: string;
 }
 
-export interface LocationModel {
+export interface ILocation {
   state: string;
   city: string;
   cityName: string;
 }
 
-export interface StateModel {
+export interface IState {
   name: string;
   _id: string;
 }
 
-export interface CitesResponseModel {
-  cities: CityModel[];
+export interface ICityResponse {
+  cities: ICity[];
   message: string;
 }
 
-export interface StatesResponseModel {
-  states: StateModel[];
+export interface IStateResponse {
+  states: IState[];
   message: string;
 }

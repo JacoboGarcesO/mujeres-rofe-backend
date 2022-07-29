@@ -1,7 +1,7 @@
 import requestsCollection from '../collections/requests.collection';
 import { MessagesMapper } from '../mappers/messages.mapper';
-import { RequestsModel, RequestsResponseModel } from '../models/requests.model';
-import { MessageModel } from '../models/message.model';
+import { IRequest, IRequestResponse } from '../models/requests.model';
+import { IMessage } from '../models/message.model';
 import messages from '../utils/messages';
 import { EmailsService } from './emails.service';
 import { RequestMapper } from '../mappers/requests.mapper';
@@ -18,8 +18,8 @@ export class RequestsService {
     this.requestMapper = requestMapper;
   }
 
-  async getAll(): Promise<RequestsResponseModel | MessageModel> {
-    const requests: RequestsModel[] = await requestsCollection.find().sort({ creationDate: -1 });
+  async getAll(): Promise<IRequestResponse | IMessage> {
+    const requests: IRequest[] = await requestsCollection.find().sort({ creationDate: -1 });
 
     if (!requests?.length) {
       return this.messageMapper.map(messages.getAllFailure('requests'));
@@ -30,7 +30,7 @@ export class RequestsService {
     return { requests, message };
   }
 
-  async getById(requestId: any): Promise<RequestsResponseModel | MessageModel> {
+  async getById(requestId: any): Promise<IRequestResponse | IMessage> {
     const request = await requestsCollection.findById(requestId).populate('formId');
 
     if (!request) {
@@ -43,7 +43,7 @@ export class RequestsService {
     return requestResponse;
   }
 
-  async create(request: any, media: any): Promise<RequestsResponseModel> {
+  async create(request: any, media: any): Promise<IRequestResponse> {
     let image;
   
     if (media?.image?.[0]) {
@@ -68,7 +68,7 @@ export class RequestsService {
     return requestResponse;
   }
 
-  async update(request: any): Promise<RequestsResponseModel | MessageModel> {
+  async update(request: any): Promise<IRequestResponse | IMessage> {
     const requestUpdated = await requestsCollection.findByIdAndUpdate(request?.id, { $set: request }, { new: true });
     const message = messages.updateSuccess('request');
     const requestResponse = { requests: [requestUpdated], message };
@@ -76,7 +76,7 @@ export class RequestsService {
     return requestResponse;
   }
 
-  async delete(requestId: any): Promise<MessageModel> {
+  async delete(requestId: any): Promise<IMessage> {
     const request = await requestsCollection.findByIdAndDelete(requestId);
 
     if (!request) {

@@ -1,10 +1,10 @@
 import { UploadApiResponse } from 'cloudinary';
-import { MediaModel } from '../models/media.model';
-import { SlideModel, SlideResponseModel } from '../models/slide.model';
+import { IMedia } from '../models/media.model';
+import { ISlide, ISlideResponse } from '../models/slide.model';
 
 export class SlideMapper {
 
-  dtoToSlide(slide: any, image: any): SlideModel {
+  dtoToSlide(slide: any, image: any): ISlide {
     return {
       title: slide?.title,
       image: this.getMedia(image, JSON.parse(slide?.imageEncoded || '{}')),
@@ -13,21 +13,21 @@ export class SlideMapper {
     };
   }
 
-  slideToDto(slide: SlideModel, message: string): SlideResponseModel {
+  slideToDto(slide: ISlide, message: string): ISlideResponse {
     return {
       slides: [slide],
       message,
     };
   }
 
-  slidesToDto(slides: SlideModel[], message: string): SlideResponseModel {
+  slidesToDto(slides: ISlide[], message: string): ISlideResponse {
     return {
       slides,
       message,
     };
   }
 
-  private getMedia(newMedia: UploadApiResponse | undefined, media: MediaModel): MediaModel {    
+  private getMedia(newMedia: UploadApiResponse | undefined, media: IMedia): IMedia {    
     if (!!media && !newMedia) { return media; }
 
     return {

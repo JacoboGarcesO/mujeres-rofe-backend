@@ -2,8 +2,8 @@ import channelsCollection from '../collections/channels.collection';
 import cloudinary from '../config/cloudinary';
 import { ChannelMapper } from '../mappers/channels.mapper';
 import { MessagesMapper } from '../mappers/messages.mapper';
-import { ChannelModel, ChannelResponseModel } from '../models/channel.model';
-import { MessageModel } from '../models/message.model';
+import { IChannel, IChannelResponse } from '../models/channel.model';
+import { IMessage } from '../models/message.model';
 import messages from '../utils/messages';
 
 export class ChannelsService {
@@ -15,8 +15,8 @@ export class ChannelsService {
     this.messageMapper = messageMapper;
   }
 
-  async getAll(): Promise<ChannelResponseModel | MessageModel> {
-    const channels: ChannelModel[] = await channelsCollection.find().sort({ order: 1 });
+  async getAll(): Promise<IChannelResponse | IMessage> {
+    const channels: IChannel[] = await channelsCollection.find().sort({ order: 1 });
 
     if (!channels?.length) {
       return this.messageMapper.map(messages.getAllFailure('channels'));
@@ -25,7 +25,7 @@ export class ChannelsService {
     return this.channelMapper.channelsToDto(channels, messages.getAll('channels'));
   }
 
-  async getById(channelId: any): Promise<ChannelResponseModel | MessageModel> {
+  async getById(channelId: any): Promise<IChannelResponse | IMessage> {
     const channel = await channelsCollection.findById(channelId);
 
     if (!channel) {
@@ -35,7 +35,7 @@ export class ChannelsService {
     return this.channelMapper.channelToDto(channel, messages.getById('channel'));
   }
 
-  async create(channelDto: any, channelMedia: any): Promise<ChannelResponseModel> {
+  async create(channelDto: any, channelMedia: any): Promise<IChannelResponse> {
     let icon;
     let banner;
 
@@ -51,7 +51,7 @@ export class ChannelsService {
     return channelRequest;
   }
 
-  async update(channelDto: any, channelMedia: any): Promise<ChannelResponseModel | MessageModel> {
+  async update(channelDto: any, channelMedia: any): Promise<IChannelResponse | IMessage> {
     let icon;
     let banner;
 
@@ -77,7 +77,7 @@ export class ChannelsService {
     return channelResponse;
   }
 
-  async delete(channelId: any): Promise<MessageModel> {
+  async delete(channelId: any): Promise<IMessage> {
     const channel = await channelsCollection.findByIdAndDelete(channelId);
 
     if (!channel) {

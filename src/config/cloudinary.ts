@@ -1,4 +1,4 @@
-import * as cloudinary from 'cloudinary';
+import cloudinary from 'cloudinary';
 import environment from './environment';
 
 cloudinary.v2.config({

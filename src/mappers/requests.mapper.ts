@@ -1,8 +1,8 @@
 import { UploadApiResponse } from 'cloudinary';
-import { FieldRequestsModel, RequestsModel } from '../models/requests.model';
+import { IFieldRequest, IRequest } from '../models/requests.model';
 
 export class RequestMapper {
-  toRequest(request: any, media: UploadApiResponse | undefined): RequestsModel {
+  toRequest(request: any, media: UploadApiResponse | undefined): IRequest {
     return {
       formId: request?.requestFormId,
       title: request?.requestTitle,
@@ -13,7 +13,7 @@ export class RequestMapper {
     };
   }
 
-  private getFields(fields: any[], media: UploadApiResponse | undefined): FieldRequestsModel[] {
+  private getFields(fields: any[], media: UploadApiResponse | undefined): IFieldRequest[] {
     return fields.map((field) => {
       if (field?.type === 'image') {
         return {

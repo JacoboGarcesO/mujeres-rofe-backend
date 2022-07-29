@@ -1,21 +1,21 @@
-import { LocationModel } from './locations.model';
-import { MediaModel } from './media.model';
+import { ILocation } from './locations.model';
+import { IMedia } from './media.model';
 
-export interface UserModel {
+export interface IUser {
   firstName: string;
   lastName: string;
   email: string;
   rol: string;
   documentNumber: string;
   password: string;
-  image: MediaModel;
+  image: IMedia;
   id: string;
   description: string;
-  socialsNetworks: SocialNetworksModel[];
+  socialsNetworks: ISocialNetworks[];
   hobbies: string[];
   phoneNumber: number;
   isPremium: boolean;
-  location: LocationModel;
+  location: ILocation;
   documentType: string;
   maritalStatus: string;
   address: string;
@@ -29,34 +29,34 @@ export interface UserModel {
   disclosure: string;
   ethnicGroup: string[];
   sustaining: string[];
-  documentImage: MediaModel;
+  documentImage: IMedia;
   hasAcceptTermsAndConditions: boolean;
   creationDate?: Date;
 }
 
-export interface UserResponseModel {
-  users: UserModel[];
+export interface IUserResponse {
+  users: IUser[];
   message: string;
 }
 
-export interface UserPaginatedResponseModel {
-  users: UserModel[];
+export interface IUserPaginated {
+  users: IUser[];
   total: number;
   message: string;
 }
 
-export interface UserCredentialsModel {
+export interface IUserCredentials {
   email: string;
   password: string;
 }
 
-export interface UserCredentialsResponseModel {
+export interface IUserCredentialsResponse {
   message: string;
   token?: string;
-  user?: UserModel;
+  user?: IUser;
 }
 
-export interface SocialNetworksModel {
+export interface ISocialNetworks {
   name: string;
   url: string;
 }

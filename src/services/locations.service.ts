@@ -2,8 +2,8 @@ import citiesCollection from '../collections/cities.collection';
 import statesCollection from '../collections/states.collection';
 import { LocationsMapper } from '../mappers/locations.mapper';
 import { MessagesMapper } from '../mappers/messages.mapper';
-import { CitesResponseModel, StatesResponseModel } from '../models/locations.model';
-import { MessageModel } from '../models/message.model';
+import { ICityResponse, IStateResponse } from '../models/locations.model';
+import { IMessage } from '../models/message.model';
 import messages from '../utils/messages';
 
 export class LocationsService {
@@ -15,7 +15,7 @@ export class LocationsService {
     this.messageMapper = messageMapper;
   }
 
-  async getStates(): Promise<StatesResponseModel | MessageModel> {
+  async getStates(): Promise<IStateResponse | IMessage> {
     const states = await statesCollection.find();
 
     if (!states?.length) {
@@ -25,7 +25,7 @@ export class LocationsService {
     return this.locationsMapper.statesToDto(states, messages.getAll('states'));
   }
 
-  async getCitiesByState(stateId: any): Promise<StatesResponseModel | MessageModel> {
+  async getCitiesByState(stateId: any): Promise<IStateResponse | IMessage> {
     const cities = await citiesCollection.find({stateId});
 
     if (!cities?.length) {
@@ -35,7 +35,7 @@ export class LocationsService {
     return this.locationsMapper.citiesToDto(cities, messages.getAll('cities'));
   }
 
-  async getCities(): Promise<CitesResponseModel | MessageModel> {
+  async getCities(): Promise<ICityResponse | IMessage> {
     const cities = await citiesCollection.find();
     
     if (!cities?.length) {

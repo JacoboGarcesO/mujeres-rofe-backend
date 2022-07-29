@@ -2,8 +2,8 @@ import noticesCollection from '../collections/notices.collection';
 import cloudinary from '../config/cloudinary';
 import { MessagesMapper } from '../mappers/messages.mapper';
 import { NoticeMapper } from '../mappers/notices.mapper';
-import { MessageModel } from '../models/message.model';
-import { NoticeModel, NoticeResponseModel } from '../models/notice.model';
+import { IMessage } from '../models/message.model';
+import { INotice, INoticeResponse } from '../models/notice.model';
 import messages from '../utils/messages';
 
 export class NoticesService {
@@ -15,8 +15,8 @@ export class NoticesService {
     this.messageMapper = messageMapper;
   }
 
-  async getAll(): Promise<NoticeResponseModel | MessageModel> {
-    const notices: NoticeModel[] = await noticesCollection.find();
+  async getAll(): Promise<INoticeResponse | IMessage> {
+    const notices: INotice[] = await noticesCollection.find();
 
     if (!notices?.length) {
       return this.messageMapper.map(messages.getAllFailure('notices'));
@@ -25,7 +25,7 @@ export class NoticesService {
     return this.noticeMapper.noticesToDto(notices, messages.getAll('notices'));
   }
 
-  async getById(noticeId: any): Promise<NoticeResponseModel | MessageModel> {
+  async getById(noticeId: any): Promise<INoticeResponse | IMessage> {
     const notice = await noticesCollection.findById(noticeId);
 
     if (!notice) {
@@ -35,8 +35,8 @@ export class NoticesService {
     return this.noticeMapper.noticeToDto(notice, messages.getById('notice'));
   }
 
-  async getNoticesByChannel(channel: any): Promise<NoticeResponseModel | MessageModel> {
-    const notices: NoticeModel[] = await noticesCollection.find({channel}).sort({ order : 'asc'});
+  async getNoticesByChannel(channel: any): Promise<INoticeResponse | IMessage> {
+    const notices: INotice[] = await noticesCollection.find({channel}).sort({ order : 'asc'});
   
     if (!notices?.length) {
       return this.messageMapper.map(messages.getAllFailure('notices'));
@@ -45,7 +45,7 @@ export class NoticesService {
     return this.noticeMapper.noticesToDto(notices, messages.getAll('notices'));
   }
 
-  async create(noticeDto: any, noticeMedia: any): Promise<NoticeResponseModel> {
+  async create(noticeDto: any, noticeMedia: any): Promise<INoticeResponse> {
     let icon;
     let content;
 
@@ -61,7 +61,7 @@ export class NoticesService {
     return noticeRequest;
   }
 
-  async update(noticeDto: any, noticeMedia: any): Promise<NoticeResponseModel | MessageModel> {
+  async update(noticeDto: any, noticeMedia: any): Promise<INoticeResponse | IMessage> {
     let icon;
     let content;    
 
@@ -87,7 +87,7 @@ export class NoticesService {
     return noticeResponse;
   }
 
-  async delete(noticeId: any): Promise<MessageModel> {
+  async delete(noticeId: any): Promise<IMessage> {
     const notice = await noticesCollection.findByIdAndDelete(noticeId);
 
     if (!notice) {

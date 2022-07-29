@@ -1,3 +1,3 @@
-export interface MessageModel {
+export interface IMessage {
   message: string;
 }

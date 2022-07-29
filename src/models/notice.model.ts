@@ -1,18 +1,13 @@
-import { MediaModel } from './media.model';
+import { IMedia } from './media.model';
 
-export interface linkNoticeModel {
-  name: string,
-  url: string,
-}
-
-export interface NoticeModel {
+export interface INotice {
   title: string;
   description: string;
   order: string;
   channel: string;
-  icon: MediaModel;
-  content: MediaModel;
-  links: linkNoticeModel[];
+  icon: IMedia;
+  content: IMedia;
+  links: ILinkNotice[];
   showUsersList: boolean;
   isLink: boolean;
   url: string;
@@ -20,7 +15,12 @@ export interface NoticeModel {
   id?: string;
 }
 
-export interface NoticeResponseModel {
-  notices: NoticeModel[];
+export interface INoticeResponse {
+  notices: INotice[];
   message: string;
+}
+
+interface ILinkNotice {
+  name: string,
+  url: string,
 }

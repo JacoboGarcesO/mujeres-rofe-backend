@@ -1,16 +1,16 @@
-export interface fieldFormRequestsModel {
-  label: string,
-  placeholder: string,
-}
-
-export interface FormRequestsModel {
+export interface IFormRequest {
   title: string;
   template: string;
   subject: string;
-  links: fieldFormRequestsModel[],
+  links: IFieldFormRequest[],
 }
 
-export interface FormRequestsResponseModel {
-  forms: FormRequestsModel[];
+export interface IFormRequestResponse {
+  forms: IFormRequest[];
   message: string;
+}
+
+interface IFieldFormRequest {
+  label: string,
+  placeholder: string,
 }

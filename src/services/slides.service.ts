@@ -2,8 +2,8 @@ import slidesCollection from '../collections/slides.collection';
 import cloudinary from '../config/cloudinary';
 import { MessagesMapper } from '../mappers/messages.mapper';
 import { SlideMapper } from '../mappers/slides.mapper';
-import { MessageModel } from '../models/message.model';
-import { SlideModel, SlideResponseModel } from '../models/slide.model';
+import { IMessage } from '../models/message.model';
+import { ISlide, ISlideResponse } from '../models/slide.model';
 import messages from '../utils/messages';
 
 export class SlideService {
@@ -15,8 +15,8 @@ export class SlideService {
     this.messageMapper = messageMapper;
   }
 
-  async getAll(): Promise<SlideResponseModel | MessageModel> {
-    const slides: SlideModel[] = await slidesCollection.find();
+  async getAll(): Promise<ISlideResponse | IMessage> {
+    const slides: ISlide[] = await slidesCollection.find();
 
     if (!slides?.length) {
       return this.messageMapper.map(messages.getAllFailure('slides'));
@@ -25,7 +25,7 @@ export class SlideService {
     return this.slideMapper.slidesToDto(slides, messages.getAll('slides'));
   }
 
-  async getById(slideId: any): Promise<SlideResponseModel | MessageModel> {
+  async getById(slideId: any): Promise<ISlideResponse | IMessage> {
     const slide = await slidesCollection.findById(slideId);
 
     if (!slide) {
@@ -35,7 +35,7 @@ export class SlideService {
     return this.slideMapper.slideToDto(slide, messages.getById('slides'));
   }
 
-  async create(slideDto: any, slideImage: any): Promise<SlideResponseModel> {
+  async create(slideDto: any, slideImage: any): Promise<ISlideResponse> {
     let image;
 
     if (slideImage) {
@@ -49,7 +49,7 @@ export class SlideService {
     return slideRequest;
   }
 
-  async update(slideDto: any, slideImage: any): Promise<SlideResponseModel | MessageModel> {
+  async update(slideDto: any, slideImage: any): Promise<ISlideResponse | IMessage> {
     let image;
 
     if (slideImage) {
@@ -66,7 +66,7 @@ export class SlideService {
     return slideResponse;
   }
 
-  async delete(slideId: any): Promise<MessageModel> {
+  async delete(slideId: any): Promise<IMessage> {
     const slide = await slidesCollection.findByIdAndDelete(slideId);
 
     if (!slide) {

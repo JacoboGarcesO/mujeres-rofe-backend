@@ -1,7 +1,7 @@
 import formRequestsCollection from '../collections/form-requests.collection';
 import { MessagesMapper } from '../mappers/messages.mapper';
-import { FormRequestsModel, FormRequestsResponseModel } from '../models/form-requests.model';
-import { MessageModel } from '../models/message.model';
+import { IFormRequest, IFormRequestResponse } from '../models/form-requests.model';
+import { IMessage } from '../models/message.model';
 import messages from '../utils/messages';
 
 export class formRequestsService {
@@ -11,8 +11,8 @@ export class formRequestsService {
     this.messageMapper = messageMapper;
   }
 
-  async getAll(): Promise<FormRequestsResponseModel | MessageModel> {
-    const forms: FormRequestsModel[] = await formRequestsCollection.find();
+  async getAll(): Promise<IFormRequestResponse | IMessage> {
+    const forms: IFormRequest[] = await formRequestsCollection.find();
 
     if (!forms?.length) {
       return this.messageMapper.map(messages.getAllFailure('forms requests'));
@@ -23,7 +23,7 @@ export class formRequestsService {
     return { forms, message };
   }
 
-  async getById(formId: any): Promise<FormRequestsResponseModel | MessageModel> {
+  async getById(formId: any): Promise<IFormRequestResponse | IMessage> {
     const form = await formRequestsCollection.findById(formId);
 
     if (!form) {
@@ -36,7 +36,7 @@ export class formRequestsService {
     return formResponse;
   }
 
-  async create(form: any): Promise<FormRequestsResponseModel> {
+  async create(form: any): Promise<IFormRequestResponse> {
     const formCreated = await new formRequestsCollection(form).save();
     const message = messages.createSuccess('form');
     const formResponse = { forms: [formCreated], message };
@@ -44,7 +44,7 @@ export class formRequestsService {
     return formResponse;
   }
 
-  async update(form: any): Promise<FormRequestsResponseModel | MessageModel> {
+  async update(form: any): Promise<IFormRequestResponse | IMessage> {
     const formUpdated = await formRequestsCollection.findByIdAndUpdate(form?.id, { $set: form }, { new: true });
     const message = messages.updateSuccess('form');
     const formResponse = { forms: [formUpdated], message };
@@ -52,7 +52,7 @@ export class formRequestsService {
     return formResponse;
   }
 
-  async delete(formId: any): Promise<MessageModel> {
+  async delete(formId: any): Promise<IMessage> {
     const form = await formRequestsCollection.findByIdAndDelete(formId);
 
     if (!form) {

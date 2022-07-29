@@ -1,17 +1,17 @@
 import usersCollection from '../collections/users.collection';
 import { UserMapper } from '../mappers/users.mapper';
 import {
-  UserCredentialsResponseModel,
-  UserModel,
-  UserResponseModel,
-  UserPaginatedResponseModel,
+  IUserCredentialsResponse,
+  IUser,
+  IUserResponse,
+  IUserPaginated,
 } from '../models/user.model';
 import messages from '../utils/messages';
 import Jwt from 'jsonwebtoken';
 import environment from '../config/environment';
 import cloudinary from '../config/cloudinary';
 import { MessagesMapper } from '../mappers/messages.mapper';
-import { MessageModel } from '../models/message.model';
+import { IMessage } from '../models/message.model';
 import { comparePasswords } from '../utils/bcrypt';
 import { EmailsService } from './emails.service';
 
@@ -25,7 +25,7 @@ export class UserService {
     this.messageMapper = messageMapper;
   }
 
-  async forgotPassword(email: any): Promise<MessageModel> {
+  async forgotPassword(email: any): Promise<IMessage> {
     const user = await usersCollection.findOne({ email: email?.toLowerCase() });
 
     if (!user) {
@@ -42,7 +42,7 @@ export class UserService {
     return this.messageMapper.map(messages.forgotPassword);
   }
 
-  async auth(userCredentials: any): Promise<UserCredentialsResponseModel> {
+  async auth(userCredentials: any): Promise<IUserCredentialsResponse> {
     const credentials = this.userMapper.dtoToUserCredentials(userCredentials);
     const user = await usersCollection.findOne({
       email: credentials.email.toLowerCase(),
@@ -67,7 +67,7 @@ export class UserService {
   async create(
     userDto: any,
     userMedia: any,
-  ): Promise<UserResponseModel | MessageModel> {
+  ): Promise<IUserResponse | IMessage> {
     const emailExisting = await usersCollection.findOne({
       email: userDto?.email?.toLowerCase(),
     });
@@ -113,8 +113,8 @@ export class UserService {
     return userResponse;
   }
 
-  async getAll(): Promise<UserResponseModel | MessageModel> {
-    const users: UserModel[] = await usersCollection
+  async getAll(): Promise<IUserResponse | IMessage> {
+    const users: IUser[] = await usersCollection
       .find()
       .sort({ firstName: 1 });
 
@@ -125,8 +125,8 @@ export class UserService {
     return this.userMapper.usersToDto(users, messages.getAll('users'));
   }
 
-  async getAllByCity(city: string): Promise<UserResponseModel | MessageModel> {
-    const users: UserModel[] = await usersCollection
+  async getAllByCity(city: string): Promise<IUserResponse | IMessage> {
+    const users: IUser[] = await usersCollection
       .find({ 'location.city': city})
       .sort({ firstName: 1 });
 
@@ -137,8 +137,8 @@ export class UserService {
     return this.userMapper.usersToDto(users, messages.getAll('users'));
   }
 
-  async getByFirstName(firstName: string): Promise<UserResponseModel | MessageModel> {
-    const users: UserModel[] = await usersCollection
+  async getByFirstName(firstName: string): Promise<IUserResponse | IMessage> {
+    const users: IUser[] = await usersCollection
       .find({ firstName: new RegExp(firstName) })
       .sort({ firstName: 1 });
 
@@ -151,7 +151,7 @@ export class UserService {
 
   async getPaginatedUsers(
     from: number,
-  ): Promise<UserPaginatedResponseModel | MessageModel> {
+  ): Promise<IUserPaginated | IMessage> {
     const [users, total] = await Promise.all([
       usersCollection.find().skip(from).limit(10).sort({ firstName: 1 }),
       usersCollection.countDocuments(),
@@ -168,7 +168,7 @@ export class UserService {
     );
   }
 
-  async getById(userId: any): Promise<UserResponseModel | MessageModel> {
+  async getById(userId: any): Promise<IUserResponse | IMessage> {
     const user = await usersCollection.findById(userId);
 
     if (!user) {
@@ -181,7 +181,7 @@ export class UserService {
   async update(
     userDto: any,
     userMedia: any,
-  ): Promise<UserResponseModel | MessageModel> {
+  ): Promise<IUserResponse | IMessage> {
     let image;
     let documentImage;
 
@@ -216,7 +216,7 @@ export class UserService {
     return userResponse;
   }
 
-  async delete(userId: any): Promise<MessageModel> {
+  async delete(userId: any): Promise<IMessage> {
     const user = await usersCollection.findByIdAndDelete(userId);
 
     if (!user) {
