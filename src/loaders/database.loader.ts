@@ -3,6 +3,10 @@ import environment from '../config/environment';
 
 export default class Database {
   public async connect(): Promise<Mongoose> {
-    return connect(environment.databaseUrl.dev);
+    return connect(
+      environment.isProduction
+        ? environment.databaseUrl.prod
+        : environment.databaseUrl.dev,
+    );
   }
 }

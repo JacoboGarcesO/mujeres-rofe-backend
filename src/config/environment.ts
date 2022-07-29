@@ -5,6 +5,7 @@ import { IEnvironment } from '../models/environment.model';
 config({ path: resolve(__dirname, '../../.env') });
 
 export default <IEnvironment>{
+  isProduction: process.env.NODE_ENV === 'production',
   port: process.env.PORT,
   jwtPassword: process.env.JWT_PSW,
   databaseUrl: {
