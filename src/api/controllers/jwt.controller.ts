@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import Jwt from 'jsonwebtoken';
-import environment from '../../config/environment';
-import messages from '../../utils/messages';
+import { environment } from '../../core/config/environment';
+import { messages } from '../../core/utils/messages';
 
 export class JwtController {
   async validateToken(request: Request, response: Response, next: NextFunction) {

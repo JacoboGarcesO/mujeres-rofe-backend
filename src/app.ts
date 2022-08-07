@@ -1,5 +1,5 @@
 import express from 'express';
-import Loader from './loaders/index';
+import Loader from './core/loaders/index';
 
 (
   async () => {

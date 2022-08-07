@@ -1,21 +1,21 @@
-import usersCollection from '../collections/users.collection';
-import { UserMapper } from '../mappers/users.mapper';
+import usersCollection from '../data/models/user.model';
+import { UserMapper } from '../domain/mappers/user.mapper';
 import {
   IUserCredentialsResponse,
   IUser,
   IUserResponse,
   IUserPaginated,
-} from '../models/user.model';
-import messages from '../utils/messages';
+} from '../core/interfaces/user.interface';
+import { messages } from '../core/utils/messages';
 import Jwt from 'jsonwebtoken';
-import environment from '../config/environment';
-import cloudinary from '../config/cloudinary';
-import { MessagesMapper } from '../mappers/messages.mapper';
-import { IMessage } from '../models/message.model';
-import { comparePasswords } from '../utils/bcrypt';
+import { environment } from '../core/config/environment';
+import cloudinary from '../core/config/cloudinary';
+import { MessagesMapper } from '../domain/mappers/messages.mapper';
+import { IMessage } from '../core/interfaces/message.interface';
+import { comparePasswords } from '../core/utils/bcrypt';
 import { EmailsService } from './emails.service';
-import { EmailMapper } from '../mappers/email.mapper';
-import { TemplateEnum } from '../models/template.enum';
+import { EmailMapper } from '../domain/mappers/email.mapper';
+import { TemplateEnum } from '../core/constants/template.enum';
 
 export class UserService {
   private userMapper: UserMapper = new UserMapper();
@@ -110,7 +110,7 @@ export class UserService {
     );
 
     await this.emailsService.send(emailData);
-  
+
     return this.userMapper.userToDto(userCreated, messages.createSuccess('user'));
   }
 

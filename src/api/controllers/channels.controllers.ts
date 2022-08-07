@@ -1,56 +1,80 @@
 import { Request, Response, NextFunction } from 'express';
-import { ChannelMapper } from '../../mappers/channels.mapper';
-import { MessagesMapper } from '../../mappers/messages.mapper';
-import { ChannelsService } from '../../services/channels.service';
-
-const channelMapper = new ChannelMapper();
-const messageMapper = new MessagesMapper();
-const service = new ChannelsService(channelMapper, messageMapper);
+import { CreateChannelUseCase } from '../../domain/use-cases/channel/create-channel.use-case';
+import { DeleteChannelUseCase } from '../../domain/use-cases/channel/delete-channel.use-case';
+import { GetChannelByIdUseCase } from '../../domain/use-cases/channel/get-channel-by-id.use-case';
+import { GetChannelsUseCase } from '../../domain/use-cases/channel/get-channels.use-case';
+import { UpdateChannelUseCase } from '../../domain/use-cases/channel/update-channel.use-case';
 
 export class ChannelController {
+  private createChannelUseCase: CreateChannelUseCase;
+  private getChannelsUseCase: GetChannelsUseCase;
+  private getChannelByIdUseCase: GetChannelByIdUseCase;
+  private updateChannelUseCase: UpdateChannelUseCase;
+  private deleteChannelUseCase: DeleteChannelUseCase;
 
-  async getAll(_request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
+  constructor(
+    createChannelUseCase: CreateChannelUseCase,
+    getChannelsUseCase: GetChannelsUseCase,
+    getChannelByIdUseCase: GetChannelByIdUseCase,
+    updateChannelUseCase: UpdateChannelUseCase,
+    deleteChannelUseCase: DeleteChannelUseCase,
+  ) {
+    
+    this.createChannelUseCase = createChannelUseCase;
+    this.getChannelsUseCase = getChannelsUseCase;
+    this.getChannelByIdUseCase = getChannelByIdUseCase;
+    this.updateChannelUseCase = updateChannelUseCase;
+    this.deleteChannelUseCase = deleteChannelUseCase;
+  }
+
+  public async handleCreateChannel(req: Request, res: Response, next: NextFunction): Promise<Response | undefined> {
     try {
-      const channelsResponse = await service.getAll();
-      return response.status(200).json(channelsResponse);
+      const execution = await this.createChannelUseCase.execute(req.body, req.files);
+      return res.status(200).json(execution);
     } catch (err) {
+      res.status(500).send({ error: err, message: 'Internal server error' });
+      next();
+    }
+  }
+
+  public async handleGetChannels(_req: Request, res: Response, next: NextFunction): Promise<Response | undefined> {
+    try {
+      console.log(this);
+      const execution = await this.getChannelsUseCase.execute();
+      return res.status(200).json(execution);
+    } catch (err) {
+      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
   }
 
-  async getById(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
+  public async handleGetChannelById(req: Request, res: Response, next: NextFunction): Promise<Response | undefined> {
     try {
-      const channelResponse = await service.getById(request.params.channelId);
-      return response.status(200).json(channelResponse);
+      const execution = await this.getChannelByIdUseCase.execute(req.params.channelId);
+      return res.status(200).json(execution);
     } catch (err) {
-      next(err);
+      res.status(500).send({ error: err, message: 'Internal server error' });
+      next();
     }
   }
 
-  async create(request: Request, response: Response, next: NextFunction): Promise<any> {
+  public async handleUpdateChannel(req: Request, res: Response, next: NextFunction): Promise<Response | undefined> {
     try {
-      const channelCreated = await service.create(request.body, request.files);
-      return response.status(200).json(channelCreated);
+      const execution = await this.updateChannelUseCase.execute(req.body, req.files);
+      return res.status(200).json(execution);
     } catch (err) {
-      next(err);
+      res.status(500).send({ error: err, message: 'Internal server error' });
+      next();
     }
   }
 
-  async update(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
+  public async handleDeleteChannel(req: Request, res: Response, next: NextFunction): Promise<Response | undefined> {
     try {
-      const channelResponse = await service.update(request.body, request.files);
-      return response.status(200).json(channelResponse);
+      const execution = await this.deleteChannelUseCase.execute(req.params.channelId);
+      return res.status(200).json(execution);
     } catch (err) {
-      next(err);
-    }
-  }
-
-  async delete(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
-    try {      
-      const channelResponse = await service.delete(request.params.channelId);
-      return response.status(200).json(channelResponse);
-    } catch (err) {
-      next(err);
+      res.status(500).send({ error: err, message: 'Internal server error' });
+      next();
     }
   }
 }

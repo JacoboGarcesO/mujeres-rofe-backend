@@ -1,10 +1,10 @@
-import slidesCollection from '../collections/slides.collection';
-import cloudinary from '../config/cloudinary';
-import { MessagesMapper } from '../mappers/messages.mapper';
-import { SlideMapper } from '../mappers/slides.mapper';
-import { IMessage } from '../models/message.model';
-import { ISlide, ISlideResponse } from '../models/slide.model';
-import messages from '../utils/messages';
+import slidesCollection from '../data/models/slide.model';
+import cloudinary from '../core/config/cloudinary';
+import { MessagesMapper } from '../domain/mappers/messages.mapper';
+import { SlideMapper } from '../domain/mappers/slide.mapper';
+import { IMessage } from '../core/interfaces/message.interface';
+import { ISlide, ISlideResponse } from '../core/interfaces/slide.interface';
+import { messages } from '../core/utils/messages';
 
 export class SlideService {
   private slideMapper: SlideMapper;

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { LocationsMapper } from '../../mappers/locations.mapper';
-import { MessagesMapper } from '../../mappers/messages.mapper';
+import { LocationsMapper } from '../../domain/mappers/location.mapper';
+import { MessagesMapper } from '../../domain/mappers/messages.mapper';
 import { LocationsService } from '../../services/locations.service';
 
 const locationsMapper = new LocationsMapper();

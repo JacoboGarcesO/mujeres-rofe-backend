@@ -1,12 +1,12 @@
-import requestsCollection from '../collections/requests.collection';
-import { MessagesMapper } from '../mappers/messages.mapper';
-import { IRequest, IRequestResponse } from '../models/requests.model';
-import { IMessage } from '../models/message.model';
-import messages from '../utils/messages';
+import requestsCollection from '../data/models/request.model';
+import { MessagesMapper } from '../domain/mappers/messages.mapper';
+import { IRequest, IRequestResponse } from '../core/interfaces/requests.interface';
+import { IMessage } from '../core/interfaces/message.interface';
+import { messages } from '../core/utils/messages';
 import { EmailsService } from './emails.service';
-import { RequestMapper } from '../mappers/requests.mapper';
-import cloudinary from '../config/cloudinary';
-import { EmailMapper } from '../mappers/email.mapper';
+import { RequestMapper } from '../domain/mappers/request.mapper';
+import cloudinary from '../core/config/cloudinary';
+import { EmailMapper } from '../domain/mappers/email.mapper';
 
 export class RequestsService {
   private messageMapper: MessagesMapper = new MessagesMapper();
@@ -41,7 +41,7 @@ export class RequestsService {
 
   async create(request: any, media: any): Promise<IRequestResponse> {
     let image;
-  
+
     if (media?.image?.[0]) {
       image = await cloudinary.upload(media?.image?.[0]?.path);
     }

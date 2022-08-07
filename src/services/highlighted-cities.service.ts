@@ -1,8 +1,8 @@
-import highlightedCitiesCollection from '../collections/highlighted-cities.collection';
-import { MessagesMapper } from '../mappers/messages.mapper';
-import { IState, IStateResponse } from '../models/locations.model';
-import { IMessage } from '../models/message.model';
-import messages from '../utils/messages';
+import highlightedCitiesCollection from '../data/models/highlighted-city.model';
+import { MessagesMapper } from '../domain/mappers/messages.mapper';
+import { IState, IStateResponse } from '../core/interfaces/locations.interface';
+import { IMessage } from '../core/interfaces/message.interface';
+import { messages } from '../core/utils/messages';
 
 export class HighlightedCityService {
   private messageMapper: MessagesMapper;

@@ -1,7 +1,7 @@
 
-import createEmail from '../utils/emails/emails';
-import sender from '../config/sendgrid';
-import { IEmail } from '../models/email.model';
+import { sender } from '../core/config/sendgrid';
+import { IEmail } from '../core/interfaces/email.interface';
+import { createEmail } from '../core/utils/emails/emails';
 
 export class EmailsService {
   async send(data: IEmail): Promise<any> {

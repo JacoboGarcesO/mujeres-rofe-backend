@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
-import { MessagesMapper } from '../../mappers/messages.mapper';
-import { NoticeMapper } from '../../mappers/notices.mapper';
+import { MessagesMapper } from '../../domain/mappers/messages.mapper';
+import { NoticeMapper } from '../../domain/mappers/notice.mapper';
 import { NoticesService } from '../../services/notices.service';
 
 const noticeMapper = new NoticeMapper();

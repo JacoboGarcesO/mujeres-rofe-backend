@@ -1,14 +1,22 @@
 import { Application, Router } from 'express';
-import storage from '../../config/storage';
+import storage from '../../core/config/storage';
 import { ChannelController } from '../controllers/channels.controllers';
 import { JwtController } from '../controllers/jwt.controller';
 
 export class ChannelRouter {
   private app: Application;
-  private controller: ChannelController = new ChannelController();
-  private jwtController: JwtController = new JwtController();
+  private channelController: ChannelController;
+  private jwtController: JwtController;
 
-  constructor(app: Application) { this.app = app; }
+  constructor(
+    channelController: ChannelController,
+    jwtController: JwtController,
+    app: Application,
+  ) {
+    this.channelController = channelController;
+    this.jwtController = jwtController;
+    this.app = app;
+  }
 
   init() {
     const router = Router();
@@ -18,32 +26,32 @@ export class ChannelRouter {
       '/',
       this.jwtController.validateToken,
       storage.fields([{ name: 'banner' }, { name: 'icon' }]),
-      this.controller.create,
+      this.channelController.handleCreateChannel.bind(this),
     );
 
     router.get(
       '/',
       this.jwtController.validateToken,
-      this.controller.getAll,
+      this.channelController.handleGetChannels.bind(this),
     );
 
     router.get(
       '/:channelId',
       this.jwtController.validateToken,
-      this.controller.getById,
+      this.channelController.handleGetChannelById.bind(this),
     );
 
     router.put(
       '/',
       this.jwtController.validateToken,
       storage.fields([{ name: 'banner' }, { name: 'icon' }]),
-      this.controller.update,
+      this.channelController.handleUpdateChannel.bind(this),
     );
 
     router.delete(
       '/:channelId',
       this.jwtController.validateToken,
-      this.controller.delete,
+      this.channelController.handleDeleteChannel.bind(this),
     );
   }
 }

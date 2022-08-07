@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { formRequestsService } from '../../services/form-requests.service';
-import { MessagesMapper } from '../../mappers/messages.mapper';
+import { MessagesMapper } from '../../domain/mappers/messages.mapper';
 
 const messageMapper = new MessagesMapper();
 const service = new formRequestsService(messageMapper);

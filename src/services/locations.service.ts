@@ -1,10 +1,10 @@
-import citiesCollection from '../collections/cities.collection';
-import statesCollection from '../collections/states.collection';
-import { LocationsMapper } from '../mappers/locations.mapper';
-import { MessagesMapper } from '../mappers/messages.mapper';
-import { ICityResponse, IStateResponse } from '../models/locations.model';
-import { IMessage } from '../models/message.model';
-import messages from '../utils/messages';
+import citiesCollection from '../data/models/city.model';
+import statesCollection from '../data/models/state.model';
+import { LocationsMapper } from '../domain/mappers/location.mapper';
+import { MessagesMapper } from '../domain/mappers/messages.mapper';
+import { ICityResponse, IStateResponse } from '../core/interfaces/locations.interface';
+import { IMessage } from '../core/interfaces/message.interface';
+import { messages } from '../core/utils/messages';
 
 export class LocationsService {
   private locationsMapper: LocationsMapper;
@@ -26,7 +26,7 @@ export class LocationsService {
   }
 
   async getCitiesByState(stateId: any): Promise<IStateResponse | IMessage> {
-    const cities = await citiesCollection.find({stateId});
+    const cities = await citiesCollection.find({ stateId });
 
     if (!cities?.length) {
       return this.messageMapper.map(messages.getAllFailure('cities'));
@@ -37,7 +37,7 @@ export class LocationsService {
 
   async getCities(): Promise<ICityResponse | IMessage> {
     const cities = await citiesCollection.find();
-    
+
     if (!cities?.length) {
       return this.messageMapper.map(messages.getAllFailure('cities'));
     }

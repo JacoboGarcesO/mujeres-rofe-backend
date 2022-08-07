@@ -1,10 +1,10 @@
-import noticesCollection from '../collections/notices.collection';
-import cloudinary from '../config/cloudinary';
-import { MessagesMapper } from '../mappers/messages.mapper';
-import { NoticeMapper } from '../mappers/notices.mapper';
-import { IMessage } from '../models/message.model';
-import { INotice, INoticeResponse } from '../models/notice.model';
-import messages from '../utils/messages';
+import noticesCollection from '../data/models/notice.model';
+import cloudinary from '../core/config/cloudinary';
+import { MessagesMapper } from '../domain/mappers/messages.mapper';
+import { NoticeMapper } from '../domain/mappers/notice.mapper';
+import { IMessage } from '../core/interfaces/message.interface';
+import { INotice, INoticeResponse } from '../core/interfaces/notice.interface';
+import { messages } from '../core/utils/messages';
 
 export class NoticesService {
   private noticeMapper: NoticeMapper;

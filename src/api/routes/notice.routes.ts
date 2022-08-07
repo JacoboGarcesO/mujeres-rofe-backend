@@ -1,5 +1,5 @@
 import { Application, Router } from 'express';
-import storage from '../../config/storage';
+import storage from '../../core/config/storage';
 import { JwtController } from '../controllers/jwt.controller';
 import { NoticeController } from '../controllers/notices.controllers';
 

@@ -1,8 +1,8 @@
-import formRequestsCollection from '../collections/form-requests.collection';
-import { MessagesMapper } from '../mappers/messages.mapper';
-import { IFormRequest, IFormRequestResponse } from '../models/form-requests.model';
-import { IMessage } from '../models/message.model';
-import messages from '../utils/messages';
+import formRequestsCollection from '../data/models/form-request.model';
+import { MessagesMapper } from '../domain/mappers/messages.mapper';
+import { IFormRequest, IFormRequestResponse } from '../core/interfaces/form-requests.interface';
+import { IMessage } from '../core/interfaces/message.interface';
+import { messages } from '../core/utils/messages';
 
 export class formRequestsService {
   private messageMapper: MessagesMapper;

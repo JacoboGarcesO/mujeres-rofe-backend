@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { MessagesMapper } from '../../mappers/messages.mapper';
+import { MessagesMapper } from '../../domain/mappers/messages.mapper';
 import { HighlightedCityService } from '../../services/highlighted-cities.service';
 
 const messageMapper = new MessagesMapper();

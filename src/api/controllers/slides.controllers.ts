@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
-import { MessagesMapper } from '../../mappers/messages.mapper';
-import { SlideMapper } from '../../mappers/slides.mapper';
+import { MessagesMapper } from '../../domain/mappers/messages.mapper';
+import { SlideMapper } from '../../domain/mappers/slide.mapper';
 import { SlideService } from '../../services/slides.service';
 
 const slideMapper = new SlideMapper();
