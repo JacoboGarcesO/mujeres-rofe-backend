@@ -10,7 +10,7 @@ export default {
   updateSuccess: (entity: string) => `${StringsUtils.capitalize(entity)} was updated successfully`,
   updateFailure: (entity: string) => `${StringsUtils.capitalize(entity)} was not updated`,
   deleteSuccess: (entity: string) => `${StringsUtils.capitalize(entity)} was deleted`,
-  deleteFailure: (entity: string) => `${StringsUtils.capitalize(entity)} was not found`,
+  deleteFailure: (entity: string) => `${StringsUtils.capitalize(entity)} was not found or internal server error`,
   emailDuplicate: 'No pudimos crear el usuario porque el correo ya está registrado',
   documentDuplicate: 'No pudimos crear el usuario porque el documento ya está registrado',
   authSuccess: 'Authentication was completed',

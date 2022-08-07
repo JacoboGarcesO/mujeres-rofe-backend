@@ -1,11 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { RequestsService } from '../../services/requests.service';
-import { MessagesMapper } from '../../mappers/messages.mapper';
-import { RequestMapper } from '../../mappers/requests.mapper';
 
-const messageMapper = new MessagesMapper();
-const requestMapper = new RequestMapper();
-const service = new RequestsService(messageMapper, requestMapper);
+const service = new RequestsService();
 
 export class RequestsController {
   async getAll(_request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {

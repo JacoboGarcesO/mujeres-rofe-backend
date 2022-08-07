@@ -24,6 +24,10 @@ export default class Server {
     return this.server;
   }
 
+  public getServer(): Application {
+    return this.server;
+  }
+
   private setPort(): void {
     this.server.set('PORT', environment.port || 3000);
   }

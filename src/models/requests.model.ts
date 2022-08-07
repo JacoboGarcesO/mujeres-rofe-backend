@@ -1,4 +1,5 @@
 import { IMedia } from './media.model';
+import { TemplateEnum } from './template.enum';
 
 export interface IFieldRequest {
   label: string,
@@ -10,7 +11,7 @@ export interface IFieldRequest {
 export interface IRequest {
   formId: string;
   title: string;
-  template: string;
+  template: TemplateEnum;
   subject: string;
   channel: string;
   fields: IFieldRequest[],

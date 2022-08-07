@@ -20,4 +20,8 @@ export default class {
     await this.database.connect();
     await this.server.start();
   }
+
+  public getServer(): Application {
+    return this.server.getServer();
+  }
 }

@@ -1,5 +1,6 @@
 import { UploadApiResponse } from 'cloudinary';
 import { IFieldRequest, IRequest } from '../models/requests.model';
+import { toTemplateEnum } from '../models/template.enum';
 
 export class RequestMapper {
   toRequest(request: any, media: UploadApiResponse | undefined): IRequest {
@@ -7,7 +8,7 @@ export class RequestMapper {
       formId: request?.requestFormId,
       title: request?.requestTitle,
       subject: request?.requestSubject,
-      template: request?.requestTemplate,
+      template: toTemplateEnum(request?.requestTemplate),
       channel: request?.requestChannel,
       fields: this.getFields(JSON.parse(request?.requestFields), media),
     };

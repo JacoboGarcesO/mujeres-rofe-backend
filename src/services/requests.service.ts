@@ -6,17 +6,13 @@ import messages from '../utils/messages';
 import { EmailsService } from './emails.service';
 import { RequestMapper } from '../mappers/requests.mapper';
 import cloudinary from '../config/cloudinary';
-
-const emailsService = new EmailsService();
+import { EmailMapper } from '../mappers/email.mapper';
 
 export class RequestsService {
-  private messageMapper: MessagesMapper;
-  private requestMapper: RequestMapper;
-
-  constructor(messageMapper: MessagesMapper, requestMapper: RequestMapper) {
-    this.messageMapper = messageMapper;
-    this.requestMapper = requestMapper;
-  }
+  private messageMapper: MessagesMapper = new MessagesMapper();
+  private requestMapper: RequestMapper = new RequestMapper();
+  private emailService: EmailsService = new EmailsService();
+  private emailMapper: EmailMapper = new EmailMapper();
 
   async getAll(): Promise<IRequestResponse | IMessage> {
     const requests: IRequest[] = await requestsCollection.find().sort({ creationDate: -1 });
@@ -54,14 +50,17 @@ export class RequestsService {
 
     const requestCreated = await new requestsCollection(requestMapped).save();
 
-    const user = {
-      email: request?.userEmail,
-      firstName: request?.userFirstName,
-      lastName: request?.userLastName,
-      document: request?.userDocument,
-    };
+    const emailData = this.emailMapper.toEmail(
+      requestMapped.template,
+      request?.userFirstName,
+      request?.userLastName,
+      request?.userEmail,
+      requestMapped?.subject,
+      requestMapped?.title,
+      request?.userDocument,
+    );
 
-    await emailsService.send(user, requestMapped?.subject, requestMapped?.template, requestMapped?.title);
+    await this.emailService.send(emailData);
     const message = messages.createSuccess('request');
     const requestResponse = { requests: [requestCreated], message };
 

@@ -14,16 +14,14 @@ import { MessagesMapper } from '../mappers/messages.mapper';
 import { IMessage } from '../models/message.model';
 import { comparePasswords } from '../utils/bcrypt';
 import { EmailsService } from './emails.service';
+import { EmailMapper } from '../mappers/email.mapper';
+import { TemplateEnum } from '../models/template.enum';
 
-const emailsService = new EmailsService();
 export class UserService {
-  private userMapper: UserMapper;
-  private messageMapper: MessagesMapper;
-
-  constructor(mapper: UserMapper, messageMapper: MessagesMapper) {
-    this.userMapper = mapper;
-    this.messageMapper = messageMapper;
-  }
+  private userMapper: UserMapper = new UserMapper();
+  private messageMapper: MessagesMapper = new MessagesMapper();
+  private emailMapper: EmailMapper = new EmailMapper();
+  private emailsService = new EmailsService();
 
   async forgotPassword(email: any): Promise<IMessage> {
     const user = await usersCollection.findOne({ email: email?.toLowerCase() });
@@ -32,12 +30,16 @@ export class UserService {
       throw new Error(this.messageMapper.map(messages.userNotFound).message);
     }
 
-    await emailsService.send(
-      user,
+    const emailData = this.emailMapper.toEmail(
+      TemplateEnum.forgotPassword,
+      user.firstName,
+      user.lastName,
+      user.email,
       'Recordatorio de credenciales para tu cuenta de Mujeres ROFÉ',
-      'forgot-password',
       '¡Estas son tus credenciales de acceso!',
     );
+
+    await this.emailsService.send(emailData);
 
     return this.messageMapper.map(messages.forgotPassword);
   }
@@ -68,9 +70,7 @@ export class UserService {
     userDto: any,
     userMedia: any,
   ): Promise<IUserResponse | IMessage> {
-    const emailExisting = await usersCollection.findOne({
-      email: userDto?.email?.toLowerCase(),
-    });
+    const emailExisting = await usersCollection.findOne({ email: userDto?.email?.toLowerCase() });
 
     if (emailExisting) {
       throw new Error(this.messageMapper.map(messages.emailDuplicate).message);
@@ -86,13 +86,6 @@ export class UserService {
       );
     }
 
-    await emailsService.send(
-      userDto,
-      'Confirma tu cuenta de Mujeres ROFÉ',
-      'register',
-      '¡Tu cuenta ha sido creada exitosamente!',
-    );
-
     let image;
     let documentImage;
 
@@ -105,12 +98,20 @@ export class UserService {
 
     const user = this.userMapper.dtoToUser(userDto, image, documentImage);
     const userCreated = await new usersCollection(user).save();
-    const userResponse = this.userMapper.userToDto(
-      userCreated,
-      messages.createSuccess('user'),
+
+    const emailData = this.emailMapper.toEmail(
+      TemplateEnum.register,
+      userCreated.firstName,
+      userCreated.lastName,
+      userCreated.email,
+      'Confirma tu cuenta de Mujeres ROFÉ',
+      '¡Tu cuenta ha sido creada exitosamente!',
+      userCreated.documentNumber,
     );
 
-    return userResponse;
+    await this.emailsService.send(emailData);
+  
+    return this.userMapper.userToDto(userCreated, messages.createSuccess('user'));
   }
 
   async getAll(): Promise<IUserResponse | IMessage> {
@@ -127,7 +128,7 @@ export class UserService {
 
   async getAllByCity(city: string): Promise<IUserResponse | IMessage> {
     const users: IUser[] = await usersCollection
-      .find({ 'location.city': city})
+      .find({ 'location.city': city })
       .sort({ firstName: 1 });
 
     if (!users?.length) {
