@@ -7,7 +7,6 @@ import { UserRouter } from '../../api/routes/user.routes';
 import { FormRequestRouter } from '../../api/routes/form-request.routes';
 import { RequestRouter } from '../../api/routes/request.routes';
 import { HighlightedCityRouter } from '../../api/routes/highlighted-city.routes';
-import { ChannelController } from '../../api/controllers/channels.controllers';
 import { JwtController } from '../../api/controllers/jwt.controller';
 import { CreateChannelUseCase } from '../../domain/use-cases/channel/create-channel.use-case';
 import { ChannelRepository } from '../../domain/repositories/channel.repository';
@@ -19,6 +18,7 @@ import { GetChannelsUseCase } from '../../domain/use-cases/channel/get-channels.
 import { GetChannelByIdUseCase } from '../../domain/use-cases/channel/get-channel-by-id.use-case';
 import { UpdateChannelUseCase } from '../../domain/use-cases/channel/update-channel.use-case';
 import { DeleteChannelUseCase } from '../../domain/use-cases/channel/delete-channel.use-case';
+import { channelController } from '../../api/controllers/channels.controllers';
 
 export default class Router {
   private routes: (
@@ -77,7 +77,7 @@ export default class Router {
       new ResponseMapper(),
     );
 
-    const channelController = new ChannelController(
+    const controller = channelController(
       createChannelUseCase,
       getChannelsUseCase,
       getChannelByIdUseCase,
@@ -88,7 +88,7 @@ export default class Router {
     const jwtController = new JwtController();
 
     return new ChannelRouter(
-      channelController,
+      controller,
       jwtController,
       app,
     );

@@ -1,6 +1,6 @@
 import { Application, Router } from 'express';
-import storage from '../../core/config/storage';
-import { ChannelController } from '../controllers/channels.controllers';
+import { storage } from '../../core/config/storage';
+import { ChannelController } from '../controllers/interfaces/channel-controller.interface';
 import { JwtController } from '../controllers/jwt.controller';
 
 export class ChannelRouter {
@@ -26,32 +26,32 @@ export class ChannelRouter {
       '/',
       this.jwtController.validateToken,
       storage.fields([{ name: 'banner' }, { name: 'icon' }]),
-      this.channelController.handleCreateChannel.bind(this),
+      this.channelController.handleCreateChannel,
     );
 
     router.get(
       '/',
       this.jwtController.validateToken,
-      this.channelController.handleGetChannels.bind(this),
+      this.channelController.handleGetChannels,
     );
 
     router.get(
       '/:channelId',
       this.jwtController.validateToken,
-      this.channelController.handleGetChannelById.bind(this),
+      this.channelController.handleGetChannelById,
     );
 
     router.put(
       '/',
       this.jwtController.validateToken,
       storage.fields([{ name: 'banner' }, { name: 'icon' }]),
-      this.channelController.handleUpdateChannel.bind(this),
+      this.channelController.handleUpdateChannel,
     );
 
     router.delete(
       '/:channelId',
       this.jwtController.validateToken,
-      this.channelController.handleDeleteChannel.bind(this),
+      this.channelController.handleDeleteChannel,
     );
   }
 }
