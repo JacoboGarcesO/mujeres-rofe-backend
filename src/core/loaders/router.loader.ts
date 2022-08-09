@@ -9,6 +9,7 @@ import { SlideRouter } from '../../api/routes/slide.routes';
 import { UserRouter } from '../../api/routes/user.routes';
 import { ChannelRouterInitializer } from './routes/channel-router.initialize';
 import { FormRequestRouterInitializer } from './routes/form-request-router.initializer';
+import { HighlightedCityRouterInitializer } from './routes/highlighted-city-router.initializer';
 import { LocationRouterInitializer } from './routes/location-router.initializer';
 
 export default class Router {
@@ -25,18 +26,18 @@ export default class Router {
 
   constructor(app: Application) {
     this.routes = [
-      new HighlightedCityRouter(app),
       new RequestRouter(app),
       new SlideRouter(app),
       new NoticeRouter(app),
       new UserRouter(app),
+      HighlightedCityRouterInitializer(app),
       FormRequestRouterInitializer(app),
       LocationRouterInitializer(app),
       ChannelRouterInitializer(app),
     ];
   }
 
-  public init(): void {
-    this.routes.forEach((route) => route.init());
+  public async init(): Promise<void> {
+    return this.routes.forEach((route) => route.init());
   }
 }

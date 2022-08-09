@@ -1,35 +1,39 @@
 import { NextFunction, Request, Response } from 'express';
-import { MessagesMapper } from '../../domain/mappers/messages.mapper';
-import { HighlightedCityService } from '../../services/highlighted-cities.service';
+import { CreateHighlightedCityUseCase } from '../../domain/use-cases/highlighted-city/create-highlighted-city.use-case';
+import { DeleteHighlightedCityUseCase } from '../../domain/use-cases/highlighted-city/delete-highlighted-city.use-case';
+import { GetHighlightedCitiesUseCase } from '../../domain/use-cases/highlighted-city/get-highlighted-cities.use-case';
+import { HighlightedCityController } from './interfaces/highlighted-city-controller.interface';
 
-const messageMapper = new MessagesMapper();
-const service = new HighlightedCityService(messageMapper);
-
-export class HighlightedCityController {
-  async getAll(_request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
+export const highlightedCityController = (
+  createHighlightedCityUseCase: CreateHighlightedCityUseCase,
+  getHighlightedCitiesUseCase: GetHighlightedCitiesUseCase,
+  deleteHighlightedCityUseCase: DeleteHighlightedCityUseCase,
+): HighlightedCityController => ({
+  handleCreateHighlightedCity: async (req: Request, res: Response, next: NextFunction): Promise<Response | undefined> => {
     try {
-      const formsResponse = await service.getAll();
-      return response.status(200).json(formsResponse);
+      const execution = await createHighlightedCityUseCase.execute(req.body);
+      return res.status(200).json(execution);
     } catch (err) {
+      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
-  }
-
-  async create(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
+  },
+  handleGetHighlightedCities: async (_req: Request, res: Response, next: NextFunction): Promise<Response | undefined> => {
     try {
-      const formCreated = await service.create(request.body);
-      return response.status(201).json(formCreated);
+      const execution = await getHighlightedCitiesUseCase.execute();
+      return res.status(200).json(execution);
     } catch (err) {
+      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
-  }
-
-  async delete(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
-    try {      
-      const formResponse = await service.delete(request.params.cityId);
-      return response.status(200).json(formResponse);
+  },
+  handleDeleteHighlightedCity: async (req: Request, res: Response, next: NextFunction): Promise<Response | undefined> => {
+    try {
+      const execution = await deleteHighlightedCityUseCase.execute(req.params.highlightedCityId);
+      return res.status(200).json(execution);
     } catch (err) {
+      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
-  }
-}
+  },
+});

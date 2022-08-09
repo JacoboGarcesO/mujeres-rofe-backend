@@ -5,4 +5,4 @@ const highlightedCitiesSchema = new Schema({
   name: { type: String },
 }, { collection: 'HighlightedCities' });
 
-export default model('HighlightedCities', highlightedCitiesSchema);
+export const highlightedCityModel = model('HighlightedCities', highlightedCitiesSchema);
