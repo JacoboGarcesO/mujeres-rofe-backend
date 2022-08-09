@@ -1,13 +1,21 @@
 import { Application, Router } from 'express';
+import { FormRequestController } from '../controllers/interfaces/form-request-controller.interface';
 import { JwtController } from '../controllers/jwt.controller';
-import { FormRequestsController } from '../controllers/form-requests.controllers';
 
 export class FormRequestRouter {
   private app: Application;
-  private controller: FormRequestsController = new FormRequestsController();
-  private jwtController: JwtController = new JwtController();
+  private formRequestcontroller: FormRequestController;
+  private jwtController: JwtController;
 
-  constructor(app: Application) { this.app = app; }
+  constructor(
+    formRequestcontroller: FormRequestController,
+    jwtController: JwtController,
+    app: Application,
+  ) {
+    this.formRequestcontroller = formRequestcontroller;
+    this.jwtController = jwtController;
+    this.app = app;
+  }
 
   init() {
     const router = Router();
@@ -16,31 +24,31 @@ export class FormRequestRouter {
     router.post(
       '/',
       this.jwtController.validateToken,
-      this.controller.create,
+      this.formRequestcontroller.handleCreateFormRequest,
     );
 
     router.get(
       '/',
       this.jwtController.validateToken,
-      this.controller.getAll,
+      this.formRequestcontroller.handleGetFormRequests,
     );
 
     router.get(
-      '/:formId',
+      '/:formRequestId',
       this.jwtController.validateToken,
-      this.controller.getById,
+      this.formRequestcontroller.handleGetFormRequestById,
     );
 
     router.put(
       '/',
       this.jwtController.validateToken,
-      this.controller.update,
+      this.formRequestcontroller.handleUpdateFormRequest,
     );
 
     router.delete(
-      '/:formId',
+      '/:formRequestId',
       this.jwtController.validateToken,
-      this.controller.delete,
+      this.formRequestcontroller.handleDeleteFormRequest,
     );
   }
 }

@@ -16,8 +16,3 @@ export interface IRequest {
   channel: string;
   fields: IFieldRequest[],
 }
-
-export interface IRequestResponse {
-  requests: IRequest[];
-  message: string;
-}

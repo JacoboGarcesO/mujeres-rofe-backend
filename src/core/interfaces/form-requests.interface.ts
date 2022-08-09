@@ -1,16 +1,12 @@
 export interface IFormRequest {
+  id: string;
   title: string;
   template: string;
   subject: string;
-  links: IFieldFormRequest[],
-}
-
-export interface IFormRequestResponse {
-  forms: IFormRequest[];
-  message: string;
+  links: IFieldFormRequest[];
 }
 
 interface IFieldFormRequest {
-  label: string,
-  placeholder: string,
+  label: string;
+  placeholder: string;
 }

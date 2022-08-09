@@ -19,7 +19,7 @@ export const channelController = (
       return res.status(200).json(execution);
     } catch (err) {
       res.status(500).send({ error: err, message: 'Internal server error' });
-      next();
+      next(err);
     }
   },
   handleGetChannels: async (_req: Request, res: Response, next: NextFunction): Promise<Response | undefined> => {
@@ -37,7 +37,7 @@ export const channelController = (
       return res.status(200).json(execution);
     } catch (err) {
       res.status(500).send({ error: err, message: 'Internal server error' });
-      next();
+      next(err);
     }
   },
   handleUpdateChannel: async (req: Request, res: Response, next: NextFunction): Promise<Response | undefined> => {
@@ -46,7 +46,7 @@ export const channelController = (
       return res.status(200).json(execution);
     } catch (err) {
       res.status(500).send({ error: err, message: 'Internal server error' });
-      next();
+      next(err);
     }
   },
   handleDeleteChannel: async (req: Request, res: Response, next: NextFunction): Promise<Response | undefined> => {
@@ -55,7 +55,7 @@ export const channelController = (
       return res.status(200).json(execution);
     } catch (err) {
       res.status(500).send({ error: err, message: 'Internal server error' });
-      next();
+      next(err);
     }
   },
 });

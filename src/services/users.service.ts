@@ -13,7 +13,7 @@ import cloudinary from '../core/config/cloudinary';
 import { MessagesMapper } from '../domain/mappers/messages.mapper';
 import { IMessage } from '../core/interfaces/message.interface';
 import { comparePasswords } from '../core/utils/bcrypt';
-import { EmailsService } from './emails.service';
+import { EmailsService } from '../domain/use-cases/email/send-email.use-case';
 import { EmailMapper } from '../domain/mappers/email.mapper';
 import { TemplateEnum } from '../core/constants/template.enum';
 

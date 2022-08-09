@@ -21,4 +21,4 @@ const formRequestsSchema = new Schema({
   channel: { type: String },
 }, { collection: 'FormRequests' });
 
-export default model('FormRequests', formRequestsSchema);
+export const formRequestModel = model('FormRequests', formRequestsSchema);

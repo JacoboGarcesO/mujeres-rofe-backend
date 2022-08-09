@@ -3,7 +3,7 @@ import { MessagesMapper } from '../domain/mappers/messages.mapper';
 import { IRequest, IRequestResponse } from '../core/interfaces/requests.interface';
 import { IMessage } from '../core/interfaces/message.interface';
 import { messages } from '../core/utils/messages';
-import { EmailsService } from './emails.service';
+import { EmailsService } from '../domain/use-cases/email/send-email.use-case';
 import { RequestMapper } from '../domain/mappers/request.mapper';
 import cloudinary from '../core/config/cloudinary';
 import { EmailMapper } from '../domain/mappers/email.mapper';

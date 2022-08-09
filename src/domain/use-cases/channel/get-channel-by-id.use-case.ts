@@ -23,6 +23,6 @@ export class GetChannelByIdUseCase {
       return this.responseMapper.toResponse(null, messages.getByIdFailure('channel'));
     }
 
-    return this.responseMapper.toResponse(channel, messages.getById('channels'));
+    return this.responseMapper.toResponse(channel, messages.getById('channel'));
   }
 }

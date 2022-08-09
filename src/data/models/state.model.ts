@@ -6,4 +6,4 @@ const statesSchema = new Schema({
   _id: { type: Number },
 }, { collection: 'States' });
 
-export default model('States', statesSchema);
+export const stateModel =  model('States', statesSchema);

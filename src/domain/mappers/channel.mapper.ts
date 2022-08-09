@@ -3,7 +3,6 @@ import { IChannel } from '../../core/interfaces/channel.interface';
 import { IMedia } from '../../core/interfaces/media.interface';
 
 export class ChannelMapper {
-
   toChannel(channel: any, icon: UploadApiResponse | undefined, banner: UploadApiResponse | undefined): IChannel {
     return {
       name: channel?.name,

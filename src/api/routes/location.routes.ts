@@ -1,11 +1,14 @@
 import { Application, Router } from 'express';
-import { LocationsController } from '../controllers/locations.controller';
+import { LocationController } from '../controllers/interfaces/locations-controller.interface';
 
 export class LocationRouter {
   private app: Application;
-  private controller: LocationsController = new LocationsController();
+  private locationController: LocationController;
 
-  constructor(app: Application) { this.app = app; }
+  constructor(locationController: LocationController, app: Application) {
+    this.locationController = locationController;
+    this.app = app;
+  }
 
   init() {
     const router = Router();
@@ -13,17 +16,17 @@ export class LocationRouter {
 
     router.get(
       '/',
-      this.controller.getStates,
+      this.locationController.handleGetStates,
     );
 
     router.get(
       '/:stateId',
-      this.controller.getCitiesByState,
+      this.locationController.handleGetCitiesByState,
     );
 
     router.post(
       '/cities',
-      this.controller.getCities,
+      this.locationController.handleGetCities,
     );
   }
 }
