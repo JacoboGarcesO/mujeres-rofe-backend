@@ -7,4 +7,4 @@ cloudinary.v2.config({
   api_secret: environment.cloudinary.apiSecret,
 });
 
-export default cloudinary.v2.uploader;
+export const cdn = cloudinary.v2.uploader;

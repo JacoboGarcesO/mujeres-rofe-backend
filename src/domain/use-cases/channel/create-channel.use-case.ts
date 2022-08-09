@@ -1,4 +1,4 @@
-import cloudinary from '../../../core/config/cloudinary';
+import { cdn } from '../../../core/config/cloudinary';
 import { IChannel } from '../../../core/interfaces/channel.interface';
 import { IResponse } from '../../../core/interfaces/response.interface';
 import { messages } from '../../../core/utils/messages';
@@ -26,8 +26,8 @@ export class CreateChannelUseCase {
     let banner;
 
     if (media.banner?.[0] && media.icon?.[0]) {
-      banner = await cloudinary.upload(media.banner?.[0]?.path);
-      icon = await cloudinary.upload(media.icon?.[0]?.path);
+      banner = await cdn.upload(media.banner?.[0]?.path);
+      icon = await cdn.upload(media.icon?.[0]?.path);
     }
 
     const channel = this.channelMapper.toChannel(data, icon, banner);

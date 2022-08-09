@@ -1,4 +1,4 @@
-import cloudinary from '../../../core/config/cloudinary';
+import { cdn } from '../../../core/config/cloudinary';
 import { IChannel } from '../../../core/interfaces/channel.interface';
 import { IResponse } from '../../../core/interfaces/response.interface';
 import { messages } from '../../../core/utils/messages';
@@ -24,8 +24,8 @@ export class DeleteChannelUseCase {
       return this.responseMapper.toResponse(null, messages.deleteFailure('channel'));
     }
 
-    await cloudinary.destroy(channel?.banner?._id);
-    await cloudinary.destroy(channel?.icon?._id);
+    await cdn.destroy(channel?.banner?._id);
+    await cdn.destroy(channel?.icon?._id);
     return this.responseMapper.toResponse(channel, messages.deleteSuccess('channel'));
   }
 }
