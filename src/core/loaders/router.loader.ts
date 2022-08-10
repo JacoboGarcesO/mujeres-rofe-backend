@@ -11,6 +11,7 @@ import { ChannelRouterInitializer } from './routes/channel-router.initialize';
 import { FormRequestRouterInitializer } from './routes/form-request-router.initializer';
 import { HighlightedCityRouterInitializer } from './routes/highlighted-city-router.initializer';
 import { LocationRouterInitializer } from './routes/location-router.initializer';
+import { NoticeRouterInitializer } from './routes/notice-router.initialize';
 
 export default class Router {
   private routes: (
@@ -28,8 +29,8 @@ export default class Router {
     this.routes = [
       new RequestRouter(app),
       new SlideRouter(app),
-      new NoticeRouter(app),
       new UserRouter(app),
+      NoticeRouterInitializer(app),
       HighlightedCityRouterInitializer(app),
       FormRequestRouterInitializer(app),
       LocationRouterInitializer(app),

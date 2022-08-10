@@ -1,9 +1,9 @@
 import { UploadApiResponse } from 'cloudinary';
 import { IMedia } from '../../core/interfaces/media.interface';
-import { INotice, INoticeResponse as INoticeResponse } from '../../core/interfaces/notice.interface';
+import { INotice } from '../../core/interfaces/notice.interface';
 
 export class NoticeMapper {
-  dtoToNotice(notice: any, icon: UploadApiResponse | undefined, content: UploadApiResponse | undefined): INotice {
+  toNotice(notice: any, icon: UploadApiResponse | undefined, content: UploadApiResponse | undefined): INotice {
     return {
       title: notice?.title,
       description: notice?.description,
@@ -17,20 +17,6 @@ export class NoticeMapper {
       formId: notice?.formId,
       url: notice?.url,
       id: notice?.id,
-    };
-  }
-
-  noticeToDto(notice: INotice, message: string): INoticeResponse {
-    return {
-      notices: [notice],
-      message,
-    };
-  }
-
-  noticesToDto(notices: INotice[], message: string): INoticeResponse {
-    return {
-      notices,
-      message,
     };
   }
 

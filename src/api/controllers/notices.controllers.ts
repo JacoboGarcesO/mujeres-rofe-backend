@@ -1,65 +1,72 @@
 import { NextFunction, Request, Response } from 'express';
-import { MessagesMapper } from '../../domain/mappers/messages.mapper';
-import { NoticeMapper } from '../../domain/mappers/notice.mapper';
-import { NoticesService } from '../../services/notices.service';
+import { CreateNoticeUseCase } from '../../domain/use-cases/notice/create-notice.use-case';
+import { DeleteNoticeUseCase } from '../../domain/use-cases/notice/delete-notice.use-case';
+import { GetNoticeByIdUseCase } from '../../domain/use-cases/notice/get-notice-by-id.use-case';
+import { GetNoticesByChannelUseCase } from '../../domain/use-cases/notice/get-notices-by-channel.use-case';
+import { GetNoticesUseCase } from '../../domain/use-cases/notice/get-notices.use-case';
+import { UpdateNoticeUseCase } from '../../domain/use-cases/notice/update-notice.use-case';
+import { NoticeController } from './interfaces/notice-controller.interface';
 
-const noticeMapper = new NoticeMapper();
-const messageMapper = new MessagesMapper();
-const service = new NoticesService(noticeMapper, messageMapper);
-export class NoticeController {
-
-  async getAll(_request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
+export const noticeController = (
+  createNoticeUseCase: CreateNoticeUseCase,
+  updateNoticeUseCase: UpdateNoticeUseCase,
+  deleteNoticeUseCase: DeleteNoticeUseCase,
+  getNoticeByIdUseCase: GetNoticeByIdUseCase,
+  getNoticesUseCase: GetNoticesUseCase,
+  getNoticesByChannelUseCase: GetNoticesByChannelUseCase,
+): NoticeController => ({
+  handleCreateNotice: async (req: Request, res: Response, next: NextFunction): Promise<Response | undefined> => {
     try {
-      const noticesResponse = await service.getAll();
-      return response.status(200).json(noticesResponse);
+      const execution = await createNoticeUseCase.execute(req.body, req.files);
+      return res.status(200).json(execution);
     } catch (err) {
+      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
-  }
-
-  async getById(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
+  },
+  handleDeleteNotice: async (req: Request, res: Response, next: NextFunction): Promise<Response | undefined> => {
     try {
-      const noticeResponse = await service.getById(request.params.noticeId);
-      return response.status(200).json(noticeResponse);
+      const execution = await deleteNoticeUseCase.execute(req.params.noticeId);
+      return res.status(200).json(execution);
     } catch (err) {
+      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
-  }
-
-  async getNoticesByChannel(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
+  },
+  handleGetNoticesByChannel: async (req: Request, res: Response, next: NextFunction): Promise<Response | undefined> => {
     try {
-      const channel = request.params.channel; 
-      const noticesResponse = await service.getNoticesByChannel(channel);
-      return response.status(200).json(noticesResponse);
+      const execution = await getNoticesByChannelUseCase.execute(req.params.channel);
+      return res.status(200).json(execution);
     } catch (err) {
+      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
-  }
-
-  async create(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
+  },
+  handleGetNoticeById: async (req: Request, res: Response, next: NextFunction): Promise<Response | undefined> => {
     try {
-      const noticeCreated = await service.create(request.body, request.files);
-      return response.status(200).json(noticeCreated);
+      const execution = await getNoticeByIdUseCase.execute(req.params.noticeId);
+      return res.status(200).json(execution);
     } catch (err) {
+      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
-  }
-
-  async update(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
-    try {      
-      const noticeResponse = await service.update(request.body, request.files);
-      return response.status(200).json(noticeResponse);
+  },
+  handleGetNotices: async (_req: Request, res: Response, next: NextFunction): Promise<Response | undefined> => {
+    try {
+      const execution = await getNoticesUseCase.execute();
+      return res.status(200).json(execution);
     } catch (err) {
+      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
-  }
-
-  async delete(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
-    try {      
-      const noticeResponse = await service.delete(request.params.noticeId);
-      return response.status(200).json(noticeResponse);
+  },
+  handleUpdateNotice: async (req: Request, res: Response, next: NextFunction): Promise<Response | undefined> => {
+    try {
+      const execution = await updateNoticeUseCase.execute(req.body, req.files);
+      return res.status(200).json(execution);
     } catch (err) {
+      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
-  }
-}
+  },
+});

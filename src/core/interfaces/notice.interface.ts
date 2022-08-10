@@ -12,12 +12,7 @@ export interface INotice {
   isLink: boolean;
   url: string;
   formId: string;
-  id?: string;
-}
-
-export interface INoticeResponse {
-  notices: INotice[];
-  message: string;
+  id: string;
 }
 
 interface ILinkNotice {

@@ -1,9 +1,9 @@
 import { HydratedDocument, Model } from 'mongoose';
 
 export class MongooseSource<T> {
-  private model: Model<T>;
+  private model: Model<any>;
 
-  constructor(model: Model<T>) { this.model = model; }
+  constructor(model: Model<any>) { this.model = model; }
 
   public async create(data: T): Promise<T> {
     return await this.model.create(data);

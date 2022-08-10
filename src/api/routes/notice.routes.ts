@@ -1,14 +1,22 @@
 import { Application, Router } from 'express';
 import { storage } from '../../core/config/storage';
+import { NoticeController } from '../controllers/interfaces/notice-controller.interface';
 import { JwtController } from '../controllers/jwt.controller';
-import { NoticeController } from '../controllers/notices.controllers';
 
 export class NoticeRouter {
   private app: Application;
-  private controller: NoticeController = new NoticeController();
-  private jwtController: JwtController = new JwtController();
+  private controller: NoticeController;
+  private jwtController: JwtController;
 
-  constructor(app: Application) { this.app = app; }
+  constructor(
+    controller: NoticeController,
+    jwtController: JwtController,
+    app: Application,
+  ) {
+    this.controller = controller;
+    this.jwtController = jwtController;
+    this.app = app;
+  }
 
   init() {
     const router = Router();
@@ -18,38 +26,38 @@ export class NoticeRouter {
       '/',
       this.jwtController.validateToken,
       storage.fields([{ name: 'content' }, { name: 'icon' }]),
-      this.controller.create,
+      this.controller.handleCreateNotice,
     );
 
     router.get(
       '/',
       this.jwtController.validateToken,
-      this.controller.getAll,
+      this.controller.handleGetNotices,
     );
 
     router.get(
       '/:noticeId',
       this.jwtController.validateToken,
-      this.controller.getById,
+      this.controller.handleGetNoticeById,
     );
 
     router.get(
       '/channel/:channel',
       this.jwtController.validateToken,
-      this.controller.getNoticesByChannel,
+      this.controller.handleGetNoticesByChannel,
     );
 
     router.put(
       '/',
       this.jwtController.validateToken,
       storage.fields([{ name: 'content' }, { name: 'icon' }]),
-      this.controller.update,
+      this.controller.handleUpdateNotice,
     );
 
     router.delete(
       '/:noticeId',
       this.jwtController.validateToken,
-      this.controller.delete,
+      this.controller.handleDeleteNotice,
     );
   }
 }

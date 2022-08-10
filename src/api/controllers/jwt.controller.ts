@@ -4,7 +4,7 @@ import { environment } from '../../core/config/environment';
 import { messages } from '../../core/utils/messages';
 
 export class JwtController {
-  async validateToken(request: Request, response: Response, next: NextFunction) {
+  async validateToken(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
     const token = request.header('Authorization');
 
     if (!token) {
@@ -16,7 +16,7 @@ export class JwtController {
         return response.status(401).json({ message: messages.requestInvalid });
       }
 
-      next();
+      next(err);
     });
   }
 }

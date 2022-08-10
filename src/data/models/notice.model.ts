@@ -20,4 +20,4 @@ const noticeSchema = new Schema({
   links: [linkSchema],
 }, { collection: 'Notices' });
 
-export default model('Notices', noticeSchema);
+export const noticeModel =  model('Notices', noticeSchema);
