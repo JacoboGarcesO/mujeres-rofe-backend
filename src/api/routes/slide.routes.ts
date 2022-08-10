@@ -1,14 +1,22 @@
 import { Application, Router } from 'express';
 import { storage } from '../../core/config/storage';
+import { SlideController } from '../controllers/interfaces/slide-controller.interface';
 import { JwtController } from '../controllers/jwt.controller';
-import { SlideController } from '../controllers/slides.controllers';
 
 export class SlideRouter {
   private app: Application;
-  private controller: SlideController = new SlideController();
-  private jwtController: JwtController = new JwtController();
+  private controller: SlideController;
+  private jwtController: JwtController;
 
-  constructor(app: Application) { this.app = app; }
+  constructor(
+    controller: SlideController,
+    jwtController: JwtController,
+    app: Application,
+  ) {
+    this.app = app;
+    this.controller = controller;
+    this.jwtController = jwtController;
+  }
 
   init() {
     const router = Router();
@@ -18,32 +26,32 @@ export class SlideRouter {
       '/',
       this.jwtController.validateToken,
       storage.single('image'),
-      this.controller.create,
+      this.controller.handleCreateSlide,
     );
 
     router.get(
       '/',
       this.jwtController.validateToken,
-      this.controller.getAll,
+      this.controller.handleGetSlides,
     );
 
     router.get(
       '/:slideId',
       this.jwtController.validateToken,
-      this.controller.getById,
+      this.controller.handleGetSlideById,
     );
 
     router.put(
       '/',
       this.jwtController.validateToken,
       storage.single('image'),
-      this.controller.update,
+      this.controller.handleUpdateSlide,
     );
 
     router.delete(
       '/:slideId',
       this.jwtController.validateToken,
-      this.controller.delete,
+      this.controller.handleDeleteSlide,
     );
   }
 }

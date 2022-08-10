@@ -7,4 +7,4 @@ const slideSchema = new Schema({
   url: { type: String, required: [true, 'Slide url is required'] },
 }, { collection: 'Slides' });
 
-export default model('Slides', slideSchema);
+export const slideModel = model('Slides', slideSchema);

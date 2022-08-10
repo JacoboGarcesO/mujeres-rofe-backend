@@ -1,55 +1,61 @@
 import { NextFunction, Request, Response } from 'express';
-import { MessagesMapper } from '../../domain/mappers/messages.mapper';
-import { SlideMapper } from '../../domain/mappers/slide.mapper';
-import { SlideService } from '../../services/slides.service';
+import { CreateSlideUseCase } from '../../domain/use-cases/slide/create-slide.use-case';
+import { DeleteSlideUseCase } from '../../domain/use-cases/slide/delete-slide.use-case';
+import { GetSlideByIdUseCase } from '../../domain/use-cases/slide/get-slide-by-id.use-case';
+import { GetSlidesUseCase } from '../../domain/use-cases/slide/get-slides.use-case';
+import { UpdateSlideUseCase } from '../../domain/use-cases/slide/update-slide.use-case';
+import { SlideController } from './interfaces/slide-controller.interface';
 
-const slideMapper = new SlideMapper();
-const messageMapper = new MessagesMapper();
-const service = new SlideService(slideMapper, messageMapper);
-export class SlideController {
-
-  async getAll(_request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
+export const slideController = (
+  createSlideUseCase: CreateSlideUseCase,
+  updateSlideUseCase: UpdateSlideUseCase,
+  deleteSlideUseCase: DeleteSlideUseCase,
+  getSlideByIdUseCase: GetSlideByIdUseCase,
+  getSlidesUseCase: GetSlidesUseCase,
+): SlideController => ({
+  handleCreateSlide: async (req: Request, res: Response, next: NextFunction): Promise<Response | undefined> => {
     try {
-      const slidesResponse = await service.getAll();
-      return response.status(200).json(slidesResponse);
+      const execution = await createSlideUseCase.execute(req.body, req.file?.path);
+      return res.status(200).json(execution);
     } catch (err) {
+      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
-  }
-
-  async getById(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
+  },
+  handleGetSlideById: async (req: Request, res: Response, next: NextFunction): Promise<Response | undefined> => {
     try {
-      const slideResponse = await service.getById(request.params.slideId);
-      return response.status(200).json(slideResponse);
+      const execution = await getSlideByIdUseCase.execute(req.params.slideId);
+      return res.status(200).json(execution);
     } catch (err) {
+      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
-  }
-
-  async create(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
-    try{
-      const slideResponse = await service.create(request.body, request.file?.path);
-      return response.status(200).json(slideResponse);
+  },
+  handleGetSlides: async (_req: Request, res: Response, next: NextFunction): Promise<Response | undefined> => {
+    try {
+      const execution = await getSlidesUseCase.execute();
+      return res.status(200).json(execution);
     } catch (err) {
+      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
-  }
-
-  async update(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
-    try {      
-      const slideResponse = await service.update(request.body, request.file?.path);
-      return response.status(200).json(slideResponse);
+  },
+  handleUpdateSlide: async (req: Request, res: Response, next: NextFunction): Promise<Response | undefined> => {
+    try {
+      const execution = await updateSlideUseCase.execute(req.body, req.file?.path);
+      return res.status(200).json(execution);
     } catch (err) {
+      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
-  }
-
-  async delete(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
-    try {      
-      const slideResponse = await service.delete(request.params.slideId);
-      return response.status(200).json(slideResponse);
+  },
+  handleDeleteSlide: async (req: Request, res: Response, next: NextFunction): Promise<Response | undefined> => {
+    try {
+      const execution = await deleteSlideUseCase.execute(req.params.slideId);
+      return res.status(200).json(execution);
     } catch (err) {
+      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
-  }
-}
+  },
+});
