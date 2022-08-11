@@ -19,4 +19,4 @@ const requestsSchema = new Schema({
   fields: [fieldSchema],
 }, { collection: 'Requests' });
 
-export default model('Requests', requestsSchema);
+export const requestModel = model('Requests', requestsSchema);

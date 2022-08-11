@@ -16,8 +16,8 @@ export class GetSlideByIdUseCase {
     this.responseMapper = responseMapper;
   }
 
-  public async execute(noticeId: string): Promise<IResponse<ISlide>> {
-    const slide = await this.repository.getSlideById(noticeId);
+  public async execute(slideId: string): Promise<IResponse<ISlide>> {
+    const slide = await this.repository.getSlideById(slideId);
 
     if (!slide) {
       return this.responseMapper.toResponse(null, messages.getByIdFailure('slide'));

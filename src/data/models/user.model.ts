@@ -48,4 +48,4 @@ const userSchema = new Schema({
   hasAcceptTermsAndConditions: { type: Boolean },
 }, { collection: 'Users' });
 
-export default model('Users', userSchema);
+export const userModel = model('Users', userSchema);

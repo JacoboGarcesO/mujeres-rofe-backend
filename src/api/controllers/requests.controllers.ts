@@ -1,51 +1,39 @@
 import { NextFunction, Request, Response } from 'express';
-import { RequestsService } from '../../services/requests.service';
+import { CreateRequestUseCase } from '../../domain/use-cases/request/create-request.use-case';
+import { DeleteRequestUseCase } from '../../domain/use-cases/request/delete-request.use-case';
+import { GetRequestsUseCase } from '../../domain/use-cases/request/get-requests.use-case';
+import { RequestController } from './interfaces/request-controller.interface';
 
-const service = new RequestsService();
-
-export class RequestsController {
-  async getAll(_request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
+export const requestController = (
+  createRequestUseCase: CreateRequestUseCase,
+  deleteRequestUseCase: DeleteRequestUseCase,
+  getRequestsUseCase: GetRequestsUseCase,
+): RequestController => ({
+  handleCreateRequest: async (req: Request, res: Response, next: NextFunction): Promise<Response | undefined> => {
     try {
-      const requestsResponse = await service.getAll();
-      return response.status(200).json(requestsResponse);
+      const execution = await createRequestUseCase.execute(req.body, req.file?.path);
+      return res.status(200).json(execution);
     } catch (err) {
+      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
-  }
-
-  async getById(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
+  },
+  handleDeleteRequest: async (req: Request, res: Response, next: NextFunction): Promise<Response | undefined> => {
     try {
-      const requestResponse = await service.getById(request.params.requestId);
-      return response.status(200).json(requestResponse);
+      const execution = await deleteRequestUseCase.execute(req.params.requestId);
+      return res.status(200).json(execution);
     } catch (err) {
+      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
-  }
-
-  async create(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
-    try {      
-      const requestCreated = await service.create(request.body, request.files);
-      return response.status(201).json(requestCreated);
+  },
+  handleGetRequests: async (_req: Request, res: Response, next: NextFunction): Promise<Response | undefined> => {
+    try {
+      const execution = await getRequestsUseCase.execute();
+      return res.status(200).json(execution);
     } catch (err) {
+      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
-  }
-
-  async update(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
-    try {      
-      const requestResponse = await service.update(request.body);
-      return response.status(200).json(requestResponse);
-    } catch (err) {
-      next(err);
-    }
-  }
-
-  async delete(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
-    try {      
-      const requestResponse = await service.delete(request.params.requestId);
-      return response.status(200).json(requestResponse);
-    } catch (err) {
-      next(err);
-    }
-  }
-}
+  },
+});

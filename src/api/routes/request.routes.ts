@@ -1,14 +1,22 @@
 import { Application, Router } from 'express';
 import { storage } from '../../core/config/storage';
+import { RequestController } from '../controllers/interfaces/request-controller.interface';
 import { JwtController } from '../controllers/jwt.controller';
-import { RequestsController } from '../controllers/requests.controllers';
 
 export class RequestRouter {
   private app: Application;
-  private controller: RequestsController = new RequestsController();
-  private jwtController: JwtController = new JwtController();
+  private controller: RequestController;
+  private jwtController: JwtController;
 
-  constructor(app: Application) { this.app = app; }
+  constructor(
+    controller: RequestController,
+    jwtController: JwtController,
+    app: Application,
+  ) {
+    this.app = app;
+    this.controller = controller;
+    this.jwtController = jwtController;
+  }
 
   init() {
     const router = Router();
@@ -17,32 +25,20 @@ export class RequestRouter {
     router.post(
       '/',
       this.jwtController.validateToken,
-      storage.fields([{ name: 'image' }]),
-      this.controller.create,
+      storage.single('image'),
+      this.controller.handleCreateRequest,
     );
 
     router.get(
       '/',
       this.jwtController.validateToken,
-      this.controller.getAll,
-    );
-
-    router.get(
-      '/:requestId',
-      this.jwtController.validateToken,
-      this.controller.getById,
-    );
-
-    router.put(
-      '/',
-      this.jwtController.validateToken,
-      this.controller.update,
+      this.controller.handleGetRequests,
     );
 
     router.delete(
       '/:requestId',
       this.jwtController.validateToken,
-      this.controller.delete,
+      this.controller.handleDeleteRequest,
     );
   }
 }

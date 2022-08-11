@@ -18,13 +18,13 @@ export class DeleteSlideUseCase {
   }
 
   public async execute(slideId: string): Promise<IResponse<ISlide>> {
-    const notice = await this.repository.deleteslide(slideId);
+    const slide = await this.repository.deleteslide(slideId);
 
-    if (!notice) {
+    if (!slide) {
       return this.responseMapper.toResponse(null, messages.deleteFailure('slide'));
     }
 
-    await cdn.destroy(notice?.image?._id);
-    return this.responseMapper.toResponse(notice, messages.deleteSuccess('slide'));
+    await cdn.destroy(slide?.image?._id);
+    return this.responseMapper.toResponse(slide, messages.deleteSuccess('slide'));
   }
 }

@@ -6,6 +6,7 @@ export interface IFieldRequest {
   placeholder: string,
   value: string,
   image?: IMedia;
+  type: string;
 }
 
 export interface IRequest {
@@ -15,4 +16,5 @@ export interface IRequest {
   subject: string;
   channel: string;
   fields: IFieldRequest[],
+  id: string;
 }

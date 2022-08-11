@@ -11,6 +11,7 @@ export class RequestMapper {
       template: toTemplateEnum(request?.requestTemplate),
       channel: request?.requestChannel,
       fields: this.getFields(JSON.parse(request?.requestFields), media),
+      id: request.id,
     };
   }
 

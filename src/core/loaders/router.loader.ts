@@ -12,6 +12,7 @@ import { FormRequestRouterInitializer } from './routes/form-request-router.initi
 import { HighlightedCityRouterInitializer } from './routes/highlighted-city-router.initializer';
 import { LocationRouterInitializer } from './routes/location-router.initializer';
 import { NoticeRouterInitializer } from './routes/notice-router.initialize';
+import { RequestRouterInitializer } from './routes/request-router.initialize';
 import { SlideRouterInitializer } from './routes/slide-router.initialize';
 
 export default class Router {
@@ -28,8 +29,8 @@ export default class Router {
 
   constructor(app: Application) {
     this.routes = [
-      new RequestRouter(app),
       new UserRouter(app),
+      RequestRouterInitializer(app),
       SlideRouterInitializer(app),
       NoticeRouterInitializer(app),
       HighlightedCityRouterInitializer(app),
