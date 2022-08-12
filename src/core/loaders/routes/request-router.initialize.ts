@@ -1,6 +1,6 @@
 import { Application } from 'express';
 import { JwtController } from '../../../api/controllers/jwt.controller';
-import { requestController } from '../../../api/controllers/requests.controllers';
+import { requestController } from '../../../api/controllers/request.controller';
 import { RequestRouter } from '../../../api/routes/request.routes';
 import { requestModel } from '../../../data/models/request.model';
 import { MongooseSource } from '../../../data/mongoose.source';

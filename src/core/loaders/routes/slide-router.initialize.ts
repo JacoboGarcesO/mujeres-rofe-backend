@@ -1,6 +1,6 @@
 import { Application } from 'express';
 import { JwtController } from '../../../api/controllers/jwt.controller';
-import { slideController } from '../../../api/controllers/slides.controllers';
+import { slideController } from '../../../api/controllers/slide.controller';
 import { SlideRouter } from '../../../api/routes/slide.routes';
 import { slideModel } from '../../../data/models/slide.model';
 import { MongooseSource } from '../../../data/mongoose.source';

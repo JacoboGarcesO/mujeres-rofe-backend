@@ -1,13 +1,21 @@
 import { Application, Router } from 'express';
 import { storage } from '../../core/config/storage';
+import { UserController } from '../controllers/interfaces/user-controller.interface';
 import { JwtController } from '../controllers/jwt.controller';
-import { UserController } from '../controllers/users.controllers';
 export class UserRouter {
   private app: Application;
-  private controller: UserController = new UserController();
-  private jwtController: JwtController = new JwtController();
+  private controller: UserController;
+  private jwtController: JwtController;
 
-  constructor(app: Application) { this.app = app; }
+  constructor(
+    controller: UserController,
+    jwtController: JwtController,
+    app: Application,
+  ) {
+    this.controller = controller;
+    this.jwtController = jwtController;
+    this.app = app;
+  }
 
   init() {
     const router = Router();
@@ -16,58 +24,49 @@ export class UserRouter {
     router.post(
       '/',
       storage.fields([{ name: 'image' }, { name: 'documentImage' }]),
-      this.controller.create,
+      this.controller.handleCreateUser,
     );
 
-    router.get(
-      '/',
-      this.jwtController.validateToken,
-      this.controller.getAll,
+    router.post(
+      '/auth',
+      this.controller.handleAuthentication,
     );
 
-    router.get(
-      '/paginated/:from',
-      this.jwtController.validateToken,
-      this.controller.getPaginatedUsers,
+    router.post(
+      '/forgot-password',
+      this.controller.handleForgotPassword,
     );
 
     router.put(
       '/',
       this.jwtController.validateToken,
       storage.fields([{ name: 'image' }, { name: 'documentImage' }]),
-      this.controller.update,
+      this.controller.handleUpdateUser,
     );
 
-    router.get(
-      '/:userId',
-      this.jwtController.validateToken,
-      this.controller.getById,
-    );
-
+    
     router.delete(
       '/:userId',
       this.jwtController.validateToken,
-      this.controller.delete,
-    );
-
-    router.post(
-      '/auth',
-      this.controller.auth,
-    );
-
-    router.post(
-      '/forgot-password',
-      this.controller.forgotPassword,
+      this.controller.handleDeleteUser,
     );
 
     router.get(
-      '/for-city/:city',
-      this.controller.getAllByCity,
+      '/paginated',
+      this.jwtController.validateToken,
+      this.controller.handleGetUsers,
     );
 
     router.get(
-      '/for-name/:name',
-      this.controller.getAllByName,
+      '/total',
+      this.jwtController.validateToken,
+      this.controller.handleGetTotalUsers,
+    );
+
+    router.get(
+      '/:userId',
+      this.jwtController.validateToken,
+      this.controller.handleGetUserById,
     );
   }
 }

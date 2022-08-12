@@ -1,4 +1,5 @@
 import { HydratedDocument, Model } from 'mongoose';
+import { IFilter } from '../core/interfaces/response.interface';
 
 export class MongooseSource<T> {
   private model: Model<any>;
@@ -29,8 +30,8 @@ export class MongooseSource<T> {
     return await this.model.find(filter).sort(sorter);
   }
 
-  public async findPaginated(from: number, limit: number, sorter: any): Promise<HydratedDocument<T>[]> {
-    return await this.model.find().skip(from).limit(limit).sort(sorter);
+  public async findPaginated(filter: IFilter): Promise<HydratedDocument<T>[]> {
+    return await this.model.find(filter.term).skip(filter.from).limit(filter.limit).sort(filter.sort);
   }
 
   public async count(): Promise<number> {

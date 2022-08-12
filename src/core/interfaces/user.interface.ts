@@ -34,26 +34,9 @@ export interface IUser {
   creationDate?: Date;
 }
 
-export interface IUserResponse {
-  users: IUser[];
-  message: string;
-}
-
-export interface IUserPaginated {
-  users: IUser[];
-  total: number;
-  message: string;
-}
-
 export interface IUserCredentials {
   email: string;
   password: string;
-}
-
-export interface IUserCredentialsResponse {
-  message: string;
-  token?: string;
-  user?: IUser;
 }
 
 export interface ISocialNetworks {

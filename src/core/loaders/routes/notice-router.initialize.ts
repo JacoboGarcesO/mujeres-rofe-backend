@@ -1,6 +1,6 @@
 import { Application } from 'express';
 import { JwtController } from '../../../api/controllers/jwt.controller';
-import { noticeController } from '../../../api/controllers/notices.controllers';
+import { noticeController } from '../../../api/controllers/notice.controller';
 import { NoticeRouter } from '../../../api/routes/notice.routes';
 import { noticeModel } from '../../../data/models/notice.model';
 import { MongooseSource } from '../../../data/mongoose.source';

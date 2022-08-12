@@ -1,5 +1,5 @@
 import { Application } from 'express';
-import { channelController } from '../../../api/controllers/channel.controllers';
+import { channelController } from '../../../api/controllers/channel.controller';
 import { JwtController } from '../../../api/controllers/jwt.controller';
 import { ChannelRouter } from '../../../api/routes/channel.routes';
 import { channelModel } from '../../../data/models/channel.model';

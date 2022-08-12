@@ -1,5 +1,5 @@
 import { Application } from 'express';
-import { formRequestController } from '../../../api/controllers/form-requestcontrollers';
+import { formRequestController } from '../../../api/controllers/form-request.controller';
 import { JwtController } from '../../../api/controllers/jwt.controller';
 import { FormRequestRouter } from '../../../api/routes/form-request.routes';
 import { formRequestModel } from '../../../data/models/form-request.model';
