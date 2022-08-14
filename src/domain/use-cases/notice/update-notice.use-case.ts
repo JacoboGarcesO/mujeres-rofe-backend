@@ -22,20 +22,22 @@ export class UpdateNoticeUseCase {
   }
 
   public async execute(data: any, media: any): Promise<IResponse<INotice>> {
+    const iconEncoded = JSON.parse(data.iconEncoded);
+    const contentEncoded = JSON.parse(data.contentEncoded);
     let icon;
     let content;
 
     if (media.content) {
-      if (data.content?._id) {
-        await cdn.destroy(data?.content._id);
+      if (contentEncoded?._id) {
+        await cdn.destroy(contentEncoded._id);
       }
 
       content = await cdn.upload(media.content?.[0]?.path);
     }
 
     if (media.icon) {
-      if (data.icon?._id) {
-        await cdn.destroy(data.icon?._id);
+      if (iconEncoded?._id) {
+        await cdn.destroy(iconEncoded._id);
       }
 
       icon = await cdn.upload(media.icon?.[0]?.path);
