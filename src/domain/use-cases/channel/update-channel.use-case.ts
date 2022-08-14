@@ -22,20 +22,23 @@ export class UpdateChannelUseCase {
   }
 
   public async execute(data: any, media: any): Promise<IResponse<IChannel>> {
+    const iconEncoded = JSON.parse(data.iconEncoded);
+    const bannerEncoded = JSON.parse(data.bannerEncoded);
+
     let icon;
     let banner;
 
     if (media.banner) {
-      if (data.banner?._id) {
-        await cdn.destroy(data?.banner._id);
+      if (bannerEncoded?._id) {
+        await cdn.destroy(bannerEncoded._id);
       }
 
       banner = await cdn.upload(media.banner?.[0]?.path);
     }
 
     if (media.icon) {
-      if (data.icon?._id) {
-        await cdn.destroy(data.icon?._id);
+      if (iconEncoded?._id) {
+        await cdn.destroy(iconEncoded._id);
       }
 
       icon = await cdn.upload(media.icon?.[0]?.path);
