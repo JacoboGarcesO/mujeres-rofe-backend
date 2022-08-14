@@ -22,12 +22,12 @@ export class UpdateSlideUseCase {
   }
 
   public async execute(data: any, media: any): Promise<IResponse<ISlide>> {
+    const imageEncoded = JSON.parse(data.imageEncoded);
     let image;
 
-
-    if (media) {
-      if (data.image?._id) {
-        await cdn.destroy(data.image?._id);
+    if (media) {      
+      if (imageEncoded?._id) {
+        await cdn.destroy(imageEncoded._id);
       }
 
       image = await cdn.upload(media);
