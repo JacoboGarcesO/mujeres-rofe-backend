@@ -4,10 +4,11 @@ export class FormRequestMapper {
   toFormRequest(formRequest: any): IFormRequest {
     return {
       id: formRequest?.id,
-      links: formRequest?.links,
+      fields: formRequest?.fields,
       subject: formRequest?.subject,
       template: formRequest?.template,
       title: formRequest?.title,
+      description: formRequest?.description,
     };
   }
 }
