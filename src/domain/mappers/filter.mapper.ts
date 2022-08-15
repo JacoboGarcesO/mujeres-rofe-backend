@@ -6,8 +6,8 @@ export class FilterMapper {
       from: data?.from,
       limit: data?.limit,
       sort: data?.sort,
-      term: data?.term,
+      term: { [Object.keys(data.term)[0]]: new RegExp(data.term[Object.keys(data.term)[0]]) },
       total: data?.total,
     };
-  }
+}
 }

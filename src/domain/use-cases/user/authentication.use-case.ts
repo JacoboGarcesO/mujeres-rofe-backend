@@ -27,7 +27,7 @@ export class AuthenticationUseCase {
     }
 
     if(comparePasswords(data?.password, user.password)) {
-      const token = Jwt.sign(data, environment.jwtPassword);
+      const token = Jwt.sign(JSON.stringify(user), environment.jwtPassword);
       return this.responseMapper.toResponse(user, messages.authSuccess, token);
     }
 

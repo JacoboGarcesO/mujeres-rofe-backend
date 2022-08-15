@@ -31,7 +31,7 @@ export class MongooseSource<T> {
   }
 
   public async findPaginated(filter: IFilter): Promise<HydratedDocument<T>[]> {
-    return await this.model.find({[Object.keys(filter.term)[0]]: new RegExp(filter.term[Object.keys(filter.term)[0]])}).skip(filter.from).limit(filter.limit).sort(filter.sort);
+    return await this.model.find(filter.term).skip(filter.from).limit(filter.limit).sort(filter.sort);
   }
 
   public async count(): Promise<number> {
