@@ -22,20 +22,23 @@ export class UpdateUserUseCase {
   }
 
   public async execute(data: any, media: any): Promise<IResponse<IUser>> {
+    const imageEncoded = JSON.parse(data.imageEncoded);
+    const documentImageEncoded = JSON.parse(data.documentImageEncoded);
+  
     let image;
     let documentImage;
 
     if (media.image) {
-      if (data.image?._id) {
-        await cdn.destroy(data?.image._id);
+      if (imageEncoded?._id) {
+        await cdn.destroy(imageEncoded._id);
       }
 
       image = await cdn.upload(media.image?.[0]?.path);
     }
 
     if (media.documentImage) {
-      if (data.documentImage?._id) {
-        await cdn.destroy(data.documentImage?._id);
+      if (documentImageEncoded?._id) {
+        await cdn.destroy(documentImageEncoded?._id);
       }
 
       documentImage = await cdn.upload(media.documentImage?.[0]?.path);
