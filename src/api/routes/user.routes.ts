@@ -52,7 +52,7 @@ export class UserRouter {
     );
 
     router.get(
-      '/paginated',
+      '/',
       this.jwtController.validateToken,
       this.controller.handleGetUsers,
     );
