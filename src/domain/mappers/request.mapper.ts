@@ -5,13 +5,13 @@ import { toTemplateEnum } from '../../core/constants/template.enum';
 export class RequestMapper {
   toRequest(request: any, media: UploadApiResponse | undefined): IRequest {
     return {
-      formId: request?.requestFormId,
-      title: request?.requestTitle,
-      subject: request?.requestSubject,
-      template: toTemplateEnum(request?.requestTemplate),
-      channel: request?.requestChannel,
-      fields: this.getFields(JSON.parse(request?.requestFields), media),
-      id: request.id,
+      formId: request?.formId,
+      title: request?.title,
+      subject: request?.subject,
+      template: toTemplateEnum(request?.template),
+      channel: request?.channel,
+      fields: this.getFields(JSON.parse(request?.fields), media),
+      id: request?.id,
     };
   }
 
