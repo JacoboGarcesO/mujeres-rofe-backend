@@ -51,8 +51,8 @@ export class UserRouter {
       this.controller.handleDeleteUser,
     );
 
-    router.get(
-      '/',
+    router.post(
+      '/paginated',
       this.jwtController.validateToken,
       this.controller.handleGetUsers,
     );
