@@ -31,6 +31,7 @@ export const userController = (
   handleCreateUser: async (req: Request, res: Response, next: NextFunction): Promise<Response | undefined> => {
     try {
       const execution = await createUserUseCase.execute(req.body, req.files);
+      if (!execution?.result) { return res.status(500).send(execution); }
       return res.status(200).json(execution);
     } catch (err) {
       res.status(500).send({ error: err, message: 'Internal server error' });

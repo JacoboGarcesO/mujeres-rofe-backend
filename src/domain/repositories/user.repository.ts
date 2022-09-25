@@ -36,10 +36,10 @@ export class UserRepository {
   }
 
   public async isEmailDuplicated(email: string): Promise<boolean | null> {
-    return !await this.db.findOne({ email });
+    return !!await this.db.findOne({ email });
   }
 
   public async isDocumentDuplicated(documentNumber: string): Promise<boolean | null> {
-    return !await this.db.findOne({ documentNumber });
+    return !!await this.db.findOne({ documentNumber });
   }
 }

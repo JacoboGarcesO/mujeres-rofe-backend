@@ -39,6 +39,7 @@ export class ForgotPasswordUseCase {
       user.email,
       'Recordatorio de credenciales para tu cuenta de Mujeres ROFÉ',
       '¡Estas son tus credenciales de acceso!',
+      user.documentNumber,
     );
 
     await this.emailUseCase.send(emailData);

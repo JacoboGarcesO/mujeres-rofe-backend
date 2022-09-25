@@ -31,8 +31,12 @@ export class CreateUserUseCase {
   }
 
   public async execute(data: any, media: any): Promise<IResponse<IUser>> {
-    this.throwDuplicated(data?.email?.toLowerCase(), 'Email');
-    this.throwDuplicated(data?.document, 'Document');
+    const isEmailDuplicated = await this.throwDuplicated(data?.email?.toLowerCase(), 'Email');
+    const isDocumentDuplicated = await this.throwDuplicated(data?.document, 'Document');
+
+    if (isEmailDuplicated) { return this.responseMapper.toResponse(null, isEmailDuplicated?.message); }
+
+    if (isDocumentDuplicated) { return this.responseMapper.toResponse(null, isDocumentDuplicated?.message); }
 
     let image;
     let documentImage;
@@ -48,10 +52,9 @@ export class CreateUserUseCase {
     return this.responseMapper.toResponse(userCreated, messages.createSuccess('user'));
   }
 
-  private async throwDuplicated(data: string, entity: 'Document' | 'Email'): Promise<void> {
+  private async throwDuplicated(data: string, entity: 'Document' | 'Email'): Promise<void | Error> {
     const isDuplicated = await this.repository[`is${entity}Duplicated`](data);
-
-    if (isDuplicated) { throw new Error(messages[`${entity}Duplicated`]); }
+    if (isDuplicated) { return new Error(messages[`${entity}Duplicated`]); }
   }
 
   private async sendCreationUserEmail(user: IUser): Promise<void> {
@@ -67,5 +70,5 @@ export class CreateUserUseCase {
 
     await this.emailUseCase.send(emailData);
   }
-  
+
 }
