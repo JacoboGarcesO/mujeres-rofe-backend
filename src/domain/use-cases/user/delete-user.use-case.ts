@@ -24,8 +24,9 @@ export class DeleteUserUseCase {
       return this.responseMapper.toResponse(null, messages.deleteFailure('user'));
     }
 
-    await cdn.destroy(user?.image?._id);
-    await cdn.destroy(user?.documentImage?._id);
+    if (user?.image?._id) { await cdn.destroy(user?.image?._id); }
+    if (user?.documentImage?._id) { await cdn.destroy(user?.documentImage?._id); }
+
     return this.responseMapper.toResponse(user, messages.deleteSuccess('user'));
   }
 }

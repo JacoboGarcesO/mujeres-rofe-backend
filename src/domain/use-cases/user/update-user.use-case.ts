@@ -24,7 +24,7 @@ export class UpdateUserUseCase {
   public async execute(data: any, media: any): Promise<IResponse<IUser>> {
     const imageEncoded = JSON.parse(data.imageEncoded);
     const documentImageEncoded = JSON.parse(data.documentImageEncoded);
-  
+
     let image;
     let documentImage;
 
@@ -46,6 +46,6 @@ export class UpdateUserUseCase {
 
     const user = this.userMapper.toUser(data, image, documentImage);
     const userUpdated = await this.repository.updateUser(user);
-    return this.responseMapper.toResponse(userUpdated, messages.updateSuccess('channel'));
+    return this.responseMapper.toResponse(userUpdated, messages.updateSuccess('user'));
   }
 }
