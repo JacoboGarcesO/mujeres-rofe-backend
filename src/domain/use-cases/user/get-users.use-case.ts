@@ -22,12 +22,18 @@ export class GetUsersUseCase {
 
   public async execute(data: any): Promise<IResponse<IUser[]>> {
     const filter = this.filterMapper.toFilter(data);
+    const total = await this.repository.getTotalUsers(filter.term);
     const users = await this.repository.getUsers(filter);
 
     if (!users?.length) {
       return this.responseMapper.toResponse(null, messages.getAllFailure('users'));
     }
 
-    return this.responseMapper.toResponse(users, messages.getAll('users'));
+    return this.responseMapper.toResponse(
+      users,
+      messages.getAll('users'),
+      undefined,
+      { ...filter, total: total, term: this.filterMapper.toTerm(filter.term) }
+    );
   }
 }

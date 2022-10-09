@@ -31,8 +31,8 @@ export class UserRepository {
     return await this.db.findOne({ email });
   }
 
-  public async getTotalUsers(): Promise<number> {
-    return await this.db.count();
+  public async getTotalUsers(filter: { [key: string]: string }): Promise<number> {
+    return await this.db.count(filter);
   }
 
   public async isEmailDuplicated(email: string): Promise<boolean | null> {

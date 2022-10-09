@@ -58,12 +58,6 @@ export class UserRouter {
     );
 
     router.get(
-      '/total',
-      this.jwtController.validateToken,
-      this.controller.handleGetTotalUsers,
-    );
-
-    router.get(
       '/:userId',
       this.jwtController.validateToken,
       this.controller.handleGetUserById,

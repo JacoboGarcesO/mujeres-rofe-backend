@@ -14,7 +14,6 @@ import { AuthenticationUseCase } from '../../../domain/use-cases/user/authentica
 import { CreateUserUseCase } from '../../../domain/use-cases/user/create-user.use-case';
 import { DeleteUserUseCase } from '../../../domain/use-cases/user/delete-user.use-case';
 import { ForgotPasswordUseCase } from '../../../domain/use-cases/user/forgot-password.use-case';
-import { GetTotalUsersUseCase } from '../../../domain/use-cases/user/get-total-users.use-case';
 import { GetUserByIdUseCase } from '../../../domain/use-cases/user/get-user-by-id.use-case';
 import { GetUsersUseCase } from '../../../domain/use-cases/user/get-users.use-case';
 import { UpdateUserUseCase } from '../../../domain/use-cases/user/update-user.use-case';
@@ -45,11 +44,6 @@ export const UserRouterInitializer = (app: Application): UserRouter => {
     new ResponseMapper(),
   );
 
-  const getTotalUsersUseCase = new GetTotalUsersUseCase(
-    new UserRepository(new MongooseSource(userModel)),
-    new ResponseMapper(),
-  );
-
   const getUserByIdUseCase = new GetUserByIdUseCase(
     new UserRepository(new MongooseSource(userModel)),
     new ResponseMapper(),
@@ -72,7 +66,6 @@ export const UserRouterInitializer = (app: Application): UserRouter => {
     createUserUseCase,
     deleteUserUseCase,
     forgotPasswordUseCase,
-    getTotalUsersUseCase,
     getUserByIdUseCase,
     getUsersUseCase,
     updateUserUseCase,

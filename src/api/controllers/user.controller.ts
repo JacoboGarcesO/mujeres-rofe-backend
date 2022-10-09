@@ -3,7 +3,6 @@ import { AuthenticationUseCase } from '../../domain/use-cases/user/authenticatio
 import { CreateUserUseCase } from '../../domain/use-cases/user/create-user.use-case';
 import { DeleteUserUseCase } from '../../domain/use-cases/user/delete-user.use-case';
 import { ForgotPasswordUseCase } from '../../domain/use-cases/user/forgot-password.use-case';
-import { GetTotalUsersUseCase } from '../../domain/use-cases/user/get-total-users.use-case';
 import { GetUserByIdUseCase } from '../../domain/use-cases/user/get-user-by-id.use-case';
 import { GetUsersUseCase } from '../../domain/use-cases/user/get-users.use-case';
 import { UpdateUserUseCase } from '../../domain/use-cases/user/update-user.use-case';
@@ -14,7 +13,6 @@ export const userController = (
   createUserUseCase: CreateUserUseCase,
   deleteUserUseCase: DeleteUserUseCase,
   forgotPasswordUseCase: ForgotPasswordUseCase,
-  getTotalUsersUseCase: GetTotalUsersUseCase,
   getUserByIdUseCase: GetUserByIdUseCase,
   getUsersUseCase: GetUsersUseCase,
   updateUserUseCase: UpdateUserUseCase,
@@ -50,15 +48,6 @@ export const userController = (
   handleForgotPassword: async (req: Request, res: Response, next: NextFunction): Promise<Response | undefined> => {
     try {
       const execution = await forgotPasswordUseCase.execute(req.body);
-      return res.status(200).json(execution);
-    } catch (err) {
-      res.status(500).send({ error: err, message: 'Internal server error' });
-      next(err);
-    }
-  },
-  handleGetTotalUsers: async (_req: Request, res: Response, next: NextFunction): Promise<Response | undefined> => {
-    try {
-      const execution = await getTotalUsersUseCase.execute();
       return res.status(200).json(execution);
     } catch (err) {
       res.status(500).send({ error: err, message: 'Internal server error' });

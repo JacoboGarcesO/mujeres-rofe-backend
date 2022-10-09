@@ -10,5 +10,5 @@ export interface IFilter {
   limit: number;
   term: any;
   sort: any;
-  total: number;
+  total?: number;
 }

@@ -8,5 +8,4 @@ export interface UserController {
   handleUpdateUser: (req: Request, res: Response, next: NextFunction) => Promise<Response | undefined>;
   handleGetUserById: (req: Request, res: Response, next: NextFunction) => Promise<Response | undefined>;
   handleGetUsers: (req: Request, res: Response, next: NextFunction) => Promise<Response | undefined>;
-  handleGetTotalUsers: (_req: Request, res: Response, next: NextFunction) => Promise<Response | undefined>;
 }

@@ -34,7 +34,7 @@ export class MongooseSource<T> {
     return await this.model.find(filter.term).skip(filter.from).limit(filter.limit).sort(filter.sort);
   }
 
-  public async count(): Promise<number> {
-    return await this.model.countDocuments();
+  public async count(filter: { [key: string]: string }): Promise<number> {
+    return await this.model.countDocuments(filter);
   }
 }
