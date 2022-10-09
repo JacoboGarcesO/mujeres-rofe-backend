@@ -26,7 +26,12 @@ export class GetUsersUseCase {
     const users = await this.repository.getUsers(filter);
 
     if (!users?.length) {
-      return this.responseMapper.toResponse(null, messages.getAllFailure('users'));
+      return this.responseMapper.toResponse(
+        null,
+        messages.getAllFailure('users'),
+        undefined,
+        { ...filter, total: total, term: this.filterMapper.toTerm(filter.term) }
+      );
     }
 
     return this.responseMapper.toResponse(
