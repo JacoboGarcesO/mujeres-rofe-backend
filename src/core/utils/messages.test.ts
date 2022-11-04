@@ -1,4 +1,4 @@
-import messages from './messages';
+import { messages } from './messages';
 
 describe('Messages utils', () => {
   test('Should return creation successfully message', () => {
