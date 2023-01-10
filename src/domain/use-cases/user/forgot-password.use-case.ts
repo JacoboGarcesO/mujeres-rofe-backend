@@ -28,9 +28,7 @@ export class ForgotPasswordUseCase {
   public async execute(data: any): Promise<IResponse<IUser>> {
     const user = await this.repository.getUserByEmail(data?.email?.toLowerCase());
 
-    if (!user) {
-      return this.responseMapper.toResponse(null, messages.userNotFound);
-    }
+    if (!user) { throw new Error(messages.userNotFound); }
 
     const emailData = this.emailMapper.toEmail(
       TemplateEnum.forgotPassword,
