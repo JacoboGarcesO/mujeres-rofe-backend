@@ -20,7 +20,6 @@ export const noticeController = (
       const execution = await createNoticeUseCase.execute(req.body, req.files);
       return res.status(200).json(execution);
     } catch (err) {
-      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
   },
@@ -29,7 +28,6 @@ export const noticeController = (
       const execution = await deleteNoticeUseCase.execute(req.params.noticeId);
       return res.status(200).json(execution);
     } catch (err) {
-      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
   },
@@ -38,7 +36,6 @@ export const noticeController = (
       const execution = await getNoticesByChannelUseCase.execute(req.params.channel);
       return res.status(200).json(execution);
     } catch (err) {
-      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
   },
@@ -47,7 +44,6 @@ export const noticeController = (
       const execution = await getNoticeByIdUseCase.execute(req.params.noticeId);
       return res.status(200).json(execution);
     } catch (err) {
-      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
   },
@@ -56,7 +52,6 @@ export const noticeController = (
       const execution = await getNoticesUseCase.execute();
       return res.status(200).json(execution);
     } catch (err) {
-      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
   },
@@ -65,7 +60,6 @@ export const noticeController = (
       const execution = await updateNoticeUseCase.execute(req.body, req.files);
       return res.status(200).json(execution);
     } catch (err) {
-      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
   },

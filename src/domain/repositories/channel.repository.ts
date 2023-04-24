@@ -1,3 +1,4 @@
+import { ModifyResult } from 'mongoose';
 import { IChannel } from '../../core/interfaces/channel.interface';
 import { MongooseSource } from '../../data/mongoose.source';
 
@@ -18,7 +19,7 @@ export class ChannelRepository {
     return await this.db.create(channel);
   }
 
-  public async updateChannel(channel: IChannel): Promise<IChannel | null> {
+  public async updateChannel(channel: IChannel): Promise<ModifyResult<IChannel> | null> {
     return await this.db.update(channel.id, channel);
   }
 

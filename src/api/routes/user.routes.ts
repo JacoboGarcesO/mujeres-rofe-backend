@@ -2,6 +2,8 @@ import { Application, Router } from 'express';
 import { storage } from '../../core/config/storage';
 import { UserController } from '../controllers/interfaces/user-controller.interface';
 import { JwtController } from '../controllers/jwt.controller';
+import { errorMiddleware } from '../../core/middlewares/error.middleware';
+
 export class UserRouter {
   private app: Application;
   private controller: UserController;
@@ -20,7 +22,7 @@ export class UserRouter {
   init() {
     const router = Router();
     this.app.use('/api/users', router);
-
+    this.app.use(errorMiddleware);
     router.post(
       '/',
       storage.fields([{ name: 'image' }, { name: 'documentImage' }]),
@@ -44,7 +46,7 @@ export class UserRouter {
       this.controller.handleUpdateUser,
     );
 
-    
+
     router.delete(
       '/:userId',
       this.jwtController.validateToken,

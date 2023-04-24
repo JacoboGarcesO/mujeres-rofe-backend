@@ -1,5 +1,7 @@
+import { ModifyResult } from "mongoose";
+
 export interface IResponse<T> {
-  result: T | null;
+  result: T | ModifyResult<T> | null;
   message: string;
   filter?: IFilter;
   token?: string;

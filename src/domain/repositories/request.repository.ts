@@ -1,3 +1,4 @@
+import { ModifyResult } from 'mongoose';
 import { IRequest } from '../../core/interfaces/requests.interface';
 import { MongooseSource } from '../../data/mongoose.source';
 
@@ -18,7 +19,7 @@ export class RequestRepository {
     return await this.db.create(request);
   }
 
-  public async updateRequest(request: IRequest): Promise<IRequest | null> {
+  public async updateRequest(request: IRequest): Promise<ModifyResult<IRequest> | null> {
     return await this.db.update(request.id, request);
   }
 

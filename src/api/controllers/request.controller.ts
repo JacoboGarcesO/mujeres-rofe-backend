@@ -14,7 +14,6 @@ export const requestController = (
       const execution = await createRequestUseCase.execute(req.body, req.file?.path);
       return res.status(200).json(execution);
     } catch (err) {
-      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
   },
@@ -23,7 +22,6 @@ export const requestController = (
       const execution = await deleteRequestUseCase.execute(req.params.requestId);
       return res.status(200).json(execution);
     } catch (err) {
-      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
   },
@@ -32,7 +30,6 @@ export const requestController = (
       const execution = await getRequestsUseCase.execute();
       return res.status(200).json(execution);
     } catch (err) {
-      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
   },

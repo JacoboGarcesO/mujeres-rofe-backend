@@ -20,19 +20,22 @@ export const userController = (
   handleAuthentication: async (req: Request, res: Response, next: NextFunction): Promise<Response | undefined> => {
     try {
       const execution = await authenticationUseCase.execute(req.body);
+      if (!execution.result) {
+        throw new Error(execution.message);
+      }
       return res.status(200).json(execution);
     } catch (err) {
-      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
   },
   handleCreateUser: async (req: Request, res: Response, next: NextFunction): Promise<Response | undefined> => {
     try {
       const execution = await createUserUseCase.execute(req.body, req.files);
-      if (!execution?.result) { return res.status(500).send(execution); }
+      if (!execution.result) {
+        throw new Error(execution.message);
+      }
       return res.status(200).json(execution);
     } catch (err) {
-      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
   },
@@ -41,7 +44,6 @@ export const userController = (
       const execution = await deleteUserUseCase.execute(req.params.userId);
       return res.status(200).json(execution);
     } catch (err) {
-      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
   },
@@ -50,7 +52,6 @@ export const userController = (
       const execution = await forgotPasswordUseCase.execute(req.body);
       return res.status(200).json(execution);
     } catch (err) {
-      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
   },
@@ -59,7 +60,6 @@ export const userController = (
       const execution = await getUserByIdUseCase.execute(req.params.userId);
       return res.status(200).json(execution);
     } catch (err) {
-      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
   },
@@ -68,7 +68,6 @@ export const userController = (
       const execution = await getUsersUseCase.execute(req.body);
       return res.status(200).json(execution);
     } catch (err) {
-      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
   },
@@ -77,7 +76,6 @@ export const userController = (
       const execution = await updateUserUseCase.execute(req.body, req.files);
       return res.status(200).json(execution);
     } catch (err) {
-      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
   },

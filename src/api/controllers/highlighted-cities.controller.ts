@@ -14,7 +14,6 @@ export const highlightedCityController = (
       const execution = await createHighlightedCityUseCase.execute(req.body);
       return res.status(200).json(execution);
     } catch (err) {
-      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
   },
@@ -23,7 +22,6 @@ export const highlightedCityController = (
       const execution = await getHighlightedCitiesUseCase.execute();
       return res.status(200).json(execution);
     } catch (err) {
-      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
   },
@@ -32,7 +30,6 @@ export const highlightedCityController = (
       const execution = await deleteHighlightedCityUseCase.execute(req.params.highlightedCityId);
       return res.status(200).json(execution);
     } catch (err) {
-      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
   },

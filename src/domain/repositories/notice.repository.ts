@@ -1,3 +1,4 @@
+import { ModifyResult } from 'mongoose';
 import { INotice } from '../../core/interfaces/notice.interface';
 import { MongooseSource } from '../../data/mongoose.source';
 
@@ -22,7 +23,7 @@ export class NoticeRepository {
     return await this.db.create(channel);
   }
 
-  public async updateNotice(channel: INotice): Promise<INotice | null> {
+  public async updateNotice(channel: INotice): Promise<ModifyResult<INotice> | null> {
     return await this.db.update(channel.id, channel);
   }
 

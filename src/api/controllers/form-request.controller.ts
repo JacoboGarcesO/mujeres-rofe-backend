@@ -18,7 +18,6 @@ export const formRequestController = (
       const execution = await createFormRequestUseCase.execute(req.body);
       return res.status(200).json(execution);
     } catch (err) {
-      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
   },
@@ -27,7 +26,6 @@ export const formRequestController = (
       const execution = await getFormRequestsUseCase.execute();
       return res.status(200).json(execution);
     } catch (err) {
-      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
   },
@@ -36,7 +34,6 @@ export const formRequestController = (
       const execution = await getFormRequestByIdUseCase.execute(req.params.formRequestId);
       return res.status(200).json(execution);
     } catch (err) {
-      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
   },
@@ -45,7 +42,6 @@ export const formRequestController = (
       const execution = await updateFormRequestUseCase.execute(req.body);
       return res.status(200).json(execution);
     } catch (err) {
-      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
   },
@@ -54,7 +50,6 @@ export const formRequestController = (
       const execution = await deleteFormRequestUseCase.execute(req.params.formRequestId);
       return res.status(200).json(execution);
     } catch (err) {
-      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
   },

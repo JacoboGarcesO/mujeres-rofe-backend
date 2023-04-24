@@ -1,3 +1,4 @@
+import { ModifyResult } from 'mongoose';
 import { IFilter } from '../../core/interfaces/response.interface';
 import { IUser } from '../../core/interfaces/user.interface';
 import { MongooseSource } from '../../data/mongoose.source';
@@ -19,7 +20,7 @@ export class UserRepository {
     return await this.db.create(user);
   }
 
-  public async updateUser(user: IUser): Promise<IUser | null> {
+  public async updateUser(user: IUser): Promise<ModifyResult<IUser> | null> {
     return await this.db.update(user.id, user);
   }
 

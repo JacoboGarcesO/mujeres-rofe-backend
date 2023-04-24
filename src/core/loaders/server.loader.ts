@@ -1,7 +1,7 @@
 import cors from 'cors';
 import express, { Application } from 'express';
-import morgan from 'morgan';
 import { environment } from '../config/environment';
+import { loggingMiddleware } from '../middlewares/logging.middleware';
 
 export default class Server {
   private server: Application;
@@ -39,9 +39,9 @@ export default class Server {
   private setDependencies(): void {
     this.server.use(
       cors(),
-      morgan('dev'),
       express.json(),
-      express.urlencoded({ extended: false, limit: '50mb' }),
+      express.urlencoded({ extended: false, limit: '10mb' }),
+      loggingMiddleware,
     );
   }
 

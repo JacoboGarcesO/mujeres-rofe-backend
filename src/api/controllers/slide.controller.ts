@@ -18,7 +18,6 @@ export const slideController = (
       const execution = await createSlideUseCase.execute(req.body, req.file?.path);
       return res.status(200).json(execution);
     } catch (err) {
-      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
   },
@@ -27,7 +26,6 @@ export const slideController = (
       const execution = await getSlideByIdUseCase.execute(req.params.slideId);
       return res.status(200).json(execution);
     } catch (err) {
-      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
   },
@@ -36,7 +34,6 @@ export const slideController = (
       const execution = await getSlidesUseCase.execute();
       return res.status(200).json(execution);
     } catch (err) {
-      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
   },
@@ -45,7 +42,6 @@ export const slideController = (
       const execution = await updateSlideUseCase.execute(req.body, req.file?.path);
       return res.status(200).json(execution);
     } catch (err) {
-      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
   },
@@ -54,7 +50,6 @@ export const slideController = (
       const execution = await deleteSlideUseCase.execute(req.params.slideId);
       return res.status(200).json(execution);
     } catch (err) {
-      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
   },

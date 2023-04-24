@@ -1,3 +1,4 @@
+import { ModifyResult } from 'mongoose';
 import { IFormRequest } from '../../core/interfaces/form-requests.interface';
 import { MongooseSource } from '../../data/mongoose.source';
 
@@ -18,7 +19,7 @@ export class FormRequestRepository {
     return await this.db.create(formRequest);
   }
 
-  public async updateChannel(formRequest: IFormRequest): Promise<IFormRequest | null> {
+  public async updateChannel(formRequest: IFormRequest): Promise<ModifyResult<IFormRequest> | null> {
     return await this.db.update(formRequest.id, formRequest);
   }
 

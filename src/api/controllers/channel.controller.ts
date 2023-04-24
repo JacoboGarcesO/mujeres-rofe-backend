@@ -18,7 +18,6 @@ export const channelController = (
       const execution = await createChannelUseCase.execute(req.body, req.files);
       return res.status(200).json(execution);
     } catch (err) {
-      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
   },
@@ -27,7 +26,6 @@ export const channelController = (
       const execution = await getChannelsUseCase.execute();
       return res.status(200).json(execution);
     } catch (err) {
-      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
   },
@@ -36,7 +34,6 @@ export const channelController = (
       const execution = await getChannelByIdUseCase.execute(req.params.channelId);
       return res.status(200).json(execution);
     } catch (err) {
-      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
   },
@@ -45,7 +42,6 @@ export const channelController = (
       const execution = await updateChannelUseCase.execute(req.body, req.files);
       return res.status(200).json(execution);
     } catch (err) {
-      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
   },
@@ -54,7 +50,6 @@ export const channelController = (
       const execution = await deleteChannelUseCase.execute(req.params.channelId);
       return res.status(200).json(execution);
     } catch (err) {
-      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
   },

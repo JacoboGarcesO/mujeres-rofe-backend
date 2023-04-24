@@ -1,3 +1,4 @@
+import { ModifyResult } from 'mongoose';
 import { ISlide } from '../../core/interfaces/slide.interface';
 import { MongooseSource } from '../../data/mongoose.source';
 
@@ -18,7 +19,7 @@ export class SlideRepository {
     return await this.db.create(slide);
   }
 
-  public async updateSlide(slide: ISlide): Promise<ISlide | null> {
+  public async updateSlide(slide: ISlide): Promise<ModifyResult<ISlide> | null> {
     return await this.db.update(slide.id, slide);
   }
 

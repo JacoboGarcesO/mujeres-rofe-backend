@@ -1,4 +1,4 @@
-import { HydratedDocument, Model } from 'mongoose';
+import { HydratedDocument, Model, ModifyResult } from 'mongoose';
 import { IFilter } from '../core/interfaces/response.interface';
 
 export class MongooseSource<T> {
@@ -10,7 +10,7 @@ export class MongooseSource<T> {
     return await this.model.create(data);
   }
 
-  public async update(id: string, data: T): Promise<Awaited<T> | null> {
+  public async update(id: string, data: any): Promise<ModifyResult<T> | null> {
     return await this.model.findByIdAndUpdate(id, { $set: data }, { new: true });
   }
 

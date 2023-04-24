@@ -14,7 +14,6 @@ export const locationController = (
       const execution = await getCitiesUseCase.execute();
       return res.status(200).json(execution);
     } catch (err) {
-      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
   },
@@ -23,7 +22,6 @@ export const locationController = (
       const execution = await getCitiesByStateUseCase.execute(req.params.stateId);
       return res.status(200).json(execution);
     } catch (err) {
-      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
   },
@@ -32,7 +30,6 @@ export const locationController = (
       const execution = await getStatesUseCase.execute();
       return res.status(200).json(execution);
     } catch (err) {
-      res.status(500).send({ error: err, message: 'Internal server error' });
       next(err);
     }
   },
