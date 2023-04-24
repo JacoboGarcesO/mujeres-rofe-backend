@@ -1,6 +1,7 @@
 import { Application, Router } from 'express';
 import { HighlightedCityController } from '../controllers/interfaces/highlighted-city-controller.interface';
 import { JwtController } from '../controllers/jwt.controller';
+import { errorMiddleware } from '../../core/middlewares/error.middleware';
 
 export class HighlightedCityRouter {
   private app: Application;
@@ -20,6 +21,7 @@ export class HighlightedCityRouter {
   init() {
     const router = Router();
     this.app.use('/api/highlighted', router);
+    this.app.use(errorMiddleware);
 
     router.post(
       '/',

@@ -2,6 +2,7 @@ import { Application, Router } from 'express';
 import { storage } from '../../core/config/storage';
 import { RequestController } from '../controllers/interfaces/request-controller.interface';
 import { JwtController } from '../controllers/jwt.controller';
+import { errorMiddleware } from '../../core/middlewares/error.middleware';
 
 export class RequestRouter {
   private app: Application;
@@ -21,6 +22,7 @@ export class RequestRouter {
   init() {
     const router = Router();
     this.app.use('/api/requests', router);
+    this.app.use(errorMiddleware);
 
     router.post(
       '/',

@@ -1,5 +1,6 @@
 import { Application, Router } from 'express';
 import { LocationController } from '../controllers/interfaces/locations-controller.interface';
+import { errorMiddleware } from '../../core/middlewares/error.middleware';
 
 export class LocationRouter {
   private app: Application;
@@ -13,6 +14,7 @@ export class LocationRouter {
   init() {
     const router = Router();
     this.app.use('/api/locations', router);
+    this.app.use(errorMiddleware);
 
     router.get(
       '/',

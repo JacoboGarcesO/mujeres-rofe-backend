@@ -2,6 +2,7 @@ import { Application, Router } from 'express';
 import { storage } from '../../core/config/storage';
 import { SlideController } from '../controllers/interfaces/slide-controller.interface';
 import { JwtController } from '../controllers/jwt.controller';
+import { errorMiddleware } from '../../core/middlewares/error.middleware';
 
 export class SlideRouter {
   private app: Application;
@@ -21,6 +22,7 @@ export class SlideRouter {
   init() {
     const router = Router();
     this.app.use('/api/slides', router);
+    this.app.use(errorMiddleware);
 
     router.post(
       '/',

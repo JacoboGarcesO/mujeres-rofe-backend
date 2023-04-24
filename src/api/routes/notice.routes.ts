@@ -2,6 +2,7 @@ import { Application, Router } from 'express';
 import { storage } from '../../core/config/storage';
 import { NoticeController } from '../controllers/interfaces/notice-controller.interface';
 import { JwtController } from '../controllers/jwt.controller';
+import { errorMiddleware } from '../../core/middlewares/error.middleware';
 
 export class NoticeRouter {
   private app: Application;
@@ -21,6 +22,7 @@ export class NoticeRouter {
   init() {
     const router = Router();
     this.app.use('/api/notices', router);
+    this.app.use(errorMiddleware);
 
     router.post(
       '/',

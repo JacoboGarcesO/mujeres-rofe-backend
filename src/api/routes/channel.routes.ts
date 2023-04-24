@@ -2,6 +2,7 @@ import { Application, Router } from 'express';
 import { storage } from '../../core/config/storage';
 import { ChannelController } from '../controllers/interfaces/channel-controller.interface';
 import { JwtController } from '../controllers/jwt.controller';
+import { errorMiddleware } from '../../core/middlewares/error.middleware';
 
 export class ChannelRouter {
   private app: Application;
@@ -21,6 +22,7 @@ export class ChannelRouter {
   init() {
     const router = Router();
     this.app.use('/api/channels', router);
+    this.app.use(errorMiddleware);
 
     router.post(
       '/',

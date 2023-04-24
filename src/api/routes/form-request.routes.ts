@@ -1,6 +1,7 @@
 import { Application, Router } from 'express';
 import { FormRequestController } from '../controllers/interfaces/form-request-controller.interface';
 import { JwtController } from '../controllers/jwt.controller';
+import { errorMiddleware } from '../../core/middlewares/error.middleware';
 
 export class FormRequestRouter {
   private app: Application;
@@ -20,6 +21,7 @@ export class FormRequestRouter {
   init() {
     const router = Router();
     this.app.use('/api/form', router);
+    this.app.use(errorMiddleware);
 
     router.post(
       '/',
